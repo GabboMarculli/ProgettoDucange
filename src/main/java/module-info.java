@@ -5,6 +5,9 @@ module com.example.progettoducange {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
+    requires org.mongodb.driver.core;
+    requires org.mongodb.bson;
+    requires org.mongodb.driver.sync.client;
 
     opens com.example.progettoducange to javafx.fxml;
     exports com.example.progettoducange;
