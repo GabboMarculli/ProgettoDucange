@@ -8,6 +8,7 @@ module com.example.progettoducange {
     requires org.mongodb.driver.core;
     requires org.mongodb.bson;
     requires org.mongodb.driver.sync.client;
+    requires org.neo4j.driver;
 
     opens com.example.progettoducange to javafx.fxml;
     exports com.example.progettoducange;
