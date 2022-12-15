@@ -1,5 +1,7 @@
 package com.example.progettoducange.DTO;
 
+import java.time.LocalDate;
+
 public class productDTO {
     private long id;
     private String name;
