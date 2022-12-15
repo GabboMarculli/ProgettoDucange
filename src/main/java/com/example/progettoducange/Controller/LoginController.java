@@ -13,6 +13,15 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
+// ######################################################################################################################
+// DA FARE:
+// - RISOLVERE BUG ESTETICI (SPESSO LE CASELLE DI INPUT SI COLORANO DI ROSSO A CAS0, E LA SCRITTA "LOGIN OK" OPPURE "LOGIN
+//   ERRATO" VIENE DOV'E' IL SIGNUP IN BASSO
+// - IMPEDIRE CHE UN UTENTE POSSA REGISTRARSI CON L'EMAIL DI UN UTENTE GIA' REGISTRATO
+// - METTERE IL CHECK PASSWORD? ADESSO E' COMMENTATO, METTERLO IMPLICA DOVER MODIFICARE TUTTE LE PASSWORD NEL DB RENDENDOLE SICURE
+// - METTERE UN LIMITE MINIMO E MASSIMO ALLA LUNGHEZZA DEI NOMI (DI NUOVO, FARLO IMPLICA DOVER MODIFICARE I NOMI ERRATI NEL DB
+// #######################################################################################################################
+
 public class LoginController {
 
     // Strings which hold css elements to easily re-use in the application
@@ -80,7 +89,6 @@ public class LoginController {
 
     @FXML
     protected void onSignUpButtonClick() {
-
         if (signUpUsernameTextField.getText().isBlank() || signUpEmailTextField.getText().isBlank() || signUpUsernameTextField.getText().equals("adimn") ||
                 signUpPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().isBlank()) {
             invalidSignupCredentials.setText("Please fill in all fields!");

@@ -5,6 +5,12 @@ import javafx.scene.control.TextField;
 import java.util.regex.Pattern;
 
 public class Utils {
+    // remove quotation marks and space within the string passed as parameter
+    public static String CleanString(String str)
+    {
+        return str.replace("\"", "").trim();
+    }
+
     public static boolean CheckEmail(String email)
     {
         String regexPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@"
