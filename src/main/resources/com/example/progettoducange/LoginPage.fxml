@@ -85,7 +85,7 @@
                         <Image url="@img/users.png"/>
                     </image>
                 </ImageView>
-                <PasswordField fx:id="loginPasswordPasswordField" layoutX="150.0" layoutY="140.0" prefHeight="30.0"
+                <PasswordField fx:id="loginPasswordField" layoutX="150.0" layoutY="140.0" prefHeight="30.0"
                                prefWidth="300.0" promptText="Password"
                                style="-fx-border-width: 2; -fx-border-color: #A9A9A9; -fx-border-radius: 5;">
                     <font>
@@ -171,7 +171,7 @@
                         <Image url="@img/email.png"/>
                     </image>
                 </ImageView>
-                <PasswordField fx:id="signUpPasswordPasswordField" layoutX="155.0" layoutY="400.0" prefHeight="30.0"
+                <PasswordField fx:id="signUpPasswordField" layoutX="155.0" layoutY="400.0" prefHeight="30.0"
                                prefWidth="300.0" promptText="Password"
                                style="-fx-border-width: 2; -fx-border-color: #A9A9A9; -fx-border-radius: 5;">
                     <font>
@@ -184,7 +184,7 @@
                         <Image url="@img/lock.png"/>
                     </image>
                 </ImageView>
-                <PasswordField fx:id="signUpRepeatPasswordPasswordField" layoutX="155.0" layoutY="440.0"
+                <PasswordField fx:id="signUpRepeatPasswordField" layoutX="155.0" layoutY="440.0"
                                prefHeight="30.0" prefWidth="300.0" promptText="Repeat Password"
                                style="-fx-border-width: 2; -fx-border-color: #A9A9A9; -fx-border-radius: 5;">
                     <font>

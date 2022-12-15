@@ -3,7 +3,7 @@ package com.example.progettoducange.model;
 import java.util.Date;
 
 public abstract class User {
-    public Long id;
+    public Integer id;
     private String firstName;
     private String lastName;
     private String username;
@@ -12,10 +12,12 @@ public abstract class User {
     private Date createdDate;
     private Date updatedDate;
 
-    public Long getId() {
+    private String email;
+
+    public Integer getId() {
         return id;
     }
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -68,19 +70,26 @@ public abstract class User {
         this.updatedDate = updatedDate;
     }
 
-
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getEmail()
+    {
+        return email;
+    }
 
     @Override
     public String toString() {
-        return "RegisteredUser{" +
+        return "User{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", profilePicUrl='" + profilePic + '\'' +
+                ", profilePic='" + profilePic + '\'' +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +
+                ", email='" + email + '\'' +
                 '}';
     }
 }

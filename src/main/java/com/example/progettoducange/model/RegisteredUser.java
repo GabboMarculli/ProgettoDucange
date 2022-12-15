@@ -1,5 +1,6 @@
 package com.example.progettoducange.model;
 
+import java.util.Date;
 import java.util.List;
 
 public class RegisteredUser extends User{
@@ -7,9 +8,17 @@ public class RegisteredUser extends User{
         List<Review> reviews;
 
         // constructor
-        public RegisteredUser(Long id)
+        public RegisteredUser(Integer id)
         {
             super.setId(id);
+        }
+
+        public RegisteredUser(Integer id, String username, String password, String email)
+        {
+            super.setId(id);
+            super.setUsername(username);
+            super.setPassword(password);
+            super.setEmail(email);
         }
 
         public Fridge getFridge() {

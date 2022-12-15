@@ -12,60 +12,47 @@ import static com.mongodb.client.model.Sorts.descending;
 import org.bson.conversions.Bson;
 
 public class MongoDbDriver {
-    public static void main(String[] args)
-    {
-        visualizeData();
-        //updateData(3,"name","Jessica");// al posto dei vari valori ci vanno le robe prese dall'interfaccia
+    private static MongoDbDriver driver = null;
+    private final MongoClient mongoclient;
+    private static MongoDatabase database;
 
-    }
-    static void visualizeData(){
+    private MongoDbDriver()
+    {
         //---Connect to the MongoDB---
         ConnectionString uri = new ConnectionString("mongodb://localhost:27017");
-        MongoClient mongoClient = MongoClients.create(uri);
-
-        // Get DB
-        MongoDatabase db = mongoClient.getDatabase("mongo_project");
-
-        //acess to the collection user
-        MongoCollection<Document> collection = db.getCollection("user");
-
-        // Get list of existing Collections
-        Bson p1 = include("username","password","country","registrationdate","name","surname");
-        Bson p2 = excludeId();
-        Document resultDoc = collection.find(eq("username", "Finochio")).projection(p1).projection(p2).first();
-        System.out.println(resultDoc.toJson());
-        String[] result = resultDoc.toJson().split(",");
-        //username;
-        System.out.println(result[0].split(":")[1]);
-        //password;
-        System.out.println(result[1].split(":")[1]);
-        //country;
-        System.out.println(result[2].split(":")[1]);
-        //registrationdate;
-        System.out.println(result[3].split(":")[1]);
-        //name;
-        System.out.println(result[4].split(":")[1]);
-        //surname;
-        System.out.println(result[5].split(":")[1]);
-        //id;
-        System.out.println(result[6].split(":")[1]);
-        //fridge; //vedere meglio
-        // System.out.println(result[7]);
+        mongoclient = MongoClients.create(uri);
+        database = mongoclient.getDatabase("Progetto");
     }
-    static void updateData(int id, String key, String value){
-        ConnectionString uri = new ConnectionString("mongodb://localhost:27017");
-        MongoClient mongoClient = MongoClients.create(uri);
 
-        // Get DB
-        MongoDatabase db = mongoClient.getDatabase("mongo_project");
+    // singleton pattern
+    public static MongoDbDriver getInstance() {
+        if(driver == null){
+            driver = new MongoDbDriver();
+        }
+        return driver;
+    }
 
-        //acess to the collection user
-        MongoCollection<Document> collection = db.getCollection("user");
+    public void close() {
+        if(mongoclient!= null){
+            mongoclient.close();
+        }
 
-        collection.updateOne(
-                Filters.eq("id", id),
-                Updates.set(key, value)
-        );
+        System.out.println("Mongo Connection closed");
+    }
+
+    public static MongoCollection<Document> getUserCollection()
+    {
+           return database.getCollection("User");
+    }
+
+    public MongoCollection<Document> getRecipeCollection()
+    {
+        return database.getCollection("Recipe");
+    }
+
+    public MongoCollection<Document> getProductCollection()
+    {
+        return database.getCollection("Product");
     }
 }
 

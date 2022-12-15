@@ -4,6 +4,11 @@ import com.mongodb.ConnectionString;
 import org.neo4j.driver.*;
 import static org.neo4j.driver.Values.parameters;
 
+// ##############################################################
+// COSA CI VA QUI???
+// ##############################################################
+
+/*
 public class Neo4jDriver {
     private final Driver driver;
     ConnectionString uri = new ConnectionString("neo4j://localhost:27017");
@@ -17,4 +22,4 @@ public class Neo4jDriver {
         // Closing a driver immediately shuts down all open connections.
         driver.close();
     }
-}
+}*/
