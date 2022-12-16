@@ -63,13 +63,30 @@ public class userDAO {
     // and than create new object User, with inserted data. After, call "signup" function to insert in the Db the new user
     public static boolean signup(User user)
     {
-        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
-        Document doc = new Document("username", user.getUsername()).append("password", user.getPassword()).append("firstName", user.getFirstName()).
-                            append("lastName", user.getLastName()).append("profilePic", user.getProfilePicUrl()).append("email", user.getEmail());
+            Document doc = new Document("username", user.getUsername()).append("password", user.getPassword()).append("firstName", user.getFirstName()).
+                    append("lastName", user.getLastName()).append("profilePic", user.getProfilePicUrl()).append("email", user.getEmail());
 
-        collection.insertOne(doc);
-        return true;
+            collection.insertOne(doc);
+            return true;
+        } catch (Exception error) {
+            System.out.println( error );
+            return false;
+        }
+    }
+
+    public boolean deleteUser(User user)
+    {
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+            collection.deleteOne(eq("username", user.getUsername()));
+            return true;
+        } catch (Exception error) {
+            System.out.println( error );
+            return false;
+        }
     }
 }
 

@@ -18,8 +18,8 @@ import java.util.Objects;
 // - RISOLVERE BUG ESTETICI (SPESSO LE CASELLE DI INPUT SI COLORANO DI ROSSO A CAS0, E LA SCRITTA "LOGIN OK" OPPURE "LOGIN
 //   ERRATO" VIENE DOV'E' IL SIGNUP IN BASSO
 // - IMPEDIRE CHE UN UTENTE POSSA REGISTRARSI CON L'EMAIL DI UN UTENTE GIA' REGISTRATO
-// - METTERE IL CHECK PASSWORD? ADESSO E' COMMENTATO, METTERLO IMPLICA DOVER MODIFICARE TUTTE LE PASSWORD NEL DB RENDENDOLE SICURE
-// - METTERE UN LIMITE MINIMO E MASSIMO ALLA LUNGHEZZA DEI NOMI (DI NUOVO, FARLO IMPLICA DOVER MODIFICARE I NOMI ERRATI NEL DB
+// - METTERE IL CHECK PASSWORD (?) ADESSO E' COMMENTATO, METTERLO IMPLICA DOVER MODIFICARE TUTTE LE PASSWORD NEL DB RENDENDOLE SICURE
+// - METTERE UN LIMITE MINIMO E MASSIMO ALLA LUNGHEZZA DEI NOMI (DI NUOVO, FARLO IMPLICA DOVER MODIFICARE I NOMI ERRATI NEL DB)
 // #######################################################################################################################
 
 public class LoginController {
@@ -80,8 +80,7 @@ public class LoginController {
                 } else {
                     invalidSignupCredentials.setText("Password is wrong");
                     invalidSignupCredentials.setStyle(errorMessage);
-                    signUpPasswordField.setStyle(errorStyle);
-                    signUpRepeatPasswordField.setStyle(errorStyle);
+                    loginPasswordField.setStyle(errorStyle);
                     invalidLoginCredentials.setText("");
                 }
         }

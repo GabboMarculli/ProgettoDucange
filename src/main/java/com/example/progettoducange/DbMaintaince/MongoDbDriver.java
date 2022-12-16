@@ -45,7 +45,7 @@ public class MongoDbDriver {
            return database.getCollection("User");
     }
 
-    public MongoCollection<Document> getRecipeCollection()
+    public static MongoCollection<Document> getRecipeCollection()
     {
         return database.getCollection("Recipe");
     }
