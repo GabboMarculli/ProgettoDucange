@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            fx:controller="com.example.progettoducange.Controller.ProfilePageController">
+    <center>
+        <Pane prefHeight="300.0" prefWidth="800.0" style="-fx-background-color: #A9A9A9;" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="276.0" layoutY="20.0" prefHeight="45.0" prefWidth="249.0" text="Profile information">
+                </Label>
+                <GridPane layoutX="30.0" layoutY="80.0" prefHeight="225.0" prefWidth="414.0">
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label fx:id="Username" prefHeight="18.0" prefWidth="71.0" text="Username">
+                        </Label>
+                        <Label fx:id="FirstName" text="First name" GridPane.rowIndex="1">
+                        </Label>
+                        <Label fx:id="LastName" text="Last name" GridPane.rowIndex="2">
+                        </Label>
+                        <Label fx:id="Email" text="Email" GridPane.rowIndex="3">
+                        </Label>
+                        <Label fx:id="Country" text="Country" GridPane.rowIndex="4">
+                        </Label>
+                        <Label fx:id="Password" text="Password" GridPane.rowIndex="5">
+                        </Label>
+                        <TextField fx:id="NewPassword" promptText="New Password" GridPane.rowIndex="6">
+                        </TextField>
+                        <Label fx:id="invalidChangePassword" layoutY="175.0" prefHeight="16.0" GridPane.rowIndex="7">
+                        </Label>
+                    </children>
+                </GridPane>
+
+                <!-- va implementato o no? -->
+                <Button layoutX="300.0" layoutY="404.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="180.0" text="Change password"
+                        onAction="#onChangePasswordButtonClick">
+                </Button>
+
+                <!-- OVVIAMENTE QUI AL POSTO DELLA PIZZA CI VA LA FOTO PROFILO DELL'UTENTE -->
+                <ImageView fitHeight="300.0" fitWidth="300.0" layoutX="500.0" layoutY="104.0" preserveRatio="true">
+                    <image>
+                        <Image url="@img/pizza.png"/>
+                    </image>
+                </ImageView>
+            </children>
+        </Pane>
+    </center>
+</BorderPane>

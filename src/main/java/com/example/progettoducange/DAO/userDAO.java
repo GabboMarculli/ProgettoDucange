@@ -2,6 +2,7 @@ package com.example.progettoducange.DAO;
 
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.Utils.Utils;
+import com.example.progettoducange.model.Recipe;
 import com.example.progettoducange.model.User;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.internal.connection.tlschannel.util.Util;
@@ -82,6 +83,26 @@ public class userDAO {
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
             collection.deleteOne(eq("username", user.getUsername()));
+            return true;
+        } catch (Exception error) {
+            System.out.println( error );
+            return false;
+        }
+    }
+
+    // #################################################################################
+    // Credo che si faccia così
+    // #################################################################################
+    public boolean changePassword(User user, String newPassword)
+    {
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+            Document doc = new Document().append("password", newPassword);
+
+            Bson query = new Document("$set", doc);
+            collection.updateOne(new Document("password", user.getPassword()), query);
+
+            user.setPassword(newPassword);
             return true;
         } catch (Exception error) {
             System.out.println( error );
