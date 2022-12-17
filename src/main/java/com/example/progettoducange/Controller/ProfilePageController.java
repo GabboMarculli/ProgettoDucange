@@ -1,10 +1,13 @@
 package com.example.progettoducange.Controller;
 
+import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.userDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
+import java.io.IOException;
 
 public class ProfilePageController {
     protected
@@ -49,5 +52,20 @@ public class ProfilePageController {
             invalidChangePassword.setText("");
             NewPassword.setStyle(successStyle);
         }
+    }
+
+    @FXML
+    protected void onDeleteUserClick()
+    {
+        try{
+            //userDAO.deleteUser( ); COME GLIELO PASSO L'UTENTE ?????
+        } catch (Exception error){
+            System.out.println(error);
+        }
+    }
+
+    @FXML
+    protected void onGoToHomeClick() throws IOException {
+        Application.changeScene("HomePage");
     }
 }

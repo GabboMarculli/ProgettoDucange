@@ -134,6 +134,8 @@ public class LoginController {
             signUpRepeatPasswordField.setStyle(successStyle);
             invalidLoginCredentials.setText("");
 
+            // ########################################################################################################
+            // come faccio a creare l'id?? forse devo fare una query per recuperare l'id piu alto presente nel db e metterci quello + 1 ?
             RegisteredUser user = new RegisteredUser(0, signUpUsernameTextField.getText(),signUpPasswordField.getText(),signUpEmailTextField.getText());
             userDAO.signup(user);
         }
