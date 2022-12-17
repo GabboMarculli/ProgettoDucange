@@ -5,6 +5,7 @@ import com.example.progettoducange.Utils.Utils;
 import com.example.progettoducange.model.Recipe;
 import com.example.progettoducange.model.User;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Projections;
 import com.mongodb.internal.connection.tlschannel.util.Util;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -39,20 +40,29 @@ public class userDAO {
         return null;
     }
 
+    // ##############################################################################################################
+    // con alcuni username funziona, mentre con altri dà che la resultDoc è null e non funziona
+    // ##############################################################################################################
+
     // Return true if the password of the username "username" is equal to the parameter "password". Return false otherwise
     public static boolean checkPassword(String username, String password)
     {
-        Bson p1 = include("password");
-        Bson p2 = excludeId();
+        Bson projectionFields = Projections.fields(
+                Projections.include("password"),
+                Projections.excludeId());
 
         // retrieve the user collection
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-        Document resultDoc = collection.find(eq("username", username)).projection(p1).projection(p2).first();
+        Document resultDoc = collection.find(eq("username", username)).projection(projectionFields).first();
 
         if(resultDoc!= null) {
             String[] result = resultDoc.toJson().split(",");
             String pass = result[1].split(":")[1];
             pass = Utils.CleanString(pass);
+
+            System.out.println(pass);
+            System.out.println(password);
+            System.out.println(password.equals(pass));
 
             return (password.equals(pass));
         } else

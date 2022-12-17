@@ -1,6 +1,7 @@
 package com.example.progettoducange.Controller;
 
 
+import com.example.progettoducange.Application;
 import com.example.progettoducange.Utils.Utils;
 import com.example.progettoducange.DAO.userDAO;
 import com.example.progettoducange.model.RegisteredUser;
@@ -11,6 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Objects;
 
 // ######################################################################################################################
@@ -59,7 +61,7 @@ public class LoginController {
     }
 
     @FXML
-    protected void onLoginButtonClick() {
+    protected void onLoginButtonClick() throws IOException {
         if (loginUsernameTextField.getText().isBlank() || loginPasswordField.getText().isBlank()) {
             invalidLoginCredentials.setText("The Login fields are required!");
             invalidLoginCredentials.setStyle(errorMessage);
@@ -77,6 +79,8 @@ public class LoginController {
                     loginUsernameTextField.setStyle(successStyle);
                     loginPasswordField.setStyle(successStyle);
                     invalidSignupCredentials.setText("");
+
+                    Application.changeScene("HomePage");
                 } else {
                     invalidSignupCredentials.setText("Password is wrong");
                     invalidSignupCredentials.setStyle(errorMessage);
