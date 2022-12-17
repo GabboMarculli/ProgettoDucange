@@ -8,7 +8,7 @@ public class Utils {
     // remove quotation marks and space within the string passed as parameter
     public static String CleanString(String str)
     {
-        return str.replace("\"", "").trim();
+        return str.replace("\"", "").replaceAll("[\\p{Ps}\\p{Pe}]", "").trim();
     }
 
     public static boolean CheckEmail(String email)
