@@ -10,15 +10,16 @@ public class HomePageController {
     protected void goToProfile() throws IOException {
         Application.changeScene("ProfilePage");
     }
+    @FXML
+    protected void goToFridge() throws IOException {
+        Application.changeScene("FridgePage");
+    }
     /*
     @FXML
     protected void goToUsers() throws IOException {
         Application.changeScene("Users");
     }
-    @FXML
-    protected void goToFridge() throws IOException {
-        Application.changeScene("Fridge");
-    }
+
     @FXML
     protected void goToRecipes() throws IOException {
         Application.changeScene("Recipes");

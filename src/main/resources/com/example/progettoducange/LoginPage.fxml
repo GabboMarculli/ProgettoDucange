@@ -253,14 +253,4 @@
         </AnchorPane>
     </right>
     <!-- Ending of the left part of the Borderpane -->
-
-    <!-- Beginning of the bottom part of the Borderpane -->
-    <bottom>
-
-        <!-- Simple Copyright -->
-        <Label prefHeight="16.0" prefWidth="107.0" style="-fx-text-fill: #B9a9a9;" text="Shop © 2021"
-               BorderPane.alignment="CENTER"/>
-    </bottom>
-    <!-- Ending of the left part of the Borderpane -->
-
 </BorderPane>

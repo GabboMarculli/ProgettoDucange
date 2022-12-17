@@ -61,7 +61,7 @@ public class LoginController {
     }
 
     @FXML
-    protected void onLoginButtonClick() throws IOException {
+    protected void onLoginButtonClick() {
         if (loginUsernameTextField.getText().isBlank() || loginPasswordField.getText().isBlank()) {
             invalidLoginCredentials.setText("The Login fields are required!");
             invalidLoginCredentials.setStyle(errorMessage);
@@ -80,7 +80,11 @@ public class LoginController {
                     loginPasswordField.setStyle(successStyle);
                     invalidSignupCredentials.setText("");
 
-                    Application.changeScene("HomePage");
+                    try {
+                        goToHomePage();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     invalidSignupCredentials.setText("Password is wrong");
                     invalidSignupCredentials.setStyle(errorMessage);
@@ -88,6 +92,10 @@ public class LoginController {
                     invalidLoginCredentials.setText("");
                 }
         }
+    }
+
+    protected void goToHomePage() throws IOException {
+        Application.changeScene("HomePage");
     }
 
     @FXML

@@ -2,12 +2,7 @@ package com.example.progettoducange.DbMaintaince;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.client.*;
-import com.mongodb.client.model.*;
 import org.bson.Document;
-
-import static com.mongodb.client.model.Filters.*;
-import static com.mongodb.client.model.Projections.*;
-import static com.mongodb.client.model.Sorts.descending;
 
 import org.bson.conversions.Bson;
 

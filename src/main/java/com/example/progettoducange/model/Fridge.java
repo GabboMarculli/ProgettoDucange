@@ -1,49 +1,48 @@
 package com.example.progettoducange.model;
 
 
-import java.util.HashMap;
+import java.time.LocalDate;
+import java.util.List;
 
 public class Fridge {
-    // first Long is product id, second integer is quantity
-    // Example: milk's id is 4, bread's id is 7, pizza's id is 16. If I put in my fridge 3 milk, 2 bread and 2 pizza,
-    // the hashMap is ->  { (4,3) , (7,2) , (16,2) }
-    public HashMap<Long, Integer> products = new HashMap<Long, Integer>();
+    private List<ProductInFridge> MyFridge;
 
     // constructor
-    public Fridge(Long product, Integer quantity) {
-        this.products.put(product, quantity);
+    public Fridge(List<ProductInFridge> products) {
+        this.MyFridge = products;
     }
 
-    public void setFridge(HashMap<Long, Integer> products) {
-        this.products = products;
+    public void setMyFridge(List<ProductInFridge> myFridge) {
+        MyFridge = myFridge;
     }
 
-    public void addProductToFridge(Long product)
+    public List<ProductInFridge> getMyFridge() {
+        return MyFridge;
+    }
+
+    public void addProductToFridge(String product, LocalDate expireDate)
     {
-        // if product is yet in fridge, increment its value, else insert new product with value '1'
-        products.put(product, products.containsKey(product) ? products.get(product) + 1 : 1);
+        // search for product in fridge
+       for(Integer i= 0; i< this.MyFridge.size();i++){
+            if(MyFridge.get(i).getName().equals(product)) // if product is already in fridge
+            {
+                MyFridge.get(i).setQuantity(MyFridge.get(i).getQuantity()+1); // increment its quantity
+            }
+       }
+       // else, add new row to fridge
+        ProductInFridge newProduct = new ProductInFridge(product, 1 , expireDate);
+        MyFridge.add(newProduct);
     }
 
-    public void removeProduct(Long productId){
-        products.remove(productId);
-    }
-
-    public HashMap<Long, Integer> getProducts() {
-        return products;
+    public void removeProduct(ProductInFridge product){
+        MyFridge.remove(product);
     }
 
     public int getTotalNumberOfProduct() {
-        return products.size();
+        return MyFridge.size();
     }
 
-    public boolean isEmpty(){
-        return products.isEmpty();
-    }
-
-    @Override
-    public String toString() {
-        return "Fridge{" +
-                "products=" + products +
-                '}';
+    public boolean isEmpty() {
+        return MyFridge.isEmpty();
     }
 }

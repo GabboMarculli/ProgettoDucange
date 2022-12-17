@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="700.0" prefWidth="800.0"  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.progettoducange.Controller.FridgePageController">
+    <top>
+        <ToolBar prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #00bfff;" BorderPane.alignment="CENTER">
+            <items>
+                <Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="146.0" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitHeight="45.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/logo.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Pane prefHeight="6.0" prefWidth="533.0" />
+            </items>
+        </ToolBar>
+    </top>
+    <bottom>
+        <Pane prefHeight="650.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+            <children>
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="20.0" prefHeight="45.0" prefWidth="250.0" text="Fridge">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Label>
+                <Button fx:id = "IncrementButton"
+                        alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="570.0" mnemonicParsing="false" text="Increment quantity">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="570.0" mnemonicParsing="false"
+                        text="Back " onAction="#goToHome">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button fx:id ="DecrementButton" onAction="#fillTable"
+                        alignment="CENTER" contentDisplay="CENTER" layoutX="300.0" layoutY="569.0" mnemonicParsing="false" text="Decrement quantity">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <TableView fx:id="FridgeTable" layoutX="103.0" layoutY="76.0" prefHeight="477.0" prefWidth="594.0">
+                    <columns>
+                        <TableColumn fx:id="ProductName" prefWidth="235" text="Name" />
+                        <TableColumn fx:id="ProductQuantity" prefWidth="155" text="Quantity" />
+                        <TableColumn fx:id="ProductExpireDate" prefWidth="205" text="Expire date" />
+                    </columns>
+                </TableView>
+            </children>
+        </Pane>
+    </bottom>
+</BorderPane>

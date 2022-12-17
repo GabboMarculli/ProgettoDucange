@@ -20,14 +20,15 @@ public class userDAO {
     // Return a user given his username. If user doesn't exists, return null
     public static String findUser(String username)
     {
-        Bson p1 = include("username");
-        Bson p2 = excludeId();
+        Bson projectionFields = Projections.fields(
+                Projections.include("username"),
+                Projections.excludeId());
 
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
         // we search for username
-        Document resultDoc = collection.find(eq("username", username)).projection(p1).projection(p2).first();
+        Document resultDoc = collection.find(eq("username", username)).projection(projectionFields).first();
 
         if(resultDoc!= null) {
             String[] result = resultDoc.toJson().split(",");
@@ -56,13 +57,16 @@ public class userDAO {
         Document resultDoc = collection.find(eq("username", username)).projection(projectionFields).first();
 
         if(resultDoc!= null) {
-            String[] result = resultDoc.toJson().split(",");
-            String pass = result[1].split(":")[1];
+            String[] result = resultDoc.toJson().split(":");
+            String pass = result[1];
             pass = Utils.CleanString(pass);
 
+            /*
+            // debug
             System.out.println(pass);
             System.out.println(password);
             System.out.println(password.equals(pass));
+             */
 
             return (password.equals(pass));
         } else
