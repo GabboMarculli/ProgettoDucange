@@ -10,7 +10,7 @@ module com.example.progettoducange {
     requires org.mongodb.driver.sync.client;
     requires org.neo4j.driver;
 
-    opens com.example.progettoducange to javafx.fxml;
+    opens com.example.progettoducange.model to javafx.base;
     exports com.example.progettoducange;
     exports com.example.progettoducange.Controller;
     opens com.example.progettoducange.Controller to javafx.fxml;

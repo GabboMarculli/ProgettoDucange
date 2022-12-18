@@ -1,40 +1,45 @@
 package com.example.progettoducange.model;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 import java.time.LocalDate;
 
 public class ProductInFridge {
-    private String name;
-    private Integer quantity;
-    private LocalDate expireDate;
+    final private SimpleStringProperty name;
+    final private SimpleIntegerProperty quantity;
+    final private SimpleLocalDateProperty expireDate;
 
     public ProductInFridge(String name, Integer quantity, LocalDate expireDate)
     {
-        this.name = name;
-        this.quantity = quantity;
-        this.expireDate = expireDate;
+
+        this.quantity = new SimpleIntegerProperty(quantity);
+        this.expireDate = new SimpleLocalDateProperty(expireDate);
+        this.name = new SimpleStringProperty(name);
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name.set(name);
     }
 
     public LocalDate getExpireDate() {
-        return expireDate;
+        return expireDate.get();
     }
 
     public Integer getQuantity() {
-        return quantity;
+        return quantity.get();
     }
 
     public void setExpireDate(LocalDate expireDate) {
-        this.expireDate = expireDate;
+        this.expireDate.set(expireDate);
     }
 
     public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+        this.quantity.set(quantity);
     }
 
     public String getName() {
-        return name;
+        return name.get();
     }
 }

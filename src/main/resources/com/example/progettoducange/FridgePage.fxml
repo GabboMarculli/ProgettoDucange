@@ -33,6 +33,7 @@
                     </font>
                 </Label>
                 <Button fx:id = "IncrementButton"
+                        onAction="#fillTable"
                         alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="570.0" mnemonicParsing="false" text="Increment quantity">
                     <font>
                         <Font size="15.0" />
@@ -52,9 +53,9 @@
                 </Button>
                 <TableView fx:id="FridgeTable" layoutX="103.0" layoutY="76.0" prefHeight="477.0" prefWidth="594.0">
                     <columns>
-                        <TableColumn fx:id="ProductName" prefWidth="235" text="Name" />
-                        <TableColumn fx:id="ProductQuantity" prefWidth="155" text="Quantity" />
-                        <TableColumn fx:id="ProductExpireDate" prefWidth="205" text="Expire date" />
+                        <TableColumn fx:id="ProductNameColumn" prefWidth="235" text="Name" />
+                        <TableColumn fx:id="ProductQuantityColumn" prefWidth="155" text="Quantity" />
+                        <TableColumn fx:id="ProductExpireDateColumn" prefWidth="205" text="Expire date" />
                     </columns>
                 </TableView>
             </children>
