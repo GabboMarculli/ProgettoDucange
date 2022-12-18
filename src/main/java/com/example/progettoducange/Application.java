@@ -20,12 +20,15 @@ public class Application extends javafx.application.Application {
         stage.show();
         setPrimaryStage(stage);
         setPrimaryScene(scene);
-
         mongodb = MongoDbDriver.getInstance();
-    }
+        }
 
     public static void main(String[] args) {
-        launch();
+        try {
+            launch();
+        }catch(Exception e){
+            System.exit(1 );
+        }
     }
 
     public static void changeScene(String fxml) throws IOException {
