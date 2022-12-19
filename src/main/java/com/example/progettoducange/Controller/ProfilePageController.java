@@ -44,8 +44,7 @@ public class ProfilePageController {
             invalidChangePassword.setText("");
             NewPassword.setStyle(errorStyle);
         } else {
-            // DA DOVE LO PRENDO L'UTENTE ?????
-            // userDAO.changePassword( , NewPassword.getText());
+            userDAO.changePassword(Application.authenticatedUser, NewPassword.getText());
 
             invalidChangePassword.setText("Passoword changed.");
             invalidChangePassword.setStyle(successMessage);

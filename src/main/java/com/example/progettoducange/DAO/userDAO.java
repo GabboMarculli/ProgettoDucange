@@ -3,6 +3,7 @@ package com.example.progettoducange.DAO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.Utils.Utils;
 import com.example.progettoducange.model.Recipe;
+import com.example.progettoducange.model.RegisteredUser;
 import com.example.progettoducange.model.User;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Projections;
@@ -10,6 +11,7 @@ import com.mongodb.internal.connection.tlschannel.util.Util;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import static com.mongodb.client.model.Filters.eq;
@@ -41,6 +43,29 @@ public class userDAO {
         return null;
     }
 
+    public static String getID(String username)
+    {
+        Bson projectionFields = Projections.fields(
+                Projections.include("username", "password", "country", "registrationdate",
+                                    "name", "surname", "id", "fridge"));
+
+        // retrieve user collection
+        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+
+        // we search for username
+        Document resultDoc = collection.find(eq("username", username)).projection(projectionFields).first();
+
+        if(resultDoc!= null) {
+            String[] result = resultDoc.toJson().split(",");
+            String id = result[0].split(":")[2]; // get username
+            id = Utils.CleanString(id);
+
+            return id;
+        }
+
+        return null;
+    }
+
     // ##############################################################################################################
     // con alcuni username funziona, mentre con altri dà che la resultDoc è null e non funziona
     // ##############################################################################################################
@@ -58,15 +83,12 @@ public class userDAO {
 
         if(resultDoc!= null) {
             String[] result = resultDoc.toJson().split(":");
-            String pass = result[1];
+            String pass = result[0];
             pass = Utils.CleanString(pass);
 
-            /*
-            // debug
-            System.out.println(pass);
             System.out.println(password);
+            System.out.println(pass);
             System.out.println(password.equals(pass));
-             */
 
             return (password.equals(pass));
         } else
@@ -107,7 +129,7 @@ public class userDAO {
     // #################################################################################
     // Credo che si faccia così
     // #################################################################################
-    public boolean changePassword(User user, String newPassword)
+    public static boolean changePassword(RegisteredUser user, String newPassword)
     {
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();

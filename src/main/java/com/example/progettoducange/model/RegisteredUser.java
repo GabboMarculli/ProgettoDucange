@@ -8,12 +8,12 @@ public class RegisteredUser extends User{
         List<Review> reviews;
 
         // constructor
-        public RegisteredUser(Integer id)
+        public RegisteredUser(String id)
         {
             super.setId(id);
         }
 
-        public RegisteredUser(Integer id, String username, String password, String email)
+        public RegisteredUser(String id, String username, String password, String email)
         {
             super.setId(id);
             super.setUsername(username);

@@ -20,6 +20,9 @@
                         <Font size="50.0" />
                     </font>
                 </Label>
+                <Button fx:id="Logout" layoutX="800" layoutY="80" contentDisplay="TOP" mnemonicParsing="false" onAction="#logout"
+                        prefHeight="50.0" prefWidth="80.0"  text="Logout" >
+                </Button>
             </children>
         </Pane>
         <GridPane alignment="CENTER" layoutX="165.0" layoutY="228.0" prefHeight="320.0"

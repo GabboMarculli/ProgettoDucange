@@ -81,6 +81,8 @@ public class LoginController {
                     invalidSignupCredentials.setText("");
 
                     try {
+                        Application.authenticatedUser = new RegisteredUser(userDAO.getID(loginUsernameTextField.getText()),
+                                                    loginUsernameTextField.getText(),loginPasswordField.getText(), null);
                         goToHomePage();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -100,7 +102,7 @@ public class LoginController {
 
     @FXML
     protected void onSignUpButtonClick() {
-        if (signUpUsernameTextField.getText().isBlank() || signUpEmailTextField.getText().isBlank() || signUpUsernameTextField.getText().equals("adimn") ||
+        if (signUpUsernameTextField.getText().isBlank() || signUpEmailTextField.getText().isBlank() || signUpUsernameTextField.getText().equals("admin") ||
                 signUpPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().isBlank()) {
             invalidSignupCredentials.setText("Please fill in all fields!");
             invalidSignupCredentials.setStyle(errorMessage);
@@ -148,7 +150,7 @@ public class LoginController {
 
             // ########################################################################################################
             // come faccio a creare l'id?? forse devo fare una query per recuperare l'id piu alto presente nel db e metterci quello + 1 ?
-            RegisteredUser user = new RegisteredUser(0, signUpUsernameTextField.getText(),signUpPasswordField.getText(),signUpEmailTextField.getText());
+            RegisteredUser user = new RegisteredUser(null, signUpUsernameTextField.getText(),signUpPasswordField.getText(),signUpEmailTextField.getText());
             userDAO.signup(user);
         }
     }

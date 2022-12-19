@@ -7,6 +7,15 @@ import java.io.IOException;
 
 public class HomePageController {
     @FXML
+    protected void logout() throws IOException {
+        Application.authenticatedUser = null;
+        goToLogin();
+    }
+    @FXML
+    protected void goToLogin() throws IOException {
+        Application.changeScene("LoginPage");
+    }
+    @FXML
     protected void goToProfile() throws IOException {
         Application.changeScene("ProfilePage");
     }
@@ -15,11 +24,6 @@ public class HomePageController {
         Application.changeScene("FridgePage");
     }
     /*
-    @FXML
-    protected void goToUsers() throws IOException {
-        Application.changeScene("Users");
-    }
-
     @FXML
     protected void goToRecipes() throws IOException {
         Application.changeScene("Recipes");

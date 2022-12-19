@@ -1,16 +1,31 @@
 package com.example.progettoducange;
 
+import com.example.progettoducange.DAO.userDAO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
+import com.example.progettoducange.model.RegisteredUser;
+import com.example.progettoducange.model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
+// ###################################################################################################################
+// ###################################################################################################################
+// ###################################################################################################################
+// ###################################################################################################################
+// BISOGNA RENDERE MODULARE QUESTO FILE: CREA UNA CLASSE GRAPHIC BUILDER DOVE METTERE DENTRO LE FUNZIONI RELATIVE AI CAMBI SCENA ECC
+// ###################################################################################################################
+// ###################################################################################################################
+// ###################################################################################################################
+// ###################################################################################################################
+
 public class Application extends javafx.application.Application {
     MongoDbDriver mongodb;
     private Stage primaryStage;
     private static Scene primaryScene;
+    public static RegisteredUser authenticatedUser;
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("LoginPage.fxml"));
@@ -18,8 +33,10 @@ public class Application extends javafx.application.Application {
         stage.setTitle("Login or Sign up");
         stage.setScene(scene);
         stage.show();
+
         setPrimaryStage(stage);
         setPrimaryScene(scene);
+
         mongodb = MongoDbDriver.getInstance();
         }
 

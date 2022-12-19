@@ -46,12 +46,12 @@
                         <Image url="@img/pizza.png"/>
                     </image>
                 </ImageView>
-                <TextField layoutX="203.0" layoutY="1.0" prefHeight="57.0" prefWidth="263.0"
+                <Label layoutX="203.0" layoutY="1.0" prefHeight="57.0" prefWidth="263.0"
                            style="-fx-background-color: transparent; -fx-text-fill: #24a0ed;" text="ENJOY THE FOOD">
                     <font>
                         <Font name="SansSerif Regular" size="25.0"/>
                     </font>
-                </TextField>
+                </Label>
                 <!-- The End of Logo -->
 
                 <!-- The Beginning of Login form -->
@@ -98,26 +98,13 @@
                         <Image url="@img/lock.png"/>
                     </image>
                 </ImageView>
-                <CheckBox layoutX="150.0" layoutY="195.0" mnemonicParsing="false" style="-fx-text-fill: #A9A9A9;"
-                          text="Remember Me">
-                    <font>
-                        <Font name="SansSerif Regular" size="15.0"/>
-                    </font>
-                </CheckBox>
-                <Button layoutX="190.0" layoutY="235.0" mnemonicParsing="false"
-                        style="-fx-background-color: transparent; -fx-text-fill: #A9A9A9;" text="Forgot your Password?"
-                        underline="true">
-                    <font>
-                        <Font size="15.0"/>
-                    </font>
-                </Button>
                 <Label fx:id="invalidLoginCredentials" alignment="CENTER" contentDisplay="CENTER" layoutX="150.0"
                        layoutY="175.0" prefHeight="16.0" prefWidth="300.0" textAlignment="CENTER" textFill="RED">
                     <opaqueInsets>
                         <Insets/>
                     </opaqueInsets>
                 </Label>
-                <Button fx:id="LoginButton" layoutX="335.0" layoutY="195.0" mnemonicParsing="false"
+                <Button fx:id="LoginButton" layoutX="250.0" layoutY="195.0" mnemonicParsing="false"
                         onAction="#onLoginButtonClick"
                         style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;"
                         text="Login">
@@ -220,12 +207,6 @@
                         <Font size="14.0"/>
                     </font>
                 </RadioButton>
-                <CheckBox fx:id="termsConditionsCheckbox" layoutX="160.0" layoutY="545.0" mnemonicParsing="false"
-                          selected="true" style="-fx-text-fill: #A9A9A9;" text="I have read the Terms and Conditions">
-                    <font>
-                        <Font name="SansSerif Regular" size="15.0"/>
-                    </font>
-                </CheckBox>
                 <Label fx:id="invalidSignupCredentials" alignment="CENTER" contentDisplay="CENTER" layoutX="160.0"
                        layoutY="580.0" prefHeight="16.0" prefWidth="300.0" textAlignment="CENTER" textFill="RED">
                     <opaqueInsets>
@@ -236,13 +217,6 @@
                         onAction="#onSignUpButtonClick" prefHeight="33.0" prefWidth="130.0"
                         style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;"
                         text="Sign-Up">
-                    <font>
-                        <Font size="15.0"/>
-                    </font>
-                </Button>
-                <Button layoutX="200.0" layoutY="660.0" mnemonicParsing="false"
-                        style="-fx-background-color: transparent; -fx-text-fill: #A9A9A9;" text="Terms and Conditions"
-                        underline="true">
                     <font>
                         <Font size="15.0"/>
                     </font>
