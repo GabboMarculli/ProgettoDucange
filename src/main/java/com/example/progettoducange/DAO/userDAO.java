@@ -1,5 +1,6 @@
 package com.example.progettoducange.DAO;
 
+import com.example.progettoducange.DTO.userDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.Utils.Utils;
 import com.example.progettoducange.model.Recipe;
@@ -9,6 +10,9 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
 import com.mongodb.internal.connection.tlschannel.util.Util;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
@@ -66,7 +70,7 @@ public class userDAO {
         return null;
     }
 
-    public static List<String> getListOfUser(Integer limit)
+    public static ArrayList<Document> getListOfUser(Integer limit)
     {
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
@@ -74,16 +78,12 @@ public class userDAO {
         // we search for username
         MongoCursor<Document> cursor =  collection.find().iterator();
 
-        List<String> resultDoc = new ArrayList<String>();
-        for(Integer i =0; i < limit; i++)
-        {
-            if(cursor.hasNext())
-                resultDoc.add(cursor.next().toJson());
-        }
+        //List<userDTO> resultDoc = FXCollections.observableArrayList();
+        ArrayList<Document> results = collection.find().limit(limit).into(new ArrayList<>());
 
-        System.out.println(resultDoc);
+        System.out.println(results);
 
-        return resultDoc;
+        return results;
     }
 
     // ##############################################################################################################
@@ -103,7 +103,7 @@ public class userDAO {
 
         if(resultDoc!= null) {
             String[] result = resultDoc.toJson().split(":");
-            String pass = result[0];
+            String pass = result[1];
             pass = Utils.CleanString(pass);
 
             System.out.println(password);
