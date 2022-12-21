@@ -6,6 +6,8 @@ import com.example.progettoducange.Utils.Utils;
 import com.example.progettoducange.model.Recipe;
 import com.example.progettoducange.model.RegisteredUser;
 import com.example.progettoducange.model.User;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
@@ -91,8 +93,8 @@ public class userDAO {
     // ##############################################################################################################
 
     // Return true if the password of the username "username" is equal to the parameter "password". Return false otherwise
-    public static boolean checkPassword(String username, String password)
-    {
+    /* VECCHIA VERSIONE
+    public static boolean checkPassword(String username, String password){
         Bson projectionFields = Projections.fields(
                 Projections.include("password"),
                 Projections.excludeId());
@@ -111,6 +113,43 @@ public class userDAO {
             System.out.println(password.equals(pass));
 
             return (password.equals(pass));
+        } else
+            return false; // in this case, user "username" doesn't exist
+    }
+    public static boolean checkPassword(String username, String password){
+        Bson projectionFields = Projections.fields(
+                Projections.include("password"),
+                Projections.excludeId());
+
+        // retrieve the user collection
+        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+        Document resultDoc = collection.find(eq("username", username)).projection(projectionFields).first();
+
+        if(resultDoc!= null) {
+            String[] result = resultDoc.toJson().split(":");
+            String pass = result[1];
+            pass = Utils.CleanString(pass);
+
+            System.out.println(password);
+            System.out.println(pass);
+            System.out.println(password.equals(pass));
+
+            return (password.equals(pass));
+        } else
+            return false; // in this case, user "username" doesn't exist
+    }
+    */
+    public static boolean checkPassword(String username, String password){
+
+        // retrieve the user collection
+        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+        List<DBObject> criteria = new ArrayList<DBObject>();
+        criteria.add(new BasicDBObject("username", new BasicDBObject("$eq", username)));
+        criteria.add(new BasicDBObject("password", new BasicDBObject("$eq", password)));
+        Document resultDoc = collection.find(new BasicDBObject("$and", criteria)).first();
+
+        if(resultDoc!= null) {
+            return true; // the password associated with that user exists
         } else
             return false; // in this case, user "username" doesn't exist
     }
