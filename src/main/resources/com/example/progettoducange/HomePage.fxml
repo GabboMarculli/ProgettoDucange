@@ -43,7 +43,7 @@
                 <Button fx:id="Recipes" contentDisplay="TOP" mnemonicParsing="false"
                         prefHeight="100.0" prefWidth="170.0"  text="Browse recipes" GridPane.columnIndex="1">
                 </Button>
-                <Button fx:id="Users" contentDisplay="TOP" mnemonicParsing="false"
+                <Button fx:id="Users" contentDisplay="TOP" mnemonicParsing="false" onAction ="#goToUsers"
                         prefHeight="100.0" prefWidth="170.0"  text="Browse users" GridPane.columnIndex="2">
                 </Button>
                 <Button fx:id="MyProfile" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToProfile"

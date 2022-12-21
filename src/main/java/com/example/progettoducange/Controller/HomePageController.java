@@ -23,15 +23,18 @@ public class HomePageController {
     protected void goToFridge() throws IOException {
         Application.changeScene("FridgePage");
     }
+
+    @FXML
+    protected void goToUsers() throws IOException {
+        Application.changeScene("AllUsers");
+    }
+
     /*
     @FXML
     protected void goToRecipes() throws IOException {
         Application.changeScene("Recipes");
     }
-    @FXML
-    protected void goToUsers() throws IOException {
-        Application.changeScene("Users");
-    }
+
     @FXML
     protected void goToProducts() throws IOException {
         Application.changeScene("Products");

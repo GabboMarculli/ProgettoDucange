@@ -6,13 +6,16 @@ import com.example.progettoducange.model.Recipe;
 import com.example.progettoducange.model.RegisteredUser;
 import com.example.progettoducange.model.User;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
 import com.mongodb.internal.connection.tlschannel.util.Util;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Projections.excludeId;
@@ -45,15 +48,12 @@ public class userDAO {
 
     public static String getID(String username)
     {
-        Bson projectionFields = Projections.fields(
-                Projections.include("username", "password", "country", "registrationdate",
-                                    "name", "surname", "id", "fridge"));
-
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
         // we search for username
-        Document resultDoc = collection.find(eq("username", username)).projection(projectionFields).first();
+        Document resultDoc = collection.find(eq("username", username)).first();
+        System.out.println(resultDoc);
 
         if(resultDoc!= null) {
             String[] result = resultDoc.toJson().split(",");
@@ -64,6 +64,26 @@ public class userDAO {
         }
 
         return null;
+    }
+
+    public static List<String> getListOfUser(Integer limit)
+    {
+        // retrieve user collection
+        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+
+        // we search for username
+        MongoCursor<Document> cursor =  collection.find().iterator();
+
+        List<String> resultDoc = new ArrayList<String>();
+        for(Integer i =0; i < limit; i++)
+        {
+            if(cursor.hasNext())
+                resultDoc.add(cursor.next().toJson());
+        }
+
+        System.out.println(resultDoc);
+
+        return resultDoc;
     }
 
     // ##############################################################################################################
