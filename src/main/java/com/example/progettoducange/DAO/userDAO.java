@@ -169,7 +169,7 @@ public class userDAO {
         }
     }
 
-    public boolean deleteUser(User user)
+    public static boolean deleteUser(User user)
     {
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();

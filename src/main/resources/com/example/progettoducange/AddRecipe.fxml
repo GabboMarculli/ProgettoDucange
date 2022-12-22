@@ -84,7 +84,6 @@
                             <Insets/>
                         </opaqueInsets>
                     </Label>
-
                 </children>
             </GridPane>
         </children>

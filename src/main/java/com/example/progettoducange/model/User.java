@@ -8,6 +8,7 @@ public abstract class User {
     private String lastName;
     private String username;
     private String password;
+    private String country;
     private String profilePic;
     private Date createdDate;
     private Date updatedDate;
@@ -84,14 +85,23 @@ public abstract class User {
         return email;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", country='" + country + '\'' +
                 ", profilePic='" + profilePic + '\'' +
                 ", createdDate=" + createdDate +
                 ", updatedDate=" + updatedDate +

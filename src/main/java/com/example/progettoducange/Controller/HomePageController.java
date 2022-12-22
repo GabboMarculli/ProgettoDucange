@@ -2,10 +2,16 @@ package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 
 import java.io.IOException;
 
 public class HomePageController {
+    @FXML
+    private Label Username;
+    public void initialize() {
+        Username.setText(Application.authenticatedUser.getUsername());
+    }
     @FXML
     protected void logout() throws IOException {
         Application.authenticatedUser = null;

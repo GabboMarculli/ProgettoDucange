@@ -35,6 +35,18 @@ public class ProfilePageController {
     @FXML
     private Label invalidChangePassword;
 
+    // ##########################################################
+    // per qualche motivo ad 'authenticatedUser'  vengono passati dei parametri nulli
+    // ##########################################################
+    public void initialize()
+    {
+        Username.setText(Application.authenticatedUser.getUsername());
+        FirstName.setText(Application.authenticatedUser.getFirstName());
+        LastName.setText(Application.authenticatedUser.getLastName());
+        Email.setText(Application.authenticatedUser.getEmail());
+        Country.setText(Application.authenticatedUser.getCountry());
+    }
+
     @FXML
     protected void onChangePasswordButtonClick()
     {
@@ -57,7 +69,8 @@ public class ProfilePageController {
     protected void onDeleteUserClick()
     {
         try{
-            //userDAO.deleteUser( ); COME GLIELO PASSO L'UTENTE ?????
+            userDAO.deleteUser(Application.authenticatedUser);
+            GoToLoginPage();
         } catch (Exception error){
             System.out.println(error);
         }
@@ -66,5 +79,9 @@ public class ProfilePageController {
     @FXML
     protected void onGoToHomeClick() throws IOException {
         Application.changeScene("HomePage");
+    }
+    @FXML
+    protected void GoToLoginPage() throws IOException {
+        Application.changeScene("Login");
     }
 }
