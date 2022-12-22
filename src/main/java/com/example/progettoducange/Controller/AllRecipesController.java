@@ -15,4 +15,14 @@ public class AllRecipesController {
             throw new RuntimeException(e);
         }
     }
+
+    @FXML
+    private void addRecipe()
+    {
+        try {
+            Application.changeScene("AddRecipe");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

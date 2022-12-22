@@ -88,10 +88,6 @@ public class userDAO {
         return results;
     }
 
-    // ##############################################################################################################
-    // con alcuni username funziona, mentre con altri dà che la resultDoc è null e non funziona
-    // ##############################################################################################################
-
     // Return true if the password of the username "username" is equal to the parameter "password". Return false otherwise
     /* VECCHIA VERSIONE
     public static boolean checkPassword(String username, String password){
@@ -185,9 +181,6 @@ public class userDAO {
         }
     }
 
-    // #################################################################################
-    // Credo che si faccia così
-    // #################################################################################
     public static boolean changePassword(RegisteredUser user, String newPassword)
     {
         try {

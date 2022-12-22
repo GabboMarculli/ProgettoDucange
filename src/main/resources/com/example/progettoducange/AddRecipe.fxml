@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="548.0" prefWidth="714.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progettoducange.Controller.AddRecipeController">
+        <children>
+            <Pane prefHeight="200.0" style="-fx-background-color: #00bfff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <children>
+                    <Label layoutX="350.0" layoutY="70.0" text="Insert new recipe" textFill="WHITE">
+                        <font>
+                            <Font size="50.0" />
+                        </font>
+                    </Label>
+                </children>
+            </Pane>
+            <GridPane alignment="CENTER" layoutX="165.0" layoutY="228.0" prefHeight="320.0" prefWidth="650.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints />
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                </rowConstraints>
+                <children>
+                    <Label prefHeight="18.0" prefWidth="71.0" text="Title">
+                    </Label>
+                    <TextField fx:id="RecipeTitle" GridPane.columnIndex="2">
+                    </TextField>
+
+                    <Label text="Ingredients" GridPane.rowIndex="2">
+                    </Label>
+                    <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                        <children>
+                            <ScrollPane fx:id="scrollpaneIngredients" prefHeight="150.0">
+                                <content>
+                                    <Text fx:id="Ingredients" lineSpacing="2.0" text="Insert the ingredients..." />
+                                </content>
+                                <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </padding>
+                            </ScrollPane>
+                        </children>
+                    </VBox>
+
+                    <Label text="Directions" GridPane.rowIndex="4">
+                    </Label>
+                    <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                        <children>
+                            <ScrollPane fx:id="scrollpaneDirections" prefHeight="150.0">
+                                <content>
+                                    <Text fx:id="Directions" lineSpacing="2.0" text="Insert the directions..." />
+                                </content>
+                                <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </padding>
+                            </ScrollPane>
+                        </children>
+                    </VBox>
+                    <Button alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="6" mnemonicParsing="false"
+                            text="Add recipe " onAction="#addRecipe" prefWidth="300.0">
+                        <font>
+                            <Font size="15.0" />
+                        </font>
+                    </Button>
+                    <Label fx:id="invalidRecipe" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0"
+                           prefWidth="300.0" textAlignment="CENTER" GridPane.rowIndex="7" textFill="RED">
+                        <opaqueInsets>
+                            <Insets/>
+                        </opaqueInsets>
+                    </Label>
+
+                </children>
+            </GridPane>
+        </children>
+</AnchorPane>

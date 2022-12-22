@@ -25,6 +25,12 @@
                         <Font size="15.0" />
                     </font>
                 </Button>
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="555.0" mnemonicParsing="false"
+                        text="Add a recipe " onAction="#addRecipe">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
             </children>
         </AnchorPane>
     </left>
@@ -32,10 +38,8 @@
 
     <!-- Beginning of the right part of the Borderpane -->
     <right>
-        <AnchorPane prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
-            <children>
+        <AnchorPane fx:id="rightWindow" prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
 
-            </children>
         </AnchorPane>
     </right>
 

@@ -11,6 +11,15 @@ public class Recipe {
     private List<Review> reviews;
     private String directions;
 
+    public Recipe(User author, List<Product> ingredients, String title, String directions, Integer id)
+    {
+        this.id = id;
+        this.author= author;
+        this.ingredients = ingredients;
+        this.title = title;
+        this.directions = directions;
+    }
+
     public List<Review> getReviews() {
         return reviews;
     }
