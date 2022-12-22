@@ -8,6 +8,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
+
 public class AddRecipeController {
     protected
     String successMessage = "-fx-text-fill: GREEN;";
@@ -57,5 +59,9 @@ public class AddRecipeController {
          */
     }
 
+    @FXML
+    private void goToAllRecipe() throws IOException {
+        Application.changeScene("AllRecipes");
+    }
 
 }

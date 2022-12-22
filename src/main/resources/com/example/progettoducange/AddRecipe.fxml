@@ -66,13 +66,20 @@
                         </children>
                     </VBox>
                     <Button alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="6" mnemonicParsing="false"
-                            text="Add recipe " onAction="#addRecipe" prefWidth="300.0">
+                            text="Back " onAction="#goToAllRecipe" prefWidth="300.0">
+                        <font>
+                            <Font size="15.0" />
+                        </font>
+                    </Button>
+                    <Button alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="6" GridPane.columnIndex="2"
+                            mnemonicParsing="false" text="Add recipe " onAction="#addRecipe" prefWidth="300.0">
                         <font>
                             <Font size="15.0" />
                         </font>
                     </Button>
                     <Label fx:id="invalidRecipe" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0"
-                           prefWidth="300.0" textAlignment="CENTER" GridPane.rowIndex="7" textFill="RED">
+                           prefWidth="300.0" textAlignment="CENTER" GridPane.rowIndex="7" GridPane.columnIndex="2"
+                           textFill="RED">
                         <opaqueInsets>
                             <Insets/>
                         </opaqueInsets>
