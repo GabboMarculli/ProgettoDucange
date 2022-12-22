@@ -2,6 +2,7 @@ package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.userDAO;
+import com.example.progettoducange.DTO.userDTO;
 import com.example.progettoducange.model.ProductInFridge;
 import com.example.progettoducange.model.RegisteredUser;
 import com.example.progettoducange.model.User;
@@ -14,6 +15,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import org.bson.Document;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,29 +26,30 @@ import static java.time.LocalDate.now;
 
 public class AllUsersController {
     @FXML
-    private TableView<RegisteredUser> Users;
+    private TableView<userDTO> UserTable;
     @FXML
-    public TableColumn<RegisteredUser, String> UsernameColumn;
+    public TableColumn<userDTO, String> UsernameColumn;
     @FXML
-    public TableColumn<RegisteredUser, String> CountryColumn;
+    public TableColumn<userDTO, String> CountryColumn;
     @FXML
-    public TableColumn<RegisteredUser, Integer> NumberOfRecipe;
+    public TableColumn<userDTO, LocalDate> NumberOfRecipe;
     public boolean prova = true;
-    private ObservableList<RegisteredUser> data = FXCollections.observableArrayList();
+    private ObservableList<userDTO> data = FXCollections.observableArrayList();
 
     public void fillTable()
     {
         if(prova) {
             UsernameColumn.setCellValueFactory(
-                    new PropertyValueFactory<RegisteredUser,String>("Name")
+                    new PropertyValueFactory<userDTO,String>("name")
             );
             CountryColumn.setCellValueFactory(
-                    new PropertyValueFactory<RegisteredUser,String>("Country")
+                    new PropertyValueFactory<userDTO,String>("country")
             );
             NumberOfRecipe.setCellValueFactory(
-                    new PropertyValueFactory<RegisteredUser,Integer>("Number of Recipe")
+                    new PropertyValueFactory<userDTO, LocalDate>("id")
             );
-            Users.setItems(data);
+
+            UserTable.setItems(data);
 
             prova = false;
             System.out.println("Inizializzazione dati in User");
@@ -53,11 +57,18 @@ public class AllUsersController {
 
         System.out.println("Inserimento dati in frigo");
         ArrayList<Document> users = getListOfUser(20);
-
-        RegisteredUser newrow = new RegisteredUser();
-        data.add(newrow);
-        System.out.println(newrow.getUsername());
-
+        for(Document us : users) {
+            System.out.println(us.get("password"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+            userDTO newrow = new userDTO(Integer.parseInt(us.get("id").toString()),
+                    us.get("username").toString(),
+                    us.get("password").toString(),
+                    us.get("name").toString(),
+                    us.get("surname").toString(),
+                    LocalDate.parse(us.get("registrationdate").toString(),formatter),
+                    us.get("country").toString());
+            data.add(newrow);
+        }
 
     }
 

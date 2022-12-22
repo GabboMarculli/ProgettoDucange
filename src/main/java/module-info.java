@@ -14,4 +14,5 @@ module com.example.progettoducange {
     exports com.example.progettoducange;
     exports com.example.progettoducange.Controller;
     opens com.example.progettoducange.Controller to javafx.fxml;
+    opens com.example.progettoducange.DTO to javafx.base;
 }
