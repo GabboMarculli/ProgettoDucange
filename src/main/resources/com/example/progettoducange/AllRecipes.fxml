@@ -1,0 +1,42 @@
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.text.Font?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.progettoducange.Controller.AllRecipesController"
+            prefHeight="400.0" prefWidth="600.0">
+    <!-- Beginning of the left part of the Borderpane -->
+    <left>
+        <!-- An AnchorPane in the Left BorderPane -->
+        <AnchorPane prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+            <children>
+                <TableView fx:id="AllRecipesTable" layoutX="63.0" layoutY="76.0" prefHeight="477.0" prefWidth="390.0">
+                    <columns>
+                        <TableColumn fx:id="RecipeNameColumn" prefWidth="235" text="Name" />
+                        <TableColumn fx:id="NumberOfLike" prefWidth="155" text="Likes" />
+                    </columns>
+                </TableView>
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="555.0" mnemonicParsing="false"
+                        text="Back " onAction="#goToHome">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
+    </left>
+    <!-- Ending of the left part of the Borderpane -->
+
+    <!-- Beginning of the right part of the Borderpane -->
+    <right>
+        <AnchorPane prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+            <children>
+
+            </children>
+        </AnchorPane>
+    </right>
+
+</BorderPane>

@@ -29,16 +29,16 @@ public class HomePageController {
         Application.changeScene("AllUsers");
     }
 
-    /*
     @FXML
-    protected void goToRecipes() throws IOException {
-        Application.changeScene("Recipes");
+    protected void goToProducts() throws IOException {
+        Application.changeScene("AllProducts");
     }
 
     @FXML
-    protected void goToProducts() throws IOException {
-        Application.changeScene("Products");
+    protected void goToRecipes() throws IOException {
+        Application.changeScene("AllRecipes");
     }
+    /*
     @FXML
     protected void goToSavedRecipes() throws IOException {
         Application.changeScene("SavedRecipes");
