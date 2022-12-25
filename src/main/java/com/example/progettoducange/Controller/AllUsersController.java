@@ -60,7 +60,8 @@ public class AllUsersController {
         for(Document us : users) {
             System.out.println(us.get("password"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-            userDTO newrow = new userDTO(Integer.parseInt(us.get("id").toString()),
+            userDTO newrow = new userDTO(Integer.parseInt(
+                    us.get("id").toString()),
                     us.get("username").toString(),
                     us.get("password").toString(),
                     us.get("name").toString(),

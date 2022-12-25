@@ -26,8 +26,6 @@ public class Application extends javafx.application.Application {
     private static Scene primaryScene;
     public static RegisteredUser authenticatedUser;
 
-
-
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("LoginPage.fxml"));
@@ -41,11 +39,8 @@ public class Application extends javafx.application.Application {
 
         mongodb = MongoDbDriver.getInstance();
         }
-
     public static void main(String[] args) {
-
         launch();
-
     }
 
     public static void changeScene(String fxml) throws IOException {

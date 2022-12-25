@@ -1,6 +1,8 @@
 package com.example.progettoducange.DbMaintaince;
 
+
 import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
 import com.mongodb.MongoDriverInformation;
 import com.mongodb.MongoException;
 import com.mongodb.client.*;
@@ -18,16 +20,24 @@ import javafx.util.Builder;
 import org.bson.BsonDocument;
 import org.bson.BsonInt64;
 import org.bson.Document;
+import java.util.*;
+import java.util.logging.Level;
 
 import org.bson.conversions.Bson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MongoDbDriver {
+
+
+
     private static MongoDbDriver driver = null;
     private static MongoClient mongoclient;
     private static MongoDatabase database;
 
     private MongoDbDriver()
     {
+
 
         //---Connect to the MongoDB---
         ConnectionString uri = new ConnectionString("mongodb://localhost:27017/?serverSelectionTimeoutMS=1000&connectTimeoutMS=1000");
@@ -42,6 +52,7 @@ public class MongoDbDriver {
          */
 
         try{
+
 
             mongoclient = MongoClients.create(uri);
             database = mongoclient.getDatabase("Progetto");
