@@ -31,6 +31,11 @@ public class AllRecipesController {
 
     private ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
 
+    public void initialize()
+    {
+        FillTable();
+    }
+
     @FXML
     private void goToHome()
     {

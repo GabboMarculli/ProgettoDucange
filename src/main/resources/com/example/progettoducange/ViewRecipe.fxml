@@ -15,6 +15,7 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.text.Text?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TextArea?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0"
             xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.example.progettoducange.Controller.ViewRecipeController">
@@ -56,16 +57,11 @@
                         prefWidth="40.0" text="Like" onAction="#likeToRecipe" GridPane.rowIndex="4">
                 </Button>
 
-                <VBox prefHeight="200.0" prefWidth="500.0" GridPane.rowIndex="5">
+                <VBox prefHeight="100.0" prefWidth="300.0" GridPane.rowIndex="7">
                     <children>
-                        <ScrollPane fx:id="scrollpane" prefHeight="150.0" >
-                            <content>
-                                <Text fx:id="Review" lineSpacing="2.0" text="Insert a comment" />
-                            </content>
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
-                        </ScrollPane>
+                            <TextArea fx:id="ReviewText" prefHeight="100.0" prefWidth="300.0"
+                                      promptText="Write your opinion..." wrapText="true">
+                            </TextArea>
                     </children>
                 </VBox>
 

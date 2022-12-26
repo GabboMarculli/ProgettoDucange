@@ -36,11 +36,16 @@ public class AllUsersController {
     public boolean prova = true;
     private ObservableList<userDTO> data = FXCollections.observableArrayList();
 
+    public void initialize()
+    {
+        fillTable();
+    }
+
     public void fillTable()
     {
         if(prova) {
             UsernameColumn.setCellValueFactory(
-                    new PropertyValueFactory<userDTO,String>("name")
+                    new PropertyValueFactory<userDTO,String>("username")
             );
             CountryColumn.setCellValueFactory(
                     new PropertyValueFactory<userDTO,String>("country")
@@ -60,8 +65,7 @@ public class AllUsersController {
         for(Document us : users) {
             System.out.println(us.get("password"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-            userDTO newrow = new userDTO(Integer.parseInt(
-                    us.get("id").toString()),
+            userDTO newrow = new userDTO(Integer.parseInt(us.get("id").toString()),
                     us.get("username").toString(),
                     us.get("password").toString(),
                     us.get("name").toString(),
