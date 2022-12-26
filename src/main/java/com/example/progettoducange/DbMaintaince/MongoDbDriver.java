@@ -111,7 +111,7 @@ public class MongoDbDriver {
         return database.getCollection("Recipe");
     }
 
-    public MongoCollection<Document> getProductCollection()
+    public static MongoCollection<Document> getProductCollection()
     {
         return database.getCollection("Product");
     }
