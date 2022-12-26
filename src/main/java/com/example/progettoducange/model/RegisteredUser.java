@@ -21,6 +21,16 @@ public class RegisteredUser extends User{
             super.setEmail(email);
         }
 
+        public RegisteredUser(String id, String username,String firstName, String lastName, String country, String email)
+        {
+            super.setId(id);
+            super.setUsername(username);
+            super.setLastName(lastName);
+            super.setFirstName(firstName);
+            super.setCountry(country);
+            super.setEmail(email);
+        }
+
         public Fridge getFridge() {
             return fridge;
         }

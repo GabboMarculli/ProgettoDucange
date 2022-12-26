@@ -1,9 +1,7 @@
 package com.example.progettoducange.DAO;
 
-import com.example.progettoducange.DTO.userDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.Utils.Utils;
-import com.example.progettoducange.model.Recipe;
 import com.example.progettoducange.model.RegisteredUser;
 import com.example.progettoducange.model.User;
 import com.mongodb.BasicDBObject;
@@ -11,20 +9,13 @@ import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
-import com.mongodb.internal.connection.tlschannel.util.Util;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Projections.excludeId;
 import static com.mongodb.client.model.Projections.include;
 
 public class userDAO {
@@ -59,7 +50,6 @@ public class userDAO {
 
         // we search for username
         Document resultDoc = collection.find(eq("username", username)).first();
-        System.out.println(resultDoc);
 
         if(resultDoc!= null) {
             String[] result = resultDoc.toJson().split(",");
@@ -86,6 +76,17 @@ public class userDAO {
         System.out.println(results);
 
         return results;
+    }
+
+    public static String getUser(String username)
+    {
+        // retrieve user collection
+        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+
+        // we search for username
+        Document resultDoc = collection.find(eq("username", username)).first();
+
+        return resultDoc.toJson();
     }
 
     public static boolean checkPassword(String username, String password){
