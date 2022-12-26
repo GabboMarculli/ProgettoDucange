@@ -2,6 +2,7 @@ package com.example.progettoducange.Controller;
 
 
 import com.example.progettoducange.Application;
+import com.example.progettoducange.DTO.userDTO;
 import com.example.progettoducange.Utils.Utils;
 import com.example.progettoducange.DAO.userDAO;
 import com.example.progettoducange.model.RegisteredUser;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -81,8 +83,16 @@ public class LoginController {
                     invalidSignupCredentials.setText("");
 
                     try {
-                        Application.authenticatedUser = new RegisteredUser(userDAO.getID(loginUsernameTextField.getText()),
-                                                    loginUsernameTextField.getText(),loginPasswordField.getText(), null);
+                        String credentials = userDAO.getUser(loginUsernameTextField.getText());
+                        String[] result = credentials.split(",");
+
+                        String id = Utils.CleanString(result[0].split(":")[2]);
+                        String username = Utils.CleanString(result[1].split(":")[1]);
+                        String country = Utils.CleanString(result[3].split(":")[1]);
+                        String firstName = Utils.CleanString(result[5].split(":")[1]);
+                        String lastName = Utils.CleanString(result[6].split(":")[1]);
+
+                        Application.authenticatedUser = new RegisteredUser(id, username, firstName,lastName, country, null);
                         goToHomePage();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -150,6 +160,10 @@ public class LoginController {
 
             // ########################################################################################################
             // come faccio a creare l'id?? forse devo fare una query per recuperare l'id piu alto presente nel db e metterci quello + 1 ?
+            // Il problema è: lascio l'email da inserire nel signup? in questo caso bisogna modificare il db aggiungendo le email
+            // o altrimenti non metto l'email e cambio il resto dei campi nel signup (probabilmente questa seconda è la più veloce)
+            // Per recuperare l'id, in ogni caso, forse è meglio salvare in una variabile globale l'id più alto e aggiornarlo via via
+
             RegisteredUser user = new RegisteredUser(null, signUpUsernameTextField.getText(),signUpPasswordField.getText(),signUpEmailTextField.getText());
             userDAO.signup(user);
         }

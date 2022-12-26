@@ -20,7 +20,6 @@ import static com.example.progettoducange.DAO.userDAO.getListOfUser;
 
 
 public class AllRecipesController {
-    boolean prova =true;
 
     @FXML
     private TableView<RecipeDTO> AllRecipesTable;
@@ -31,6 +30,9 @@ public class AllRecipesController {
 
     private ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
 
+    public AllRecipesController(){
+
+    }
     @FXML
     private void goToHome()
     {
@@ -41,20 +43,20 @@ public class AllRecipesController {
         }
     }
 
+    public void initialize(){
+        RecipeNameColumn.setCellValueFactory(
+                new PropertyValueFactory<RecipeDTO,String>("Name")
+        );
+        NumberOfLike.setCellValueFactory(
+                new PropertyValueFactory<RecipeDTO,String>("Like")
+        );
+
+        AllRecipesTable.setItems(data);
+        FillTable();
+    }
+
     public void FillTable()
     {
-        if(prova) {
-            RecipeNameColumn.setCellValueFactory(
-                    new PropertyValueFactory<RecipeDTO,String>("Name")
-            );
-            NumberOfLike.setCellValueFactory(
-                    new PropertyValueFactory<RecipeDTO,String>("ReviewCount")
-            );
-
-            AllRecipesTable.setItems(data);
-
-            prova = false;
-        }
 
         System.out.println("Inserimento dati in frigo");
 

@@ -32,9 +32,8 @@
                         <Font size="30.0" />
                     </font>
                 </Label>
-                <Button fx:id = "IncrementButton"
-                        onAction="#fillTable"
-                        alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="570.0" mnemonicParsing="false" text="Increment quantity">
+                <Button fx:id = "IncrementButton" alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="570.0"
+                        mnemonicParsing="false" text="Increment quantity" onAction="#fillTable">
                     <font>
                         <Font size="15.0" />
                     </font>
@@ -53,9 +52,10 @@
                 </Button>
                 <TableView fx:id="UserTable" layoutX="103.0" layoutY="76.0" prefHeight="477.0" prefWidth="594.0">
                     <columns>
-                        <TableColumn fx:id="UsernameColumn" prefWidth="235" text="Name" />
+                        <TableColumn fx:id="UsernameColumn" prefWidth="200" text="Name" />
                         <TableColumn fx:id="CountryColumn" prefWidth="155" text="Country" />
-                        <TableColumn fx:id="NumberOfRecipe" prefWidth="205" text="Number of recipe" />
+                        <TableColumn fx:id="NumberOfRecipe" prefWidth="130" text="Number of recipe" />
+                        <TableColumn fx:id="FollowButtonColumn" prefWidth="120" text="Follow" />
                     </columns>
                 </TableView>
             </children>

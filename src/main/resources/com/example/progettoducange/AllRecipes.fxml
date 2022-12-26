@@ -1,11 +1,41 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progettoducange.Controller.AllRecipesController">
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.Label?>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.progettoducange.Controller.AllRecipesController"
+            prefHeight="400.0" prefWidth="600.0">
     <!-- Beginning of the left part of the Borderpane -->
+    <top>
+        <ToolBar prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #00bfff;" BorderPane.alignment="CENTER">
+            <items>
+                <Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="146.0" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitHeight="45.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/logo.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="450.0" layoutY="20.0" prefHeight="45.0"
+                       prefWidth="250.0" text="All the recipes">
+                    <font>
+                        <Font size="25.0" />
+                    </font>
+                </Label>
+                <Pane prefHeight="6.0" prefWidth="533.0" />
+            </items>
+        </ToolBar>
+    </top>
     <left>
         <!-- An AnchorPane in the Left BorderPane -->
         <AnchorPane prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
@@ -16,17 +46,18 @@
                         <TableColumn fx:id="NumberOfLike" prefWidth="155" text="Number of Reviews" />
                     </columns>
                 </TableView>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="555.0" mnemonicParsing="false" onAction="#goToHome" text="Back ">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="555.0" mnemonicParsing="false"
+                        text="Back " onAction="#goToHome">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="555.0" mnemonicParsing="false" onAction="#addRecipe" text="Add a recipe ">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="555.0" mnemonicParsing="false"
+                        text="Add a recipe " onAction="#addRecipe">
                     <font>
                         <Font size="15.0" />
                     </font>
                 </Button>
-            <Button layoutX="400.0" layoutY="556.0" mnemonicParsing="false" onAction="#FillTable" text="Fill table" />
             </children>
         </AnchorPane>
     </left>

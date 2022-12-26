@@ -5,6 +5,7 @@ import com.example.progettoducange.DAO.RecipeDao;
 import com.example.progettoducange.model.Recipe;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
@@ -19,9 +20,9 @@ public class AddRecipeController {
     @FXML
     private TextField RecipeTitle;
     @FXML
-    private Text Ingredients;
+    private TextArea Ingredients;
     @FXML
-    private Text Directions;
+    private TextArea Directions;
     @FXML
     private Label invalidRecipe;
 

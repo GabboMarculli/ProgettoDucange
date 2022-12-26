@@ -35,9 +35,6 @@ public class ProfilePageController {
     @FXML
     private Label invalidChangePassword;
 
-    // ##########################################################
-    // per qualche motivo ad 'authenticatedUser'  vengono passati dei parametri nulli
-    // ##########################################################
     public void initialize()
     {
         Username.setText(Application.authenticatedUser.getUsername());
