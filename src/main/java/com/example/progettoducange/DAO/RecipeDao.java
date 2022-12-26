@@ -84,7 +84,6 @@ public class RecipeDao {
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
-        // we search for username
         ArrayList<RecipeDTO> recipes_to_return = new ArrayList<>();
 
         try (MongoCursor<Document> cursor = collection.find().limit(limit).projection(Projections.excludeId()).iterator()) {

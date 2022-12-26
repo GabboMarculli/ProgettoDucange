@@ -43,7 +43,7 @@
                 <TableView fx:id="AllProductsTable" layoutX="63.0" layoutY="76.0" prefHeight="477.0" prefWidth="390.0">
                     <columns>
                         <TableColumn fx:id="ProductNameColumn" prefWidth="235" text="Name" />
-                        <TableColumn fx:id="QuantityInMyFridge" prefWidth="155" text="Quantity" />
+                        <TableColumn fx:id="QuantityInMyFridge" prefWidth="155" text="Measure" />
                     </columns>
                 </TableView>
                 <Button alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="555.0" mnemonicParsing="false"

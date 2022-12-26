@@ -43,7 +43,7 @@
                 <TableView fx:id="AllRecipesTable" layoutX="63.0" layoutY="76.0" prefHeight="477.0" prefWidth="390.0">
                     <columns>
                         <TableColumn fx:id="RecipeNameColumn" prefWidth="235" text="Name" />
-                        <TableColumn fx:id="NumberOfLike" prefWidth="155" text="Number of Reviews" />
+                        <TableColumn fx:id="ReviewCount" prefWidth="155" text="Number of Reviews" />
                     </columns>
                 </TableView>
                 <Button alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="555.0" mnemonicParsing="false"

@@ -87,10 +87,14 @@ public class FridgePageController {
 
         System.out.println("Inserimento dati in frigo");
 
+        // ########################################################################################################
+        // Per la quantità nel frigo, bisogna ogni volta scorrere il db per vedere, di ogni prodotto, quanti ne ho nel frigo?
+        // Oppure magari, quando un utente fa login, si salva in locale il frigo con le rispettive quantità? In questo secondo caso, è un KVDB?
+        // ########################################################################################################
+
         //retrive ingredient from fridge
         ArrayList<productDTO> ingredientList = new ArrayList<>();
-        ingredientList = userDAO.getIngredients(Application.authenticatedUser);
-
+        ingredientList = ProductDAO.getIngredients(Application.authenticatedUser);
 
         for(productDTO us : ingredientList){
             ProductInFridge newrow = new ProductInFridge(us.getName(),us.getQuantity(), us.getDate());
@@ -98,3 +102,4 @@ public class FridgePageController {
         }
     }
 }
+

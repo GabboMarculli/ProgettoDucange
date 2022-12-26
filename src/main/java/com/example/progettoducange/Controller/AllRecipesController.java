@@ -26,7 +26,7 @@ public class AllRecipesController {
     @FXML
     public TableColumn<RecipeDTO, String> RecipeNameColumn;
     @FXML
-    public TableColumn<RecipeDTO, String> NumberOfLike;
+    public TableColumn<RecipeDTO, String> ReviewCount;
 
     private ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
 
@@ -47,8 +47,8 @@ public class AllRecipesController {
         RecipeNameColumn.setCellValueFactory(
                 new PropertyValueFactory<RecipeDTO,String>("Name")
         );
-        NumberOfLike.setCellValueFactory(
-                new PropertyValueFactory<RecipeDTO,String>("Like")
+        ReviewCount.setCellValueFactory(
+                new PropertyValueFactory<RecipeDTO,String>("ReviewCount")
         );
 
         AllRecipesTable.setItems(data);
@@ -65,7 +65,6 @@ public class AllRecipesController {
         for(RecipeDTO us : recipes) {
             data.add(us);
         }
-
     }
 
 
