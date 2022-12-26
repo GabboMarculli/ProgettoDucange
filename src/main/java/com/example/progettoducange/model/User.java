@@ -42,7 +42,7 @@ public abstract class User {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
+    public  String getUsername() {
         return username;
     }
     public void setUsername(String username) {

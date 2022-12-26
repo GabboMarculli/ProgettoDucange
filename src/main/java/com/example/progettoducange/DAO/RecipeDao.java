@@ -15,11 +15,7 @@ import javafx.scene.chart.PieChart;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-/////////
-/*
-* PROBLEMA: NELLA GETRECIPES L'ARRAY DI INGREDIENTI DEL FRIGO VIENE FORMATTATO MALE: RIVEDERE
-* */
-/////////
+
 
 
 
@@ -91,7 +87,7 @@ public class RecipeDao {
         // we search for username
         ArrayList<RecipeDTO> recipes_to_return = new ArrayList<>();
 
-        try (MongoCursor<Document> cursor = collection.find().limit(limit).iterator()) {
+        try (MongoCursor<Document> cursor = collection.find().limit(limit).projection(Projections.excludeId()).iterator()) {
             while (cursor.hasNext()) {
                 String text = cursor.next().toJson(); //i get a json
                 JSONObject obj = new JSONObject(text);
@@ -107,7 +103,7 @@ public class RecipeDao {
                                 obj.getString("TotalTime"),
                                 obj.getString("Ingredients"),
                                 obj.getString("Directions"),
-                                obj.getString("IngredientsList").split(","),
+                                getIngedientList(obj.getString("IngredientsList")),
                                 return_array_reviews("{ reviews: " + obj.getString("reviews") + "}")
                         )
                 );
@@ -121,7 +117,15 @@ public class RecipeDao {
         }
     }
 
-        private static ReviewsDTO[] return_array_reviews(String reviews) throws JSONException {
+    public static String[] getIngedientList(String d){
+        return rubahFormat(d).split(",");
+    }
+
+    public static String rubahFormat(String d){
+        return d.replaceAll("[\\[\\]\\\"]","");
+    }
+
+    private static ReviewsDTO[] return_array_reviews(String reviews) throws JSONException {
         JSONObject obj = new JSONObject(reviews);
         JSONArray arr = obj.getJSONArray("reviews");
         ReviewsDTO[] array_of_reviews = new ReviewsDTO[arr.length()];

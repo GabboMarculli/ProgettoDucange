@@ -3,34 +3,33 @@ package com.example.progettoducange.DTO;
 import java.time.LocalDate;
 
 public class productDTO {
-    private long id;
+
     private String name;
     private int quantity;
-    private LocalDate date;
+    private LocalDate expireDate;
+
+    public productDTO(String name, int quantity, LocalDate expireDate) {
+        this.name = name;
+        this.quantity = quantity;
+        this.expireDate = expireDate;
+    }
 
     public LocalDate getDate() {
-        return date;
+        return expireDate;
     }
 
     public void setDate(LocalDate date) {
-        this.date = date;
+        this.expireDate = date;
     }
 
     public int getQuantity() {
         return quantity;
     }
 
-    public long getId() {
-        return id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public void setName(String name) {
         this.name = name;

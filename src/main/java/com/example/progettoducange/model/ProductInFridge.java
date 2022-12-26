@@ -10,7 +10,6 @@ public class ProductInFridge {
     final private SimpleStringProperty name;
     final private SimpleIntegerProperty quantity;
     final private SimpleLocalDateProperty expireDate;
-
     public ProductInFridge(String name, Integer quantity, LocalDate expireDate)
     {
 

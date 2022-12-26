@@ -1,6 +1,9 @@
 package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
+import com.example.progettoducange.DAO.*;
+import com.example.progettoducange.DTO.productDTO;
+import com.example.progettoducange.model.*;
 import com.example.progettoducange.model.ProductInFridge;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,6 +17,7 @@ import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -80,9 +84,17 @@ public class FridgePageController {
             prova = false;
             System.out.println("Inizializzazione dati in frigo");
         }
+
         System.out.println("Inserimento dati in frigo");
-        ProductInFridge newrow = new ProductInFridge("toninomerda",69, now());
-        data.add(newrow);
-        System.out.println(newrow.getName());
+
+        //retrive ingredient from fridge
+        ArrayList<productDTO> ingredientList = new ArrayList<>();
+        ingredientList = userDAO.getIngredients(Application.authenticatedUser);
+
+
+        for(productDTO us : ingredientList){
+            ProductInFridge newrow = new ProductInFridge(us.getName(),us.getQuantity(), us.getDate());
+            data.add(newrow);
+        }
     }
 }
