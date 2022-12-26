@@ -39,31 +39,17 @@
                     <Label text="Ingredients" GridPane.rowIndex="2">
                     </Label>
                     <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                        <children>
-                            <ScrollPane fx:id="scrollpaneIngredients" prefHeight="150.0">
-                                <content>
-                                    <Text fx:id="Ingredients" lineSpacing="2.0" text="Insert the ingredients..." />
-                                </content>
-                                <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                </padding>
-                            </ScrollPane>
-                        </children>
+                        <TextArea fx:id="Ingredients" prefHeight="100.0" prefWidth="300.0"
+                                  promptText="Write the ingredients..." wrapText="true">
+                        </TextArea>
                     </VBox>
 
                     <Label text="Directions" GridPane.rowIndex="4">
                     </Label>
                     <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                        <children>
-                            <ScrollPane fx:id="scrollpaneDirections" prefHeight="150.0">
-                                <content>
-                                    <Text fx:id="Directions" lineSpacing="2.0" text="Insert the directions..." />
-                                </content>
-                                <padding>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                </padding>
-                            </ScrollPane>
-                        </children>
+                        <TextArea fx:id="Directions" prefHeight="100.0" prefWidth="300.0"
+                                  promptText="Write the directions..." wrapText="true">
+                        </TextArea>
                     </VBox>
                     <Button alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="6" mnemonicParsing="false"
                             text="Back " onAction="#goToAllRecipe" prefWidth="300.0">

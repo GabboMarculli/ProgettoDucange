@@ -88,53 +88,6 @@ public class userDAO {
         return results;
     }
 
-    // Return true if the password of the username "username" is equal to the parameter "password". Return false otherwise
-    /* VECCHIA VERSIONE
-    public static boolean checkPassword(String username, String password){
-        Bson projectionFields = Projections.fields(
-                Projections.include("password"),
-                Projections.excludeId());
-
-        // retrieve the user collection
-        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-        Document resultDoc = collection.find(eq("username", username)).projection(projectionFields).first();
-
-        if(resultDoc!= null) {
-            String[] result = resultDoc.toJson().split(":");
-            String pass = result[1];
-            pass = Utils.CleanString(pass);
-
-            System.out.println(password);
-            System.out.println(pass);
-            System.out.println(password.equals(pass));
-
-            return (password.equals(pass));
-        } else
-            return false; // in this case, user "username" doesn't exist
-    }
-    public static boolean checkPassword(String username, String password){
-        Bson projectionFields = Projections.fields(
-                Projections.include("password"),
-                Projections.excludeId());
-
-        // retrieve the user collection
-        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-        Document resultDoc = collection.find(eq("username", username)).projection(projectionFields).first();
-
-        if(resultDoc!= null) {
-            String[] result = resultDoc.toJson().split(":");
-            String pass = result[1];
-            pass = Utils.CleanString(pass);
-
-            System.out.println(password);
-            System.out.println(pass);
-            System.out.println(password.equals(pass));
-
-            return (password.equals(pass));
-        } else
-            return false; // in this case, user "username" doesn't exist
-    }
-    */
     public static boolean checkPassword(String username, String password){
 
         // retrieve the user collection
@@ -197,5 +150,7 @@ public class userDAO {
             return false;
         }
     }
+
+
 }
 
