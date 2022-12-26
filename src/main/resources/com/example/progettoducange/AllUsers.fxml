@@ -55,7 +55,7 @@
                         <TableColumn fx:id="UsernameColumn" prefWidth="200" text="Name" />
                         <TableColumn fx:id="CountryColumn" prefWidth="155" text="Country" />
                         <TableColumn fx:id="NumberOfRecipe" prefWidth="130" text="Number of recipe" />
-                        <TableColumn fx:id="Follow" prefWidth="120" text="Follow" />
+                        <TableColumn fx:id="FollowButtonColumn" prefWidth="120" text="Follow" />
                     </columns>
                 </TableView>
             </children>

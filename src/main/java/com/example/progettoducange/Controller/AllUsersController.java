@@ -9,9 +9,12 @@ import com.example.progettoducange.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import org.bson.Document;
 
 import java.io.IOException;
@@ -26,34 +29,70 @@ import static java.time.LocalDate.now;
 
 public class AllUsersController {
     @FXML
-    private TableView<userDTO> UserTable;
+    public TableView<userDTO> UserTable;
     @FXML
     public TableColumn<userDTO, String> UsernameColumn;
     @FXML
     public TableColumn<userDTO, String> CountryColumn;
     @FXML
     public TableColumn<userDTO, LocalDate> NumberOfRecipe;
-    public boolean prova = true;
+    @FXML
+    public TableColumn FollowButtonColumn = new TableColumn("Follow");
     private ObservableList<userDTO> data = FXCollections.observableArrayList();
+
+    public void initialize(){
+
+        UsernameColumn.setCellValueFactory(
+                new PropertyValueFactory<userDTO,String>("name")
+        );
+        CountryColumn.setCellValueFactory(
+                new PropertyValueFactory<userDTO,String>("country")
+        );
+        NumberOfRecipe.setCellValueFactory(
+                new PropertyValueFactory<userDTO, LocalDate>("id")
+        );
+        FollowButtonColumn.setCellValueFactory(new PropertyValueFactory<>(""));
+
+        Callback<TableColumn<userDTO, String>, TableCell<userDTO, String>> cellFactory
+                = //
+                new Callback<>() {
+                    @Override
+                    public TableCell call(final TableColumn<userDTO, String> param) {
+                        final TableCell<userDTO, String> cell = new TableCell<userDTO, String>() {
+
+                            final Button btn = new Button("Follow");
+
+                            @Override
+                            public void updateItem(String item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty) {
+                                    setGraphic(null);
+                                    setText(null);
+                                } else {
+                                    btn.setOnAction(event -> {
+                                        userDTO user = getTableView().getItems().get(getIndex());
+                                        System.out.println(user.getName()
+                                                + "   " + user.getUsername());
+                                    });
+                                    setGraphic(btn);
+                                    setText(null);
+                                }
+                            }
+                        };
+                        return cell;
+                    }
+                };
+
+        FollowButtonColumn.setCellFactory(cellFactory);
+        UserTable.setItems(data);
+
+        System.out.println("Inizializzazione dati in User");
+
+        fillTable();
+    }
 
     public void fillTable()
     {
-        if(prova) {
-            UsernameColumn.setCellValueFactory(
-                    new PropertyValueFactory<userDTO,String>("name")
-            );
-            CountryColumn.setCellValueFactory(
-                    new PropertyValueFactory<userDTO,String>("country")
-            );
-            NumberOfRecipe.setCellValueFactory(
-                    new PropertyValueFactory<userDTO, LocalDate>("id")
-            );
-
-            UserTable.setItems(data);
-
-            prova = false;
-            System.out.println("Inizializzazione dati in User");
-        }
 
         System.out.println("Inserimento dati in frigo");
         ArrayList<Document> users = getListOfUser(20);
