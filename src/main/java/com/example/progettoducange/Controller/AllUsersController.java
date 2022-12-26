@@ -72,8 +72,9 @@ public class AllUsersController {
                                 } else {
                                     btn.setOnAction(event -> {
                                         userDTO user = getTableView().getItems().get(getIndex());
-                                        System.out.println(user.getName()
-                                                + "   " + user.getUsername());
+                                        //userDAO.follow_a_user(Integer.parseInt(Application.authenticatedUser.id),user.getId());
+                                        userDAO.follow_a_user(2,user.getId());
+                                        //System.out.println(Application.authenticatedUser.getUsername()+ " FOLLOWS " + user.getUsername());
                                     });
                                     setGraphic(btn);
                                     setText(null);

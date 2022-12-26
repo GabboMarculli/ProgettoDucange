@@ -77,8 +77,6 @@ public class RecipeDao {
         }
     }
 
-
-
     public static ArrayList<RecipeDTO> getRecipe(int limit) {
 
         // retrieve user collection
@@ -107,10 +105,7 @@ public class RecipeDao {
                         )
                 );
             }
-
-
             return recipes_to_return;
-
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }

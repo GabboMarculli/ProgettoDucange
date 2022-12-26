@@ -2,6 +2,7 @@ package com.example.progettoducange.DAO;
 
 import com.example.progettoducange.DTO.productDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
+import com.example.progettoducange.DbMaintaince.Neo4jDriver;
 import com.example.progettoducange.Utils.Utils;
 import com.example.progettoducange.model.RegisteredUser;
 import com.example.progettoducange.model.User;
@@ -12,6 +13,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.neo4j.driver.Session;
 
 import java.time.LocalDate;
 import java.time.format.*;
@@ -19,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
+import static org.neo4j.driver.Values.parameters;
 
 public class userDAO {
     // Return a user given his username. If user doesn't exists, return null
@@ -152,6 +155,24 @@ public class userDAO {
             System.out.println( error );
             return false;
         }
+    }
+
+
+    public static void follow_a_user(long id_user1, long id_user2){
+
+        try (Session session = Neo4jDriver.getDriver().session()) {
+
+            session.writeTransaction(tx -> {
+                tx.run( "MATCH (a:User) WHERE a.id = $id1 " +
+                                "MATCH (b:User) WHERE b.id = $id2 " +
+                                "CREATE (a)-[:FOLLOW]->(b)",
+                        parameters("id1", id_user1, "id2", id_user2)).consume();
+                System.out.println("i due utenti si seguono: DAMNNNNN");
+                return 1;
+            });
+        }
+
+
     }
 
 }

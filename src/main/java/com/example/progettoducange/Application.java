@@ -2,6 +2,7 @@ package com.example.progettoducange;
 
 import com.example.progettoducange.DAO.userDAO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
+import com.example.progettoducange.DbMaintaince.Neo4jDriver;
 import com.example.progettoducange.model.RegisteredUser;
 import com.example.progettoducange.model.User;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +23,7 @@ import java.io.IOException;
 
 public class Application extends javafx.application.Application {
     MongoDbDriver mongodb;
+    Neo4jDriver neo4j;
     private Stage primaryStage;
     private static Scene primaryScene;
     public static RegisteredUser authenticatedUser;
@@ -38,6 +40,7 @@ public class Application extends javafx.application.Application {
         setPrimaryScene(scene);
 
         mongodb = MongoDbDriver.getInstance();
+        neo4j = Neo4jDriver.getInstance();
         }
     public static void main(String[] args) {
         launch();

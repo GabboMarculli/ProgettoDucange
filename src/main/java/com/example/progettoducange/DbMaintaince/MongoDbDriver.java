@@ -52,9 +52,7 @@ public class MongoDbDriver {
          */
 
         try{
-
-
-            mongoclient = MongoClients.create(uri);
+             mongoclient = MongoClients.create(uri);
             database = mongoclient.getDatabase("Progetto");
 
             Bson command = new BsonDocument("ping", new BsonInt64(1));
