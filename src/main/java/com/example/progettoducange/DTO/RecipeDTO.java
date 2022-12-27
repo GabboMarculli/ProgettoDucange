@@ -1,5 +1,7 @@
 package com.example.progettoducange.DTO;
 
+import javafx.beans.property.*;
+
 public class RecipeDTO {
     private String Name;
     private int Id ;
@@ -10,14 +12,12 @@ public class RecipeDTO {
     private String Cooktime;
     private String TotalTime;
     private String Ingredients;
-
-
     private String Direction;
     private String[] IngredientsList;
-    private ReviewDTO[] reviews;
+    private ReviewsDTO[] reviews;
 
 
-    public RecipeDTO(String name, int id, int reviewCount, String photo, String author, String preparationTime, String cooktime, String totalTime, String ingrients,String direction, String[] ingredientsList, ReviewDTO[] reviews) {
+    public RecipeDTO(String name, int id, int reviewCount, String photo, String author, String preparationTime, String cooktime, String totalTime, String ingrients,String direction, String[] ingredientsList, ReviewsDTO[] reviews) {
         Name = name;
         Id = id;
         Direction = direction;
@@ -112,19 +112,19 @@ public class RecipeDTO {
         IngredientsList = ingredientsList;
     }
 
-    public ReviewDTO[] getReviews() {
+    public ReviewsDTO[] getReviews() {
         return reviews;
     }
 
-    public void setReviews(ReviewDTO[] reviews) {
+    public void setReviews(ReviewsDTO[] reviews) {
         this.reviews = reviews;
+    }
+
+    public void setDirection(String direction) {
+        direction = direction;
     }
 
     public String getDirection() {
         return Direction;
     }
-    public void setDirection(String direction) {
-        Direction = direction;
-    }
-
 }

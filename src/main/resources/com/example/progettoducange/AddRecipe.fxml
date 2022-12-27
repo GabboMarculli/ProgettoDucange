@@ -27,44 +27,63 @@
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 </rowConstraints>
                 <children>
-                    <Label prefHeight="18.0" prefWidth="71.0" text="Title">
+                    <Label prefHeight="18.0" prefWidth="30.0" text="Title">
                     </Label>
                     <TextField fx:id="RecipeTitle" GridPane.columnIndex="2">
                     </TextField>
 
-                    <Label text="Ingredients" GridPane.rowIndex="2">
+                    <Label prefHeight="18.0" prefWidth="90.0" text="Preparation time"  GridPane.rowIndex="2">
                     </Label>
-                    <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                    <TextField fx:id="PreparationTime"  GridPane.rowIndex="2" GridPane.columnIndex="2">
+                    </TextField>
+
+                    <Label prefHeight="18.0" prefWidth="90.0" text="Cook time"  GridPane.rowIndex="3">
+                    </Label>
+                    <TextField fx:id="CookTime"  GridPane.rowIndex="3" GridPane.columnIndex="2">
+                    </TextField>
+
+                    <Label prefHeight="18.0" prefWidth="90.0" text="Total time"  GridPane.rowIndex="4">
+                    </Label>
+                    <TextField fx:id="TotalTime"  GridPane.rowIndex="4" GridPane.columnIndex="2">
+                    </TextField>
+
+                    <Label text="Ingredients" GridPane.rowIndex="5">
+                    </Label>
+                    <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
                         <TextArea fx:id="Ingredients" prefHeight="100.0" prefWidth="300.0"
                                   promptText="Write the ingredients..." wrapText="true">
                         </TextArea>
                     </VBox>
 
-                    <Label text="Directions" GridPane.rowIndex="4">
+                    <Label text="Directions" GridPane.rowIndex="7">
                     </Label>
-                    <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                    <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="7">
                         <TextArea fx:id="Directions" prefHeight="100.0" prefWidth="300.0"
                                   promptText="Write the directions..." wrapText="true">
                         </TextArea>
                     </VBox>
-                    <Button alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="6" mnemonicParsing="false"
+
+                    <Button alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="9" mnemonicParsing="false"
                             text="Back " onAction="#goToAllRecipe" prefWidth="300.0">
                         <font>
                             <Font size="15.0" />
                         </font>
                     </Button>
-                    <Button alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="6" GridPane.columnIndex="2"
+                    <Button alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="9" GridPane.columnIndex="2"
                             mnemonicParsing="false" text="Add recipe " onAction="#addRecipe" prefWidth="300.0">
                         <font>
                             <Font size="15.0" />
                         </font>
                     </Button>
                     <Label fx:id="invalidRecipe" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0"
-                           prefWidth="300.0" textAlignment="CENTER" GridPane.rowIndex="7" GridPane.columnIndex="2"
+                           prefWidth="300.0" textAlignment="CENTER" GridPane.rowIndex="10" GridPane.columnIndex="2"
                            textFill="RED">
                         <opaqueInsets>
                             <Insets/>

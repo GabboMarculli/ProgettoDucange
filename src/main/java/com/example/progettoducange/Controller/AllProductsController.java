@@ -6,11 +6,10 @@ import com.example.progettoducange.DTO.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,6 +22,8 @@ public class AllProductsController {
     public TableColumn<IngredientDTO, String> QuantityInMyFridge;
     @FXML
     public TableColumn AddToFridge;
+    @FXML
+    public GridPane Right;
 
     public boolean prova = true;
 
@@ -61,6 +62,18 @@ public class AllProductsController {
 
         AddToFridge.setCellFactory(cellFactory);
         AllProductsTable.setItems(data);
+
+        AllProductsTable.setRowFactory( tv -> {
+            TableRow<IngredientDTO> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    IngredientDTO rowData = row.getItem();
+                    viewProductDetail(rowData);
+                }
+            });
+            return row ;
+        });
+
         fillTable();
     }
 
@@ -90,8 +103,38 @@ public class AllProductsController {
         for(IngredientDTO us : ingredientList) {
             data.add(us);
         }
+    }
 
+    public void printProduct(String name, String text, Integer index)
+    {
+        final Label label = new Label(name);
 
+        final Label labelText = new Label(text);
+
+        if(index!= 0){
+            GridPane.setRowIndex(labelText, index);
+            GridPane.setRowIndex(label, index);
+        }
+
+        GridPane.setColumnIndex(labelText, 2);
+
+        Right.getChildren().add(label);
+        Right.getChildren().add(labelText);
+    }
+
+    @FXML
+    public void viewProductDetail(IngredientDTO rowData)
+    {
+        Right.getChildren().clear();
+        printProduct("Name: ",rowData.getFood(),0);
+        printProduct("Measure: ", rowData.getMeasure(), 1);
+        printProduct("Grams: ", rowData.getGrams(), 2);
+        printProduct("Calories: ", rowData.getCalories(), 3);
+        printProduct("Protein: ", rowData.getProtein(), 4);
+        printProduct("Fat: ", rowData.getFat(), 5);
+        printProduct("Fiber: ", rowData.getFiber(), 6);
+        printProduct("Carbs", rowData.getCarbs(), 7);
+        printProduct("Category: ", rowData.getCategory(), 8);
     }
 
     @FXML
