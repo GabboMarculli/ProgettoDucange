@@ -1,10 +1,10 @@
 package com.example.progettoducange;
 
-import com.example.progettoducange.DAO.userDAO;
+import com.example.progettoducange.DAO.RecipeDao;
+import com.example.progettoducange.DTO.ReviewDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.DbMaintaince.Neo4jDriver;
 import com.example.progettoducange.model.RegisteredUser;
-import com.example.progettoducange.model.User;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -30,6 +30,8 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+
+
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("LoginPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000 , 700);
         stage.setTitle("Login or Sign up");
@@ -41,7 +43,10 @@ public class Application extends javafx.application.Application {
 
         mongodb = MongoDbDriver.getInstance();
         neo4j = Neo4jDriver.getInstance();
-        }
+
+    }
+
+
     public static void main(String[] args) {
         launch();
     }

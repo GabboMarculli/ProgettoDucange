@@ -1,11 +1,11 @@
 package com.example.progettoducange.DTO;
 
-public class ReviewsDTO {
-    String profile;
-    int rate;
-    String comment;
+public class ReviewDTO {
+    private String profile;
+    private int rate;
+    private String comment;
 
-    public ReviewsDTO(String profile, int rate, String comment) {
+    public ReviewDTO(String profile, int rate, String comment) {
         this.profile = profile;
         this.rate = rate;
         this.comment = comment;

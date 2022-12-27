@@ -2,6 +2,7 @@ package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.*;
+import com.example.progettoducange.DTO.ReviewDTO;
 import com.example.progettoducange.DTO.productDTO;
 import com.example.progettoducange.model.*;
 import com.example.progettoducange.model.ProductInFridge;
@@ -100,6 +101,13 @@ public class FridgePageController {
             ProductInFridge newrow = new ProductInFridge(us.getName(),us.getQuantity(), us.getDate());
             data.add(newrow);
         }
+
+        ReviewDTO review = new ReviewDTO(
+                "ciao",
+                5,
+                "molto bello"
+        );
+        RecipeDao.addReview(review,7000);
     }
 }
 

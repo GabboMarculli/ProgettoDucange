@@ -2,35 +2,22 @@ package com.example.progettoducange.DAO;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DTO.RecipeDTO;
-import com.example.progettoducange.DTO.ReviewsDTO;
+import com.example.progettoducange.DTO.ReviewDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.DbMaintaince.Neo4jDriver;
-import com.example.progettoducange.Utils.Utils;
 import com.example.progettoducange.model.Recipe;
-import com.example.progettoducange.model.User;
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.model.*;
 import com.mongodb.client.model.Projections;
-import javafx.scene.chart.PieChart;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-
-
-
-
-
 import java.util.ArrayList;
-
 import static com.mongodb.client.model.Filters.eq;
 import static org.neo4j.driver.Values.parameters;
 
-import com.google.gson.*;
-import com.google.gson.*;
-import com.google.gson.GsonBuilder;
 import org.json.*;
-import org.json.simple.parser.JSONParser;
 import org.neo4j.driver.Session;
 
 public class RecipeDao {
@@ -158,16 +145,37 @@ public class RecipeDao {
         return d.replaceAll("[\\[\\]\\\"]","");
     }
 
-    private static ReviewsDTO[] return_array_reviews(String reviews) throws JSONException {
+    private static ReviewDTO[] return_array_reviews(String reviews) throws JSONException {
         JSONObject obj = new JSONObject(reviews);
         JSONArray arr = obj.getJSONArray("reviews");
-        ReviewsDTO[] array_of_reviews = new ReviewsDTO[arr.length()];
+        ReviewDTO[] array_of_reviews = new ReviewDTO[arr.length()];
         for (int i = 0; i < arr.length(); i++) {
             String user = arr.getJSONObject(i).getString("profileID");
             int rating = arr.getJSONObject(i).getInt("Rate");
             String Description = arr.getJSONObject(i).getString("Comment");
-            array_of_reviews[i] = new ReviewsDTO(user, rating, Description);
+            array_of_reviews[i] = new ReviewDTO(user, rating, Description);
         }
         return array_of_reviews;
     }
+    public static void addReview(ReviewDTO review, int id_recipe){
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
+            BasicDBObject query = new BasicDBObject();
+            query.put( "RecipeID", id_recipe);
+
+            BasicDBObject review_mongo = new BasicDBObject();
+            review_mongo.put("profileId", Application.authenticatedUser.getUsername());
+            review_mongo.put("Rate", review.getRate());
+            review_mongo.put("Comment", review.getComment());
+
+            BasicDBObject update = new BasicDBObject();
+            update.put("$push", new BasicDBObject("reviews",review_mongo));
+
+            collection.updateOne(query, update);
+
+        } catch (Exception error) {
+            System.out.println( error );
+        }
+    }
+
 }
