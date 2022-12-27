@@ -102,12 +102,6 @@ public class FridgePageController {
             data.add(newrow);
         }
 
-        ReviewDTO review = new ReviewDTO(
-                "ciao",
-                5,
-                "molto bello"
-        );
-        RecipeDao.addReview(review,7000);
     }
 }
 

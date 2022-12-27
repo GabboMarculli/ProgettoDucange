@@ -14,10 +14,10 @@ public class RecipeDTO {
     private String Ingredients;
     private String Direction;
     private String[] IngredientsList;
-    private ReviewsDTO[] reviews;
+    private ReviewDTO[] reviews;
 
 
-    public RecipeDTO(String name, int id, int reviewCount, String photo, String author, String preparationTime, String cooktime, String totalTime, String ingrients,String direction, String[] ingredientsList, ReviewsDTO[] reviews) {
+    public RecipeDTO(String name, int id, int reviewCount, String photo, String author, String preparationTime, String cooktime, String totalTime, String ingrients,String direction, String[] ingredientsList, ReviewDTO[] reviews) {
         Name = name;
         Id = id;
         Direction = direction;
@@ -112,11 +112,11 @@ public class RecipeDTO {
         IngredientsList = ingredientsList;
     }
 
-    public ReviewsDTO[] getReviews() {
+    public ReviewDTO[] getReviews() {
         return reviews;
     }
 
-    public void setReviews(ReviewsDTO[] reviews) {
+    public void setReviews(ReviewDTO[] reviews) {
         this.reviews = reviews;
     }
 
