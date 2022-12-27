@@ -1,8 +1,10 @@
 package com.example.progettoducange.DAO;
 
+import com.example.progettoducange.Application;
 import com.example.progettoducange.DTO.RecipeDTO;
 import com.example.progettoducange.DTO.ReviewsDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
+import com.example.progettoducange.DbMaintaince.Neo4jDriver;
 import com.example.progettoducange.Utils.Utils;
 import com.example.progettoducange.model.Recipe;
 import com.example.progettoducange.model.User;
@@ -22,11 +24,15 @@ import org.bson.conversions.Bson;
 import java.util.ArrayList;
 
 import static com.mongodb.client.model.Filters.eq;
+import static org.neo4j.driver.Values.parameters;
+
 import com.google.gson.*;
 import com.google.gson.*;
 import com.google.gson.GsonBuilder;
 import org.json.*;
 import org.json.simple.parser.JSONParser;
+import org.neo4j.driver.Session;
+
 public class RecipeDao {
 
     public static boolean addRecipe(RecipeDTO recipe) {
@@ -36,7 +42,7 @@ public class RecipeDao {
 
             Document doc =
                     new Document("RecipeName", recipe.getName())
-                            .append("RecipeID", 0)
+                            .append("RecipeID", 3)
                             .append("ReviewCount", 0)
                             .append("RecipePhoto", recipe.getPhoto())
                             .append("Author", recipe.getAuthor())
@@ -48,11 +54,35 @@ public class RecipeDao {
                             .append("IngredientList", recipe.getIngredientsList())
                             .append("reviews", null);
             collection.insertOne(doc);
-            return true;
         } catch (Exception error) {
             System.out.println(error);
             return false;
         }
+
+        //save recipe in Neo4J
+        try (Session session = Neo4jDriver.getDriver().session()) {
+                String name = recipe.getName();
+                int id_receipe = recipe.getId();
+                int id_user = Application.authenticatedUser.getId();
+
+                session.writeTransaction(tx -> {
+                        tx.run("MERGE (a:Receipe {name: $name, id: $id}) ",
+                            parameters("name", name, "id", id_receipe)).consume();
+                    //create a relathionship between the user and the receipe
+
+                    tx.run( "MATCH (a:User) WHERE a.id = $id " +
+                                    "MATCH (b:Receipe) WHERE b.id = $id1 " +
+                                    "CREATE (a)-[:SHARE]->(b)",
+                            parameters("id", id_user, "id1",id_receipe)).consume();
+
+                    return 1;
+                });
+            }
+        catch (Exception error) {
+            System.out.println(error);
+            return false;
+        }
+        return true;
     }
 
     public boolean deleteRecipe(Recipe recipe)

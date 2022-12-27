@@ -69,23 +69,24 @@ public class Neo4jDriverExample {
         }
     }
 
-    void create_recipe(String name, int id_receipe, int id_user ){
+    void create(String name, int id_receipe, int id_user){
         try (Session session = driver.session()) {
-            //create a recipe
-            session.writeTransaction(tx -> {
+        //create a recipe
+        session.writeTransaction(tx -> {
 
-                tx.run("MERGE (a:Receipe {name: $name, id: $id}) ",
-                        parameters("name", name, "id", id_receipe)).consume();
-                //create a relathionship between the user and the receipe
+            tx.run("MERGE (a:Receipe {name: $name, id: $id}) ",
+                    parameters("name", name, "id", id_receipe)).consume();
+            //create a relathionship between the user and the receipe
 
-                tx.run( "MATCH (a:User) WHERE a.id = $id " +
-                                "MATCH (b:Receipe) WHERE b.id = $id1 " +
-                                "CREATE (a)-[:SHARE]->(b)",
-                        parameters("id", id_user, "id1",id_receipe)).consume();
+            tx.run( "MATCH (a:User) WHERE a.id = $id " +
+                            "MATCH (b:Receipe) WHERE b.id = $id1 " +
+                            "CREATE (a)-[:SHARE]->(b)",
+                    parameters("id", id_user, "id1",id_receipe)).consume();
 
-                return 1;
-            });
-        }
+            return 1;
+        });
+    }
+
     }}
 
 //function of analytics
