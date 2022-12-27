@@ -45,12 +45,6 @@
                         <Font size="15.0" />
                     </font>
                 </Button>
-                <Button fx:id ="DecrementButton"
-                        alignment="CENTER" contentDisplay="CENTER" layoutX="300.0" layoutY="569.0" mnemonicParsing="false" text="Decrement quantity">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
                 <TableView fx:id="FridgeTable" layoutX="103.0" layoutY="76.0" prefHeight="477.0" prefWidth="594.0">
                     <columns>
                         <TableColumn fx:id="ProductNameColumn" prefWidth="235" text="Name" />
