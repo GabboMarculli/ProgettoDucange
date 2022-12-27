@@ -99,8 +99,8 @@ public class userDAO {
                 String.valueOf(resultDoc.getInteger("id")),
                 resultDoc.getString("username"),
                 resultDoc.getString("country"),
-                resultDoc.getString("firstName"),
-                resultDoc.getString("lastName"),
+                resultDoc.getString("name"),
+                resultDoc.getString("surname"),
         };
         return return_fields;
     }
