@@ -186,12 +186,10 @@ public class userDAO {
                                 "MATCH (b:User) WHERE b.id = $id2 " +
                                 "CREATE (a)-[:FOLLOW]->(b)",
                         parameters("id1", id_user1, "id2", id_user2)).consume();
-                System.out.println("i due utenti si seguono: DAMNNNNN");
+                System.out.println("I due utenti si seguono");
                 return 1;
             });
         }
-
-
     }
 
 }
