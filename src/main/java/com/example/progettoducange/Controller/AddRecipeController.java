@@ -2,6 +2,7 @@ package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.RecipeDao;
+import com.example.progettoducange.DTO.RecipeDTO;
 import com.example.progettoducange.model.Recipe;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -43,13 +44,38 @@ public class AddRecipeController {
         }
 
         // ######################################################################
-        // Come glielo passo l'id? e altra cosa, ingredients dev'essere una lista di prodotti o va bene metterlo stringa
-        // dentro 'recipe' ? E poi, possono esistere due ricette con lo stesso nome?
+        // Come glielo passo l'id?
+        // ingredients dev'essere una lista di prodotti o va bene metterlo stringa dentro 'recipe' ?  -> va messo come array
+        // E poi, possono esistere due ricette con lo stesso nome? -> ma si
         // ######################################################################
-        /*
+
         // Commento perchè altrimenti darebbe errore
-        Recipe new_recipe = new Recipe(Application.authenticatedUser, Ingredients.getText() ,RecipeTitle.getText(),
-                                      Directions.getText(), 0);
+        /*
+        RecipeDTO new_recipe = new RecipeDTO(
+                Application.authenticatedUser,
+                Ingredients.getText() ,
+                RecipeTitle.getText(),
+                Directions.getText(), 0);
+        */
+        RecipeDTO new_recipe = new RecipeDTO(
+                RecipeTitle.getText(),
+                0, //add id
+                0, // at the beginning it has no reviews
+                null, //add photo
+                Application.authenticatedUser.getUsername(),
+                "0",
+                "0",
+                "0",
+                Ingredients.getText(),
+                Directions.getText(),
+                null,
+                null
+                );
+
+        //insert this recipe into mongodB and in Neo4j;
+        RecipeDao.addRecipe(new_recipe);
+
+        /*
         if(RecipeDao.addRecipe(new_recipe)){
             invalidRecipe.setText("Recipe adding is failed!");
             invalidRecipe.setStyle(errorMessage);

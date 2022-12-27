@@ -12,6 +12,8 @@ public class RecipeDTO {
     private String Cooktime;
     private String TotalTime;
     private String Ingredients;
+
+
     private String Direction;
     private String[] IngredientsList;
     private ReviewsDTO[] reviews;
@@ -119,4 +121,12 @@ public class RecipeDTO {
     public void setReviews(ReviewsDTO[] reviews) {
         this.reviews = reviews;
     }
+
+    public String getDirection() {
+        return Direction;
+    }
+    public void setDirection(String direction) {
+        Direction = direction;
+    }
+
 }

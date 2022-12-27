@@ -29,14 +29,24 @@ import org.json.*;
 import org.json.simple.parser.JSONParser;
 public class RecipeDao {
 
-    public boolean addRecipe(Recipe recipe) {
+    public static boolean addRecipe(RecipeDTO recipe) {
+        //save recipe into mongoDB
         try {
             MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
-            Document doc = new Document("title", recipe.getTitle()).append("author", recipe.getAuthor()).
-                    append("ingredients", recipe.getIngredients()).append("review", recipe.getReviews()).
-                    append("directions", recipe.getDirections()).append("like", 0);
-
+            Document doc =
+                    new Document("RecipeName", recipe.getName())
+                            .append("RecipeID", 0)
+                            .append("ReviewCount", 0)
+                            .append("RecipePhoto", recipe.getPhoto())
+                            .append("Author", recipe.getAuthor())
+                            .append("PrepareTime", recipe.getPreparationTime())
+                            .append("CookTime", recipe.getCooktime())
+                            .append("TotalTime", recipe.getTotalTime())
+                            .append("Ingredients", recipe.getIngrients())
+                            .append("Direction", recipe.getDirection())
+                            .append("IngredientList", recipe.getIngredientsList())
+                            .append("reviews", null);
             collection.insertOne(doc);
             return true;
         } catch (Exception error) {
