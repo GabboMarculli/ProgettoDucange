@@ -74,7 +74,6 @@ public class RecipeDao {
                                     "MATCH (b:Receipe) WHERE b.id = $id1 " +
                                     "CREATE (a)-[:SHARE]->(b)",
                             parameters("id", id_user, "id1",id_receipe)).consume();
-
                     return 1;
                 });
             }
