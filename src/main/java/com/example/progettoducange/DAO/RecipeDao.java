@@ -1,6 +1,7 @@
 package com.example.progettoducange.DAO;
 
 import com.example.progettoducange.Application;
+import com.example.progettoducange.DTO.IngredientDTO;
 import com.example.progettoducange.DTO.RecipeDTO;
 import com.example.progettoducange.DTO.ReviewDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
@@ -85,7 +86,7 @@ public class RecipeDao {
 
     // ################################################################################
     // non sono sicuro funzioni, è per aumentare di uno i like.
-    // Devo fare anche la "removeLike"  ...?
+    // Devo fare anche la "removeLike"  ...? -> no
     // ################################################################################
     public boolean addLike(Recipe recipe)
     {
@@ -173,6 +174,14 @@ public class RecipeDao {
 
             collection.updateOne(query, update);
 
+        } catch (Exception error) {
+            System.out.println( error );
+        }
+    }
+    public static void removerecipe(RecipeDTO recipe) {
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
+            collection.deleteOne(eq("RecipeID", recipe.getId()));
         } catch (Exception error) {
             System.out.println( error );
         }

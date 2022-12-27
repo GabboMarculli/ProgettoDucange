@@ -71,4 +71,34 @@ public class IngredientDAO {
         System.out.println("Prodotto aggiunto");
     }
 
+    public static void removeIngredient(IngredientDTO ingredient) {
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getProductCollection();
+            collection.deleteOne(eq("food", ingredient.getFood()));
+        } catch (Exception error) {
+            System.out.println( error );
+        }
+    }
+
+    public static void addIngredient(IngredientDTO ingredient) {
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getProductCollection();
+            Document doc = new Document()
+                    .append("food",ingredient.getFood())
+                    .append("measure",ingredient.getMeasure())
+                    .append("grams",ingredient.getGrams())
+                    .append("calories",ingredient.getCalories())
+                    .append("protein",ingredient.getProtein())
+                    .append("fat",ingredient.getFat())
+                    .append("fiber",ingredient.getFiber())
+                    .append("carbs",ingredient.getCarbs())
+                    .append("category", ingredient.getCategory());
+            collection.insertOne(doc);
+        } catch (Exception error) {
+            System.out.println( error );
+        }
+    }
+
+
+
 }

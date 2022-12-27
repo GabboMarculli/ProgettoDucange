@@ -36,9 +36,7 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class ProductDAO {
 
-
     //get ingredients from the fridge
-
     public static ArrayList<productDTO> getIngredients(RegisteredUser user){
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
