@@ -21,6 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Projections.excludeId;
+import static com.mongodb.client.model.Sorts.ascending;
+import static com.mongodb.client.model.Sorts.descending;
 import static org.neo4j.driver.Values.parameters;
 
 public class userDAO {
@@ -29,7 +32,7 @@ public class userDAO {
     {
         Bson projectionFields = Projections.fields(
                 Projections.include("username"),
-                Projections.excludeId());
+                excludeId());
 
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
@@ -83,15 +86,21 @@ public class userDAO {
         return results;
     }
 
-    public static String getUser(String username)
+    public static String[] getUser(String username)
     {
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
         // we search for username
-        Document resultDoc = collection.find(eq("username", username)).first();
-
-        return resultDoc.toJson();
+        Document resultDoc = collection.find(eq("username", username)).projection(excludeId()).first();
+        String return_fields[]={
+                String.valueOf(resultDoc.getInteger("id")),
+                resultDoc.getString("username"),
+                resultDoc.getString("country"),
+                resultDoc.getString("firstName"),
+                resultDoc.getString("lastName"),
+        };
+        return return_fields;
     }
 
     public static boolean checkPassword(String username, String password){
@@ -112,19 +121,29 @@ public class userDAO {
     // Add new user
     // In LoginPage, user write your informations and than click submit. After that click, check if inserted data are valid
     // and than create new object User, with inserted data. After, call "signup" function to insert in the Db the new user
-    public static boolean signup(User user)
+    public static int signup(User user)
     {
         try {
+            //i will assign the id to the user
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
-            Document doc = new Document("username", user.getUsername()).append("password", user.getPassword()).append("firstName", user.getFirstName()).
-                    append("lastName", user.getLastName()).append("profilePic", user.getProfilePicUrl()).append("email", user.getEmail());
+            // we search for the last id
+            Document resultDoc = collection.find().sort(descending("id")).first();
+            int new_index = resultDoc.getInteger("id") + 1;
+            //insert the user in the collection
+            Document doc = new Document("username",user.getUsername())
+                    .append("password", user.getPassword())
+                    .append("firstName", user.getFirstName())
+                    .append("lastName", user.getLastName())
+                    .append("profilePic", user.getProfilePicUrl())
+                    .append("email", user.getEmail())
+                    .append("id", new_index);
 
             collection.insertOne(doc);
-            return true;
+            return new_index;
         } catch (Exception error) {
             System.out.println( error );
-            return false;
+            return 0;
         }
     }
 

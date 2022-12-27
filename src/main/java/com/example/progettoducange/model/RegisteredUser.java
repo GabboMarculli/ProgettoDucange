@@ -8,12 +8,12 @@ public class RegisteredUser extends User{
         List<Review> reviews;
 
         // constructor
-        public RegisteredUser(String id)
+        public RegisteredUser(int id)
         {
             super.setId(id);
         }
 
-        public RegisteredUser(String id, String username, String password, String email)
+        public RegisteredUser(int id, String username, String password, String email)
         {
             super.setId(id);
             super.setUsername(username);
@@ -21,7 +21,7 @@ public class RegisteredUser extends User{
             super.setEmail(email);
         }
 
-        public RegisteredUser(String id, String username,String firstName, String lastName, String country, String email)
+        public RegisteredUser(int id, String username,String firstName, String lastName, String country, String email)
         {
             super.setId(id);
             super.setUsername(username);

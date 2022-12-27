@@ -3,7 +3,7 @@ package com.example.progettoducange.model;
 import java.util.Date;
 
 public abstract class User {
-    public String id;
+    public int id;
     private String firstName;
     private String lastName;
     private String username;
@@ -14,17 +14,17 @@ public abstract class User {
     private Date updatedDate;
     private String email;
 
-    public void User(String id, String username, String password)
+    public void User(int id, String username, String password)
     {
         this.id = id;
         this.username = username;
         this.password = password;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

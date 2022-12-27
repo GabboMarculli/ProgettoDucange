@@ -83,14 +83,13 @@ public class LoginController {
                     invalidSignupCredentials.setText("");
 
                     try {
-                        String credentials = userDAO.getUser(loginUsernameTextField.getText());
-                        String[] result = credentials.split(",");
+                        String[] credentials = userDAO.getUser(loginUsernameTextField.getText());
 
-                        String id = Utils.CleanString(result[0].split(":")[2]);
-                        String username = Utils.CleanString(result[1].split(":")[1]);
-                        String country = Utils.CleanString(result[3].split(":")[1]);
-                        String firstName = Utils.CleanString(result[5].split(":")[1]);
-                        String lastName = Utils.CleanString(result[6].split(":")[1]);
+                        int id = Integer.parseInt(credentials[0]);
+                        String username = credentials[1];
+                        String country = credentials[2];
+                        String firstName = credentials[3];
+                        String lastName = credentials[4];
 
                         Application.authenticatedUser = new RegisteredUser(id, username, firstName,lastName, country, null);
                         goToHomePage();
@@ -150,22 +149,33 @@ public class LoginController {
             signUpUsernameTextField.setStyle(errorStyle);
             invalidLoginCredentials.setText("");
         } else {
-            invalidSignupCredentials.setText("You are set!");
-            invalidSignupCredentials.setStyle(successMessage);
-            signUpUsernameTextField.setStyle(successStyle);
-            signUpEmailTextField.setStyle(successStyle);
-            signUpPasswordField.setStyle(successStyle);
-            signUpRepeatPasswordField.setStyle(successStyle);
-            invalidLoginCredentials.setText("");
+
 
             // ########################################################################################################
-            // come faccio a creare l'id?? forse devo fare una query per recuperare l'id piu alto presente nel db e metterci quello + 1 ?
             // Il problema è: lascio l'email da inserire nel signup? in questo caso bisogna modificare il db aggiungendo le email
             // o altrimenti non metto l'email e cambio il resto dei campi nel signup (probabilmente questa seconda è la più veloce)
             // Per recuperare l'id, in ogni caso, forse è meglio salvare in una variabile globale l'id più alto e aggiornarlo via via
 
-            RegisteredUser user = new RegisteredUser(null, signUpUsernameTextField.getText(),signUpPasswordField.getText(),signUpEmailTextField.getText());
-            userDAO.signup(user);
+            RegisteredUser user = new RegisteredUser(0, signUpUsernameTextField.getText(),signUpPasswordField.getText(),signUpEmailTextField.getText());
+            //registriamo lo usera e otteniamo il suo id;
+            int user_index = userDAO.signup(user);
+
+            if(user_index == 0){
+                System.out.println();
+                invalidSignupCredentials.setText("Something went wrong! Retry");
+                invalidSignupCredentials.setStyle(errorMessage);
+                invalidLoginCredentials.setText("");
+
+            }else{
+                user.setId(user_index);
+                invalidSignupCredentials.setText("You are set!");
+                invalidSignupCredentials.setStyle(successMessage);
+                signUpUsernameTextField.setStyle(successStyle);
+                signUpEmailTextField.setStyle(successStyle);
+                signUpPasswordField.setStyle(successStyle);
+                signUpRepeatPasswordField.setStyle(successStyle);
+                invalidLoginCredentials.setText("");
+            }
         }
     }
 }
