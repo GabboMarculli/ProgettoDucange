@@ -1,5 +1,7 @@
 package com.example.progettoducange.DAO;
 
+import com.example.progettoducange.Application;
+import com.example.progettoducange.DTO.IngredientDTO;
 import com.example.progettoducange.DTO.productDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.DbMaintaince.Neo4jDriver;
@@ -192,5 +194,25 @@ public class userDAO {
         }
     }
 
+    public static void addToFridge(IngredientDTO ingredientDTO) {
+        //add the ingredient to user fridge
+        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+
+        BasicDBObject query = new BasicDBObject();
+        query.put( "id", Application.authenticatedUser.getId());
+
+        BasicDBObject ingredient = new BasicDBObject();
+        ingredient.put("name", ingredientDTO.getFood());
+        ingredient.put("quantity", 2);
+        ingredient.put("expiringDate", "21/9/2022");
+
+        BasicDBObject update = new BasicDBObject();
+        update.put("$push", new BasicDBObject("fridge",ingredient));
+
+        collection.updateOne(query, update);
+
+        //action to be implemented
+        System.out.println("Prodotto aggiunto");
+    }
 }
 

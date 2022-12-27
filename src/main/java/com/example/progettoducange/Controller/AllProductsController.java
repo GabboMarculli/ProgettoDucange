@@ -2,15 +2,19 @@ package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.IngredientDAO;
+import com.example.progettoducange.DAO.userDAO;
 import com.example.progettoducange.DTO.IngredientDTO;
 import com.example.progettoducange.DTO.productDTO;
 import com.example.progettoducange.DTO.userDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import org.bson.Document;
 
 import java.io.IOException;
@@ -27,6 +31,8 @@ public class AllProductsController {
     public TableColumn<IngredientDTO, String> ProductNameColumn;
     @FXML
     public TableColumn<IngredientDTO, String> QuantityInMyFridge;
+    @FXML
+    public TableColumn AddToFridge;
 
     public boolean prova = true;
 
@@ -34,6 +40,37 @@ public class AllProductsController {
 
     public void initialize()
     {
+
+        Callback<TableColumn<IngredientDTO, String>, TableCell<IngredientDTO, String>> cellFactory
+                =   new Callback<>() {
+            @Override
+            public TableCell call(final TableColumn<IngredientDTO, String> param) {
+                final TableCell<IngredientDTO, String> cell = new TableCell<IngredientDTO, String>() {
+
+                    final Button btn = new Button("View");
+
+                    @Override
+                    public void updateItem(String item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                            setText(null);
+                        } else {
+                            btn.setOnAction(event -> {
+                                IngredientDTO ingredientDTO = getTableView().getItems().get(getIndex());
+
+                            });
+                            setGraphic(btn);
+                            setText(null);
+                        }
+                    }
+                };
+                return cell;
+            }
+        };
+
+        AddToFridge.setCellFactory(cellFactory);
+        AllProductsTable.setItems(data);
         fillTable();
     }
 
