@@ -74,7 +74,6 @@ public class AllProductsController {
             });
             return row ;
         });
-
         fillTable();
     }
 
@@ -87,9 +86,7 @@ public class AllProductsController {
             QuantityInMyFridge.setCellValueFactory(
                     new PropertyValueFactory<IngredientDTO,String>("measure")
             );
-
             AllProductsTable.setItems(data);
-
             prova = false;
             System.out.println("Inizializzazione dati in Product");
         }

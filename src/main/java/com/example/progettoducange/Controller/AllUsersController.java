@@ -76,7 +76,6 @@ public class AllUsersController {
                                         userDAO.follow_a_user(Application.authenticatedUser.id,user.getId());
                                         //System.out.println(Application.authenticatedUser.getUsername()+ " FOLLOWS " + user.getUsername());
                                     });
-
                                     setGraphic(btn);
                                     setText(null);
                                 }
@@ -91,14 +90,13 @@ public class AllUsersController {
         fillTable();
     }
 
-
-    public void fillTable()
-    {
-
-        System.out.println("Inserimento dati in frigo");
-        ArrayList<Document> users = getListOfUser(20);
+    int called_times = 0;
+    //fill the table with 20 user. By pressing the button the user will visualize
+    // 20 user in plus appended at the end of the previous list of user
+    public void fillTable(){
+        int limit_views_user = 20;
+        ArrayList<Document> users = getListOfUser(limit_views_user,called_times);
         for(Document us : users) {
-            System.out.println(us.get("password"));
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
             userDTO newrow = new userDTO(Integer.parseInt(
                     us.get("id").toString()),
@@ -110,7 +108,7 @@ public class AllUsersController {
                     us.get("country").toString());
             data.add(newrow);
         }
-
+        called_times++;
     }
 
     @FXML

@@ -15,7 +15,10 @@ import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Sorts.descending;
 import static org.neo4j.driver.Values.parameters;
 
 import org.json.*;
@@ -30,7 +33,7 @@ public class RecipeDao {
 
             Document doc =
                     new Document("RecipeName", recipe.getName())
-                            .append("RecipeID", 3)
+                            .append("RecipeID", recipe.getId())
                             .append("ReviewCount", 0)
                             .append("RecipePhoto", recipe.getPhoto())
                             .append("Author", recipe.getAuthor())
@@ -39,11 +42,11 @@ public class RecipeDao {
                             .append("TotalTime", recipe.getTotalTime())
                             .append("Ingredients", recipe.getIngrients())
                             .append("Direction", recipe.getDirection())
-                            .append("IngredientList", recipe.getIngredientsList())
-                            .append("reviews", null);
+                            .append("IngredientList", Arrays.asList(recipe.getIngredientsList()))
+                            ;
             collection.insertOne(doc);
         } catch (Exception error) {
-            System.out.println(error);
+            System.err.println(error);
             return false;
         }
 
@@ -69,7 +72,21 @@ public class RecipeDao {
             System.out.println(error);
             return false;
         }
+
         return true;
+
+
+    }
+
+    //function to return the index used for creating a new recipe
+    public static int get_id_recipe() {
+        //i will assign the id to the user
+        MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
+
+        // we search for the last id
+        Document resultDoc = collection.find().sort(descending("RecipeID")).first();
+        int index = resultDoc.getInteger("RecipeID") + 1;
+        return index;
     }
 
     public boolean deleteRecipe(Recipe recipe)

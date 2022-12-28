@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.*;
 
 public class AddRecipeController {
     protected
@@ -20,6 +21,12 @@ public class AddRecipeController {
     String successStyle = "-fx-border-color: #A9A9A9; -fx-border-width: 2; -fx-border-radius: 5;";
     @FXML
     private TextField RecipeTitle;
+    @FXML
+    private TextField PreparationTime;
+    @FXML
+    private TextField CookTime;
+    @FXML
+    private TextField TotalTime;
     @FXML
     private TextArea Ingredients;
     @FXML
@@ -59,16 +66,16 @@ public class AddRecipeController {
         */
         RecipeDTO new_recipe = new RecipeDTO(
                 RecipeTitle.getText(),
-                0, //add id
+                RecipeDao.get_id_recipe(), //add id
                 0, // at the beginning it has no reviews
                 null, //add photo
                 Application.authenticatedUser.getUsername(),
-                "0",
-                "0",
-                "0",
+                PreparationTime.getText(),
+                CookTime.getText(),
+                TotalTime.getText(),
                 Ingredients.getText(),
                 Directions.getText(),
-                null,
+                return_list_of_ingredient(Ingredients.getText()),
                 null
                 );
 
@@ -84,6 +91,17 @@ public class AddRecipeController {
             invalidRecipe.setStyle(successMessage);
         }
          */
+    }
+
+    private String[] return_list_of_ingredient(String list){
+
+        String array[] = list.split(",");
+        String[] return_list_of_ingredient = new String[array.length];
+        for(int i=0; i<array.length;i++){
+            String supporto[] = array[i].split(":");
+            return_list_of_ingredient[i] = supporto[0];
+        }
+        return return_list_of_ingredient;
     }
 
     @FXML

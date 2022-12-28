@@ -55,6 +55,7 @@ public class userDAO {
         return null;
     }
 
+    //FUNZIONE DA MODIFICARE
     public static String getID(String username)
     {
         // retrieve user collection
@@ -74,7 +75,7 @@ public class userDAO {
         return null;
     }
 
-    public static ArrayList<Document> getListOfUser(Integer limit)
+    public static ArrayList<Document> getListOfUser(Integer limit,Integer called_times)
     {
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
@@ -83,7 +84,7 @@ public class userDAO {
         MongoCursor<Document> cursor =  collection.find().iterator();
 
         //List<userDTO> resultDoc = FXCollections.observableArrayList();
-        ArrayList<Document> results = collection.find().limit(limit).into(new ArrayList<>());
+        ArrayList<Document> results = collection.find().limit(limit).skip(called_times*20).into(new ArrayList<>());
 
         System.out.println(results);
 
