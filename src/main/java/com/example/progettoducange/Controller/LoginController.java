@@ -90,8 +90,9 @@ public class LoginController {
                         String country = credentials[2];
                         String firstName = credentials[3];
                         String lastName = credentials[4];
+                        String email = credentials[5];
 
-                        Application.authenticatedUser = new RegisteredUser(id, username, firstName,lastName, country, null);
+                        Application.authenticatedUser = new RegisteredUser(id, username, firstName,lastName, country, email);
                         goToHomePage();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -155,6 +156,7 @@ public class LoginController {
             // Il problema è: lascio l'email da inserire nel signup? in questo caso bisogna modificare il db aggiungendo le email
             // o altrimenti non metto l'email e cambio il resto dei campi nel signup (probabilmente questa seconda è la più veloce)
             // Per recuperare l'id, in ogni caso, forse è meglio salvare in una variabile globale l'id più alto e aggiornarlo via via
+
 
             RegisteredUser user = new RegisteredUser(0, signUpUsernameTextField.getText(),signUpPasswordField.getText(),signUpEmailTextField.getText());
             //registriamo lo usera e otteniamo il suo id;

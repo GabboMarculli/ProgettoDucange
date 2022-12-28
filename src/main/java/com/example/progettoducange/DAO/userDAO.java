@@ -103,6 +103,7 @@ public class userDAO {
                 resultDoc.getString("country"),
                 resultDoc.getString("name"),
                 resultDoc.getString("surname"),
+                resultDoc.getString("email")
         };
         return return_fields;
     }
@@ -180,7 +181,7 @@ public class userDAO {
         }
     }
 
-
+    //function to follow a user
     public static void follow_a_user(long id_user1, long id_user2){
 
         try (Session session = Neo4jDriver.getDriver().session()) {
@@ -196,7 +197,7 @@ public class userDAO {
         }
     }
 
-
+    //function to unfollow a user
     public boolean unfollowUser(long id_user1, long id_user2){
 
         try (Session session = Neo4jDriver.getDriver().session()) {
@@ -220,9 +221,7 @@ public class userDAO {
     //i will return a list of id of user followed by id_user
     // to call it List<Integer> list_ids_of_followed_user = userDAO.getFollowesUser(Application.authenticatedUser.getId());
     public static List<Integer> getFollowesUser(long id_user){
-        /*
-    MATCH (p: User)->[:FOLLOW]->(m:User) Where p.id = $id + RETURN m.id
-     */
+
         List<Integer> UserList = null;
         try (Session session = Neo4jDriver.getDriver().session())
         {
@@ -245,6 +244,5 @@ public class userDAO {
         }
         return null;
     }
-
 }
 
