@@ -32,9 +32,14 @@
                         <Font size="30.0" />
                     </font>
                 </Label>
-                <Button fx:id = "IncrementButton"
-                        onAction="#fillTable"
+                <Button fx:id = "IncrementButton" onAction="#IncrementQuantity"
                         alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="570.0" mnemonicParsing="false" text="Increment quantity">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button fx:id = "DecrementButton" onAction="#DecrementQuantity"
+                        alignment="CENTER" contentDisplay="CENTER" layoutX="400.0" layoutY="570.0" mnemonicParsing="false" text="Decrement quantity">
                     <font>
                         <Font size="15.0" />
                     </font>

@@ -2,11 +2,8 @@ package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.*;
-import com.example.progettoducange.DTO.ReviewDTO;
 import com.example.progettoducange.DTO.productDTO;
-import com.example.progettoducange.model.*;
 import com.example.progettoducange.model.ProductInFridge;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,15 +11,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import static java.time.LocalDate.*;
 
 public class FridgePageController {
     @FXML
@@ -35,6 +28,8 @@ public class FridgePageController {
     public TableColumn<ProductInFridge, Date> ProductExpireDateColumn;
     @FXML
     private Button IncrementButton;
+    @FXML
+    private Button DecrementButton;
     private ObservableList<ProductInFridge> data = FXCollections.observableArrayList();
     private boolean prova = true;
     @FXML
@@ -47,29 +42,53 @@ public class FridgePageController {
         }
     }
 
-    // #############################################################################################################
-    // Non ho idea se funzioni
-    // ###########################################################################################################
+    public void initialize()
+    {
+        fillTable();
+    }
+
+    public void DecrementQuantity()
+    {
+
+        DecrementButton.setOnAction(event -> {
+
+            List prod = FridgeTable.getItems();
+            ProductInFridge f = (ProductInFridge) prod.get(0);
+            f.setQuantity(0);
+            System.out.println(f);
+
+            //prod.setQuantity(prod.getQuantity() - 1);
+            //FridgeTable.getItems().add(FridgeTable.getSelectionModel().getSelectedIndex(), prod);
+            //FridgeTable.getItems().remove(FridgeTable.getSelectionModel().getSelectedIndex()-1);
+        });
+        /*
+        DecrementButton.setOnAction(event -> {
+            ProductInFridge fridge = FridgeTable.getItems().get(FridgeTable.getSelectionModel().getSelectedIndex());
+
+            for(ProductInFridge p : data)
+            {
+                System.out.println(p.getQuantity());
+                if(p.equals(fridge))
+                    if(fridge.getQuantity() != 0)
+                        data.get(data.indexOf(p)).setQuantity(p.getQuantity() - 1);
+            }
+        });
+        FridgeTable.setItems(data);
+        FridgeTable.refresh();*/
+    }
+
+    public void IncrementQuantity()
+    {
+        System.out.println("Ciao");
+        DecrementButton.setOnAction(event -> {
+            System.out.println("Ciao2");
+            ProductInFridge fridge = FridgeTable.getItems().get(FridgeTable.getSelectionModel().getSelectedIndex());
+            System.out.println(fridge);
+            fridge.setQuantity(fridge.getQuantity() + 1);
+        });
+    }
 
     public void fillTable() {
-        /*
-        // serve una lista del genere
-        final ObservableList<ProductInFridge> data = FXCollections.observableArrayList(
-                new ProductInFridge("Jacob", 2, LocalDate.now()),
-                new ProductInFridge("Isabella", 4,LocalDate.now()),
-                new ProductInFridge("Ethan", 3,LocalDate.now())
-        );
-        ProductName.setCellValueFactory(
-                new PropertyValueFactory<ProductInFridge,String>("name1")
-        );
-        ProductQuantity.setCellValueFactory(
-                new PropertyValueFactory<ProductInFridge,Integer>("quantity1")
-        );
-        ProductExpireDate.setCellValueFactory(
-                new PropertyValueFactory<ProductInFridge,Date>("date1")
-        );
-
-         */
         if(prova) {
             ProductNameColumn.setCellValueFactory(
                     new PropertyValueFactory<ProductInFridge,String>("name")

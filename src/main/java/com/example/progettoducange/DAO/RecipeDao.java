@@ -149,6 +149,7 @@ public class RecipeDao {
     private static ReviewDTO[] return_array_reviews(String reviews) throws JSONException {
         JSONObject obj = new JSONObject(reviews);
         JSONArray arr = obj.getJSONArray("reviews");
+
         ReviewDTO[] array_of_reviews = new ReviewDTO[arr.length()];
         for (int i = 0; i < arr.length(); i++) {
             String user = arr.getJSONObject(i).getString("profileID");
@@ -158,6 +159,7 @@ public class RecipeDao {
         }
         return array_of_reviews;
     }
+
     public static void addReview(ReviewDTO review, int id_recipe){
         try {
             MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
@@ -165,7 +167,7 @@ public class RecipeDao {
             query.put( "RecipeID", id_recipe);
 
             BasicDBObject review_mongo = new BasicDBObject();
-            review_mongo.put("profileId", Application.authenticatedUser.getUsername());
+            review_mongo.put("profileID", Application.authenticatedUser.getUsername());
             review_mongo.put("Rate", review.getRate());
             review_mongo.put("Comment", review.getComment());
 
