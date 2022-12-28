@@ -76,6 +76,7 @@ public class AllUsersController {
                                         userDAO.follow_a_user(Application.authenticatedUser.id,user.getId());
                                         //System.out.println(Application.authenticatedUser.getUsername()+ " FOLLOWS " + user.getUsername());
                                     });
+
                                     setGraphic(btn);
                                     setText(null);
                                 }

@@ -3,6 +3,7 @@ package com.example.progettoducange.DAO;
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DTO.IngredientDTO;
 import com.example.progettoducange.DTO.productDTO;
+import com.example.progettoducange.DTO.userDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.DbMaintaince.Neo4jDriver;
 import com.example.progettoducange.Utils.Utils;
@@ -15,7 +16,8 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import org.neo4j.driver.Session;
+import org.neo4j.driver.*;
+import org.neo4j.driver.Record;
 
 import java.time.LocalDate;
 import java.time.format.*;
@@ -194,6 +196,55 @@ public class userDAO {
         }
     }
 
+
+    public boolean unfollowUser(long id_user1, long id_user2){
+
+        try (Session session = Neo4jDriver.getDriver().session()) {
+
+            session.writeTransaction(tx -> {
+                tx.run( "MATCH (a:User) WHERE a.id = $id1 " +
+                                "MATCH (b:User) WHERE b.id = $id2 " +
+                                "MATCH (a)-[r:FOLLOW]->(b)"+
+                                "DELETE r",
+                        parameters("id1", id_user1, "id2", id_user2)).consume();
+                System.out.println("I due utenti si seguono");
+                return 1;
+            });
+        }catch (Exception e){
+            System.out.println("errore nella unfollow");
+            return false;
+        }
+        return true;
+    }
+
+    //i will return a list of id of user followed by id_user
+    // to call it List<Integer> list_ids_of_followed_user = userDAO.getFollowesUser(Application.authenticatedUser.getId());
+    public static List<Integer> getFollowesUser(long id_user){
+        /*
+    MATCH (p: User)->[:FOLLOW]->(m:User) Where p.id = $id + RETURN m.id
+     */
+        List<Integer> UserList = null;
+        try (Session session = Neo4jDriver.getDriver().session())
+        {
+             UserList = session.readTransaction((TransactionWork<List<Integer>>) tx -> {
+                Result result = tx.run(
+                        "MATCH (p: User)-[:FOLLOW]->(m:User) Where p.id = $id RETURN m.id AS id",
+                        parameters( "id", id_user) );
+                List<Integer> Id_User_to_send = new ArrayList<>();
+                while(result.hasNext())
+                {
+                    Record r = result.next();
+                    Id_User_to_send.add(r.get("id").asInt());
+                }
+                return Id_User_to_send;
+            });
+            return UserList;
+        }
+        catch (Exception e){
+            System.err.println(e);
+        }
+        return null;
+    }
 
 }
 

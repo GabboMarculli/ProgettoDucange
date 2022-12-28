@@ -98,7 +98,5 @@ public class IngredientDAO {
             System.out.println( error );
         }
     }
-
-
-
 }
+

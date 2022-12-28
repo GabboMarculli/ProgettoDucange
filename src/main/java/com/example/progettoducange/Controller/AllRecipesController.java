@@ -3,6 +3,7 @@ package com.example.progettoducange.Controller;
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.RecipeDao;
 import com.example.progettoducange.DTO.*;
+import com.example.progettoducange.model.ProductInFridge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -86,6 +87,8 @@ public class AllRecipesController {
         for(RecipeDTO us : recipes) {
             data.add(us);
         }
+
+
     }
 
 

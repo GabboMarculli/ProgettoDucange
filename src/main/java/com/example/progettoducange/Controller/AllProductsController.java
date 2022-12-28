@@ -3,6 +3,7 @@ package com.example.progettoducange.Controller;
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.*;
 import com.example.progettoducange.DTO.*;
+import com.example.progettoducange.model.ProductInFridge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
