@@ -36,6 +36,7 @@ public class FridgePageController {
     private void goToHome()
     {
         try {
+            FridgeDAO.updateFridge(data);
             Application.changeScene("HomePage");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -45,46 +46,21 @@ public class FridgePageController {
     public void initialize()
     {
         fillTable();
-    }
-
-    public void DecrementQuantity()
-    {
 
         DecrementButton.setOnAction(event -> {
+            Integer index = FridgeTable.getSelectionModel().getSelectedIndex();
+            ProductInFridge prod = FridgeTable.getItems().get(index);
+            if(prod.getQuantity() != 0)
+                prod.setQuantity(prod.getQuantity() - 1);
+            FridgeTable.getItems().set(index, prod);
 
-            List prod = FridgeTable.getItems();
-            ProductInFridge f = (ProductInFridge) prod.get(0);
-            f.setQuantity(0);
-            System.out.println(f);
-
-            //prod.setQuantity(prod.getQuantity() - 1);
-            //FridgeTable.getItems().add(FridgeTable.getSelectionModel().getSelectedIndex(), prod);
-            //FridgeTable.getItems().remove(FridgeTable.getSelectionModel().getSelectedIndex()-1);
         });
-        /*
-        DecrementButton.setOnAction(event -> {
-            ProductInFridge fridge = FridgeTable.getItems().get(FridgeTable.getSelectionModel().getSelectedIndex());
 
-            for(ProductInFridge p : data)
-            {
-                System.out.println(p.getQuantity());
-                if(p.equals(fridge))
-                    if(fridge.getQuantity() != 0)
-                        data.get(data.indexOf(p)).setQuantity(p.getQuantity() - 1);
-            }
-        });
-        FridgeTable.setItems(data);
-        FridgeTable.refresh();*/
-    }
-
-    public void IncrementQuantity()
-    {
-        System.out.println("Ciao");
-        DecrementButton.setOnAction(event -> {
-            System.out.println("Ciao2");
-            ProductInFridge fridge = FridgeTable.getItems().get(FridgeTable.getSelectionModel().getSelectedIndex());
-            System.out.println(fridge);
-            fridge.setQuantity(fridge.getQuantity() + 1);
+        IncrementButton.setOnAction(event -> {
+            Integer index = FridgeTable.getSelectionModel().getSelectedIndex();
+            ProductInFridge prod = FridgeTable.getItems().get(index);
+            prod.setQuantity(prod.getQuantity() + 1);
+            FridgeTable.getItems().set(index, prod);
         });
     }
 
