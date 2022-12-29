@@ -45,10 +45,7 @@ public class userDAO {
         Document resultDoc = collection.find(eq("username", username)).projection(projectionFields).first();
 
         if(resultDoc!= null) {
-            String[] result = resultDoc.toJson().split(",");
-            String user = result[0].split(":")[1]; // get username
-            user = Utils.CleanString(user);
-
+            String user = resultDoc.getString("username");
             return user;
         }
 

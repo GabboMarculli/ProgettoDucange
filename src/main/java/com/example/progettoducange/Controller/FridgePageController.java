@@ -3,19 +3,25 @@ package com.example.progettoducange.Controller;
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.*;
 import com.example.progettoducange.DTO.productDTO;
+import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.model.ProductInFridge;
+import com.mongodb.client.MongoCollection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.bson.Document;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static com.mongodb.client.model.Filters.eq;
 
 public class FridgePageController {
     @FXML
@@ -98,5 +104,21 @@ public class FridgePageController {
         }
 
     }
+
+    public void remove_product(ActionEvent actionEvent) {
+
+        ProductInFridge selectedItem = FridgeTable.getSelectionModel().getSelectedItem();
+        FridgeTable.getItems().remove(selectedItem);
+        //create a product and remove it from the db
+        productDTO product_to_delete = new productDTO(
+                selectedItem.getName(),
+                selectedItem.getQuantity(),
+                selectedItem.getExpireDate()
+        );
+        ProductDAO.remove_product_mongo(product_to_delete,Application.authenticatedUser.getId());
+
+    }
+
+
 }
 

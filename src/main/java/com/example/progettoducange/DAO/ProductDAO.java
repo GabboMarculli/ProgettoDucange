@@ -2,6 +2,8 @@ package com.example.progettoducange.DAO;
 import com.example.progettoducange.DTO.productDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.model.RegisteredUser;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
@@ -12,10 +14,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-
-import static com.mongodb.client.model.Filters.eq;
-
-
 
 
 import com.example.progettoducange.DTO.productDTO;
@@ -31,8 +29,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.List;
 
-import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.*;
 
 public class ProductDAO {
 
@@ -93,6 +92,36 @@ public class ProductDAO {
             }
         }
         return datetime;
+    }
+
+    //da completare -> non so come rimuovere un prodotto dal frigo
+    /*
+        db.User.aggregate([
+	        { $unwind: "$fridge" },
+	        { $match: { "fridge.name": "YYmargarine" }
+        }])
+
+     */
+    public static void remove_product_mongo(productDTO product_to_delete, int id) {
+        Document ciao;
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+
+
+            List<DBObject> criteria = new ArrayList<DBObject>();
+            criteria.add(new BasicDBObject("id", new BasicDBObject("$eq", id)));
+            criteria.add(new BasicDBObject("fridge.name", new BasicDBObject("$eq", product_to_delete.getName())));
+            criteria.add(new BasicDBObject("fridge.quantity", new BasicDBObject("$eq", product_to_delete.getQuantity())));
+            //criteria.add(new BasicDBObject("fridge.expiringDate", new BasicDBObject("$eq", product_to_delete.getDate())));
+            ciao = collection.find(new BasicDBObject("$and", criteria)).first();
+
+
+
+
+        } catch (Exception error) {
+            System.out.println( error );
+
+        }
     }
 }
 
