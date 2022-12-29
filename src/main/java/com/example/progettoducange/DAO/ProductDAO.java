@@ -70,7 +70,6 @@ public class ProductDAO {
     private static LocalDate getExpiringDateFormatted(String myinput){
         DateTimeFormatter pattern;
         LocalDate datetime;
-
         try {
             pattern = DateTimeFormatter.ofPattern("dd/M/yyyy");
             datetime = LocalDate.parse(myinput, pattern);

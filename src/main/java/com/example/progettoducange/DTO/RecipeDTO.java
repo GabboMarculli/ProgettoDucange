@@ -16,8 +16,14 @@ public class RecipeDTO {
     private String[] IngredientsList;
     private ReviewDTO[] reviews;
 
+    public RecipeDTO(String name, int id, int reviewCount, String totalTime) {
+        Name = name;
+        Id = id;
+        ReviewCount = reviewCount;
+        TotalTime = totalTime;
+    }
 
-    public RecipeDTO(String name, int id, int reviewCount, String photo, String author, String preparationTime, String cooktime, String totalTime, String ingrients,String direction, String[] ingredientsList, ReviewDTO[] reviews) {
+    public RecipeDTO(String name, int id, int reviewCount, String photo, String author, String preparationTime, String cooktime, String totalTime, String ingrients, String direction, String[] ingredientsList, ReviewDTO[] reviews) {
         Name = name;
         Id = id;
         Direction = direction;
@@ -121,7 +127,7 @@ public class RecipeDTO {
     }
 
     public void setDirection(String direction) {
-        direction = direction;
+        this.Direction = direction;
     }
 
     public String getDirection() {
