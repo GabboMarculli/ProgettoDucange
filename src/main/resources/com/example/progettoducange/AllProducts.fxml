@@ -50,9 +50,9 @@
 
     <!-- Beginning of the right part of the Borderpane -->
     <right>
-        <AnchorPane prefHeight="400.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="400.0" prefWidth="650.0" BorderPane.alignment="CENTER">
             <children>
-                <GridPane fx:id="Right" alignment="CENTER" prefHeight="400.0" layoutX="1" layoutY="100"
+                <GridPane fx:id="Right" alignment="CENTER" prefHeight="400.0" layoutX="0" layoutY="100"
                           prefWidth="600.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
                 <columnConstraints>
                     <ColumnConstraints hgrow="SOMETIMES" minWidth="50.0" prefWidth="50.0" />

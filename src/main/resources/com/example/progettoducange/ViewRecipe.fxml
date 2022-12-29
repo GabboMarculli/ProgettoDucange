@@ -1,91 +1,134 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.text.Text?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextArea?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0"
-            xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.progettoducange.Controller.ViewRecipeController">
-    <children>
-        <Pane prefHeight="200.0" style="-fx-background-color: #00bfff;"
-              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <Label layoutX="350.0" layoutY="70.0" text="Recipe Information" textFill="WHITE">
-                    <font>
-                        <Font size="50.0" />
-                    </font>
-                </Label>
-            </children>
-        </Pane>
-        <GridPane alignment="CENTER" layoutX="165.0" layoutY="228.0" prefHeight="320.0"
-                  prefWidth="750.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="50.0" percentWidth="30" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" prefWidth="100.0" percentWidth="70" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <Label prefHeight="18.0" prefWidth="71.0" text="Title">
-                </Label>
-                <Label fx:id="RecipeTitle" prefHeight="18.0" prefWidth="71.0" GridPane.columnIndex="2">
-                </Label>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.geometry.Insets?>
+<AnchorPane prefHeight="548.0" prefWidth="714.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progettoducange.Controller.ViewRecipeController">
+<children>
+    <Pane prefHeight="200.0" style="-fx-background-color: #00bfff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <children>
+            <Label layoutX="350.0" layoutY="70.0" text="Insert new recipe" textFill="WHITE">
+                <font>
+                    <Font size="50.0" />
+                </font>
+            </Label>
+        </children>
+    </Pane>
+    <GridPane alignment="CENTER" layoutX="165.0" layoutY="228.0" prefHeight="320.0" prefWidth="650.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+        <children>
+            <Label text="Title" prefHeight="18.0" prefWidth="30.0">
+            </Label>
+            <Label fx:id="RecipeTitle" GridPane.columnIndex="2">
+            </Label>
 
-                <Label text="Author" GridPane.rowIndex="1">
-                </Label>
-                <Label fx:id="RecipeAuthor" GridPane.rowIndex="1" GridPane.columnIndex="2">
-                </Label>
+            <Label text="Author" prefHeight="18.0" prefWidth="50.0" GridPane.rowIndex="1">
+            </Label>
+            <Label fx:id="RecipeAuthor" GridPane.rowIndex="1" GridPane.columnIndex="2">
+            </Label>
 
-                <Label text="Ingredients" GridPane.rowIndex="2">
-                </Label>
-                <VBox prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                    <TextArea fx:id="RecipeIngredients" prefHeight="100.0" prefWidth="300.0" editable="false"
-                              promptText="Write the ingredients..." wrapText="true">
+            <Label text="Ingredients" GridPane.rowIndex="2" prefHeight="18.0" prefWidth="90.0">
+            </Label>
+            <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                <TextArea fx:id="RecipeIngredients" editable="false" prefHeight="100.0" prefWidth="300.0"
+                          promptText="Write the ingredients..." wrapText="true">
+                </TextArea>
+            </VBox>
+
+            <Label text="Directions" GridPane.rowIndex="4" prefHeight="18.0" prefWidth="90.0">
+            </Label>
+            <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                <TextArea fx:id="RecipeDirections" editable="false" prefHeight="130.0" prefWidth="300.0"
+                          promptText="Write the directions..." wrapText="true">
+                </TextArea>
+            </VBox>
+
+            <VBox prefHeight="200.0" prefWidth="500.0" GridPane.rowIndex="6" GridPane.columnIndex="2">
+                <children>
+                    <TextArea fx:id="ReviewText" prefHeight="100.0" prefWidth="300.0"
+                              promptText="Write your opinion..." wrapText="true" GridPane.rowIndex="6" GridPane.columnIndex="2">
                     </TextArea>
-                </VBox>
+                </children>
+            </VBox>
 
-                <Label text="Directions" GridPane.rowIndex="4">
-                </Label>
-                <VBox prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                    <TextArea fx:id="RecipeDirections" prefHeight="100.0" prefWidth="300.0" editable="false"
-                              promptText="Write the directions..." wrapText="true">
-                    </TextArea>
-                </VBox>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" GridPane.columnIndex="2"
+                    onAction="#submitComment" text="Submit comment" GridPane.rowIndex="8">
+                <font>
+                    <Font size="15.0" />
+                </font>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                    onAction="#goBack" text="Back" GridPane.rowIndex="8">
+                <font>
+                    <Font size="15.0" />
+                </font>
+            </Button>
+            <Label fx:id="invalidSubmit" alignment="CENTER" contentDisplay="CENTER"
+                   prefHeight="16.0" prefWidth="100.0" textAlignment="CENTER" GridPane.rowIndex="9" GridPane.columnIndex="2"
+                   textFill="RED">
+                <opaqueInsets>
+                    <Insets/>
+                </opaqueInsets>
+            </Label>
+        </children>
+    </GridPane>
 
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
-                        onAction="#goBack" text="Back" GridPane.rowIndex="7">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
-
-                <VBox prefHeight="100.0" prefWidth="300.0" GridPane.rowIndex="8">
-                    <children>
-                            <TextArea fx:id="ReviewText" prefHeight="100.0" prefWidth="300.0"
-                                      promptText="Write your opinion..." wrapText="true">
-                            </TextArea>
-                    </children>
-                </VBox>
-            </children>
-        </GridPane>
-    </children>
+    <RadioButton mnemonicParsing="false" selected="true" text="1" layoutX="500" layoutY="530"
+                 textFill="DARKGRAY" >
+        <toggleGroup>
+            <ToggleGroup fx:id="Rate"/>
+        </toggleGroup>
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </RadioButton>
+    <RadioButton mnemonicParsing="false" text="2" layoutX="540" layoutY="530"
+                 textFill="DARKGRAY" toggleGroup="$Rate" >
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </RadioButton>
+    <RadioButton mnemonicParsing="false" text="3" layoutX="580" layoutY="530"
+                 textFill="DARKGRAY" toggleGroup="$Rate">
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </RadioButton>
+    <RadioButton mnemonicParsing="false" text="4" layoutX="620" layoutY="530"
+                 textFill="DARKGRAY" toggleGroup="$Rate">
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </RadioButton>
+    <RadioButton mnemonicParsing="false" text="5" layoutX="660" layoutY="530"
+                 textFill="DARKGRAY" toggleGroup="$Rate">
+        <font>
+            <Font size="14.0"/>
+        </font>
+    </RadioButton>
+</children>
 </AnchorPane>

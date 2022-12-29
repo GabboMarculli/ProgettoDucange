@@ -4,10 +4,16 @@ import java.util.Date;
 import java.util.List;
 
 public class Review {
-    private Long idUser;
-    private List<String> posts;
+    private String idUser;
+    private String posts;
     private Date lastUpdate;
 
+    public Review(String id, String post, Date data)
+    {
+        this.idUser= id;
+        this.posts = post;
+        this.lastUpdate= data;
+    }
     public Date getLastUpdate() {
         return lastUpdate;
     }
@@ -15,17 +21,17 @@ public class Review {
         this.lastUpdate = lastUpdate;
     }
 
-    public List<String> getPosts() {
+    public String getPosts() {
         return posts;
     }
-    public void setPosts(List<String> posts) {
+    public void setPosts(String posts) {
         this.posts = posts;
     }
 
-    public Long getIdUser() {
+    public String getIdUser() {
         return idUser;
     }
-    public void setIdUser(Long idUser) {
+    public void setIdUser(String idUser) {
         this.idUser = idUser;
     }
 
@@ -36,14 +42,5 @@ public class Review {
                 ", posts=" + posts +
                 ", lastUpdate=" + lastUpdate +
                 '}';
-    }
-
-    public Review(Long id, List<String> post)
-    {
-        this.idUser = id;
-        this.posts = post;
-
-        // put in current timestamp
-        this.lastUpdate = new Date();
     }
 }
