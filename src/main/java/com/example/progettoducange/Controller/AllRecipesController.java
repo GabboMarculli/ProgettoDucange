@@ -6,11 +6,9 @@ import com.example.progettoducange.DTO.*;
 import com.example.progettoducange.model.ProductInFridge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import org.bson.Document;
@@ -33,7 +31,10 @@ public class AllRecipesController {
     @FXML
     public TableColumn<RecipeDTO, String> TotalTime;
     @FXML
+    public TextField SearchRecipe;
+    @FXML
     public GridPane Right;
+
 
 
     private ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
@@ -77,20 +78,18 @@ public class AllRecipesController {
         FillTable();
     }
 
+    //funcion that pressed will show "limit" recipe at a time.
+    //the use of called time is specified in getRecipe function
+    int called_times = 0;
     public void FillTable()
     {
-
-        System.out.println("Inserimento dati in frigo");
-
-        ArrayList<RecipeDTO> recipes = RecipeDao.getRecipe(20);
-
+        int limit_views_recipe = 20;
+        ArrayList<RecipeDTO> recipes = RecipeDao.getRecipe(limit_views_recipe,called_times);
         for(RecipeDTO us : recipes) {
             data.add(us);
         }
-
-
+        called_times++;
     }
-
 
     @FXML
     private void addRecipe()
@@ -102,14 +101,45 @@ public class AllRecipesController {
         }
     }
 
+    //function called when visualize all the characterstic of a recipe
     @FXML
     private void viewRecipe(RecipeDTO rowData)
     {
         try {
+            rowData = RecipeDao.getSingleRecipe(rowData);
             ViewRecipeController.Recipe = rowData;
             Application.changeScene("ViewRecipe");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    //function that will search for a user
+
+    public void Search_for_recipe(ActionEvent actionEvent) {
+
+
+
+        String recipeName = SearchRecipe.getText();
+        if(recipeName.equals("")){
+            //retrive the first 20 recipe
+            data.clear();
+            ArrayList<RecipeDTO> recipes = RecipeDao.getRecipe(20,0);
+            for(RecipeDTO us : recipes) {
+                data.add(us);
+            }
+        }
+        else{
+            //search for the requested, there could may be more with that title
+            ArrayList<RecipeDTO> searched_recipe = RecipeDao.getSearchedRecipe(recipeName);
+            if(searched_recipe.isEmpty()){
+                return ;
+            }
+            data.clear();
+            for(RecipeDTO us : searched_recipe) {
+                data.add(us);
+            }
+        }
+        AllRecipesTable.setItems(data);
     }
 }

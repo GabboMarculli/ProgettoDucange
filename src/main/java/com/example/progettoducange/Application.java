@@ -31,7 +31,6 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("LoginPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000 , 700);
         stage.setTitle("Login or Sign up");
@@ -45,7 +44,6 @@ public class Application extends javafx.application.Application {
         neo4j = Neo4jDriver.getInstance();
 
     }
-
 
     public static void main(String[] args) {
         launch();

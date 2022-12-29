@@ -2,8 +2,7 @@ package com.example.progettoducange.DAO;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DTO.IngredientDTO;
-import com.example.progettoducange.DTO.RecipeDTO;
-import com.example.progettoducange.DTO.ReviewDTO;
+import com.example.progettoducange.DTO.*;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.DbMaintaince.Neo4jDriver;
 import com.example.progettoducange.model.Recipe;
@@ -16,8 +15,11 @@ import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.regex;
+import static com.mongodb.client.model.Projections.excludeId;
 import static com.mongodb.client.model.Sorts.descending;
 import static org.neo4j.driver.Values.parameters;
 
@@ -74,8 +76,6 @@ public class RecipeDao {
         }
 
         return true;
-
-
     }
 
     //function to return the index used for creating a new recipe
@@ -88,6 +88,8 @@ public class RecipeDao {
         int index = resultDoc.getInteger("RecipeID") + 1;
         return index;
     }
+
+
 
     public boolean deleteRecipe(Recipe recipe)
     {
@@ -121,14 +123,86 @@ public class RecipeDao {
         }
     }
 
-    public static ArrayList<RecipeDTO> getRecipe(int limit) {
+    //skipped time is used for retriving limit recipe at a time belonging to interval [skipped_times*limit, (skipped_times+1)*limit]
+    public static ArrayList<RecipeDTO> getRecipe(int limit, int skipped_times) {
 
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
         ArrayList<RecipeDTO> recipes_to_return = new ArrayList<>();
+        Bson projectionFields = Projections.fields(
+                Projections.include("RecipeName"),
+                Projections.include("RecipeID"),
+                Projections.include("ReviewCount"),
+                Projections.include("TotalTime"),
+                Projections.excludeId());
 
-        try (MongoCursor<Document> cursor = collection.find().limit(limit).projection(Projections.excludeId()).iterator()) {
+        try (MongoCursor<Document> cursor = collection.find().skip(skipped_times*limit).limit(limit).projection(projectionFields).iterator()) {
+            while (cursor.hasNext()) {
+                String text = cursor.next().toJson(); //i get a json
+                JSONObject obj = new JSONObject(text);
+                recipes_to_return.add(
+                        new RecipeDTO(
+                                obj.getString("RecipeName"),
+                                Integer.parseInt(obj.getString("RecipeID")),
+                                Integer.parseInt(obj.getString("ReviewCount")),
+                                obj.getString("TotalTime")
+                        )
+                );
+            }
+            return recipes_to_return;
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static RecipeDTO getSingleRecipe(RecipeDTO recipe) {
+
+        // retrieve information
+        Bson projectionFields = Projections.fields(
+                Projections.exclude("RecipeName"),
+                Projections.exclude("RecipeID"),
+                Projections.exclude("ReviewCount"),
+                Projections.exclude("TotalTime"),
+                excludeId());
+
+        // retrieve user collection
+        MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
+
+        // we search for username
+        Document obj = collection.find(eq("RecipeID", recipe.getId())).projection(projectionFields).first();
+
+        try{
+            recipe.setPhoto(obj.getString("RecipePhoto"));
+            recipe.setAuthor(obj.getString("Author"));
+            recipe.setPreparationTime(obj.getString("PrepareTime"));
+            recipe.setCooktime(obj.getString("CookTime"));
+            recipe.setIngrients(obj.getString("Ingredients"));
+            recipe.setDirection(obj.getString("Directions"));
+            //this 3 following line to get the list of ingredient
+            List<String> support = obj.getList("IngredientsList",String.class);
+            String[] return_list_ingredient = support.toArray(new String[0]);
+            recipe.setIngredientsList(return_list_ingredient);
+
+            List<Object> l = obj.getList("reviews",Object.class);
+            recipe.setReviews(return_array_reviews(l));
+            return recipe;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static ArrayList<RecipeDTO> getSearchedRecipe(String recipeName) {
+        // retrieve information
+        Bson projectionFields = Projections.fields(
+                excludeId());
+
+        MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
+        ArrayList<RecipeDTO> recipes_to_return = new ArrayList<>();
+
+        String pattern = ".*" + recipeName + ".*";
+
+        try (MongoCursor<Document> cursor = collection.find(regex("RecipeName", pattern)).projection(projectionFields).iterator()) {
             while (cursor.hasNext()) {
                 String text = cursor.next().toJson(); //i get a json
                 JSONObject obj = new JSONObject(text);
@@ -145,15 +219,30 @@ public class RecipeDao {
                                 obj.getString("Ingredients"),
                                 obj.getString("Directions"),
                                 getIngedientList(obj.getString("IngredientsList")),
-                                return_array_reviews("{ reviews: " + obj.getString("reviews") + "}")
+                                return_array_reviews_json("{ reviews: " + obj.getString("reviews") + "}")
                         )
                 );
             }
+
             return recipes_to_return;
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
     }
+
+    private static ReviewDTO[] return_array_reviews(List<Object> l) {
+        ReviewDTO return_Array[] = new ReviewDTO[l.size()];
+        for(int i=0; i<l.size();i++){
+            Object support = l.get(i);
+            return_Array[i] = new ReviewDTO(
+                    ((Document) support).getString("profileID"),
+                    ((Document) support).getInteger("Rate"),
+                    ((Document) support).getString("Comment")
+            );
+        }
+        return return_Array;
+    }
+
 
     public static String[] getIngedientList(String d){
         return rubahFormat(d).split(",");
@@ -163,7 +252,7 @@ public class RecipeDao {
         return d.replaceAll("[\\[\\]\\\"]","");
     }
 
-    private static ReviewDTO[] return_array_reviews(String reviews) throws JSONException {
+    private static ReviewDTO[] return_array_reviews_json(String reviews) throws JSONException {
         JSONObject obj = new JSONObject(reviews);
         JSONArray arr = obj.getJSONArray("reviews");
 
@@ -176,6 +265,8 @@ public class RecipeDao {
         }
         return array_of_reviews;
     }
+
+
 
     public static void addReview(ReviewDTO review, int id_recipe){
         try {
