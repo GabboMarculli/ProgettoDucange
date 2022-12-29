@@ -35,6 +35,14 @@ public class AllProductsController {
     public void initialize()
     {
 
+        ProductNameColumn.setCellValueFactory(
+                new PropertyValueFactory<IngredientDTO,String>("food")
+        );
+        QuantityInMyFridge.setCellValueFactory(
+                new PropertyValueFactory<IngredientDTO,String>("measure")
+        );
+        AllProductsTable.setItems(data);
+
         Callback<TableColumn<IngredientDTO, String>, TableCell<IngredientDTO, String>> cellFactory
                 =   new Callback<>() {
             @Override
@@ -52,7 +60,7 @@ public class AllProductsController {
                         } else {
                             btn.setOnAction(event -> {
                                 IngredientDTO ingredientDTO = getTableView().getItems().get(getIndex());
-
+                                IngredientDAO.addToFridge(ingredientDTO);
                             });
                             setGraphic(btn);
                             setText(null);
@@ -79,29 +87,16 @@ public class AllProductsController {
         fillTable();
     }
 
+    int called_times_products = 0;
     public void fillTable()
     {
-        if(prova) {
-            ProductNameColumn.setCellValueFactory(
-                    new PropertyValueFactory<IngredientDTO,String>("food")
-            );
-            QuantityInMyFridge.setCellValueFactory(
-                    new PropertyValueFactory<IngredientDTO,String>("measure")
-            );
-            AllProductsTable.setItems(data);
-            prova = false;
-            System.out.println("Inizializzazione dati in Product");
-        }
+        int limit_views_product = 20;
+        ArrayList<IngredientDTO> ingredientList = IngredientDAO.getListOfIngredient(limit_views_product, called_times_products);
 
-        ArrayList<IngredientDTO> ingredientList = IngredientDAO.getListOfIngredient(20);
-
-        // ########################################################################################################
-        // Per la quantità nel frigo, bisogna ogni volta scorrere il db per vedere, di ogni prodotto, quanti ne ho nel frigo?
-        // Oppure magari, quando un utente fa login, si salva in locale il frigo con le rispettive quantità? In questo secondo caso, è un KVDB?
-        // ########################################################################################################
-
-        for(IngredientDTO us : ingredientList) {
-            data.add(us);
+        if(ingredientList!= null)
+        {
+            data.addAll(ingredientList);
+            called_times_products++;
         }
     }
 

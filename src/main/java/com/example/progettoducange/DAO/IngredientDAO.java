@@ -40,13 +40,13 @@ public class IngredientDAO {
         }
     }
 
-    public static ArrayList<IngredientDTO> getListOfIngredient(int limit){
+    public static ArrayList<IngredientDTO> getListOfIngredient(int limit, int skipped_times){
         // retrieve ingredient collection
         MongoCollection<Document> collection = MongoDbDriver.getProductCollection();
 
         ArrayList<IngredientDTO> ingredients_to_return = new ArrayList<>();
 
-        try (MongoCursor<Document> cursor = collection.find().limit(limit).projection(Projections.excludeId()).iterator()) {
+        try (MongoCursor<Document> cursor = collection.find().skip(limit*skipped_times).limit(limit).projection(Projections.excludeId()).iterator()) {
             while (cursor.hasNext()) {
                 String text = cursor.next().toJson(); //i get a json
                 JSONObject obj = new JSONObject(text);

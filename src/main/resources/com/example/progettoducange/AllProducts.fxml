@@ -42,7 +42,13 @@
                         <TableColumn fx:id="AddToFridge" prefWidth="96.0" text="Add to fridge" />
                     </columns>
                 </TableView>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="555.0" mnemonicParsing="false" onAction="#goToHome" text="Back ">
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="560.0" mnemonicParsing="false" onAction="#goToHome" text="Back ">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="130.0" layoutY="560.0" mnemonicParsing="false"
+                        onAction="#fillTable" text="Show more ">
                     <font>
                         <Font size="15.0" />
                     </font>
