@@ -19,6 +19,27 @@ import java.util.ArrayList;
 import static com.mongodb.client.model.Filters.eq;
 
 public class IngredientDAO {
+    public static IngredientDTO getIngredient(String food)
+    {
+        MongoCollection<Document> collection = MongoDbDriver.getProductCollection();
+        try {
+            Document obj = collection.find(eq("food", food)).first();
+            IngredientDTO result = new IngredientDTO(obj.getString("food"),
+                    obj.getString("measure"),
+                    obj.getString("grams"),
+                    obj.getString("calories"),
+                    obj.getString("protein"),
+                    obj.getString("fat"),
+                    obj.getString("fiber"),
+                    obj.getString("carbs"),
+                    obj.getString("category"));
+            return result;
+        } catch (Exception error){
+            System.out.println(error);
+            return null;
+        }
+    }
+
     public static ArrayList<IngredientDTO> getListOfIngredient(int limit){
         // retrieve ingredient collection
         MongoCollection<Document> collection = MongoDbDriver.getProductCollection();

@@ -31,6 +31,10 @@
         <!-- An AnchorPane in the Left BorderPane -->
         <AnchorPane prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
             <children>
+                <TextField fx:id="SearchIngredient" layoutX="170.0" layoutY="35.0" promptText="Seach for a ingredient" />
+                <Button fx:id="SearchIngredientButton" layoutX="343.0" layoutY="35.0" mnemonicParsing="false"
+                        onAction="#Search_for_ingredient" text="Search" />
+
                 <TableView fx:id="AllProductsTable" layoutX="63.0" layoutY="76.0" prefHeight="477.0" prefWidth="390.0">
                     <columns>
                         <TableColumn fx:id="ProductNameColumn" prefWidth="137.0" text="Name" />

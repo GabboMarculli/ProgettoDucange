@@ -25,6 +25,8 @@ public class AllProductsController {
     public TableColumn AddToFridge;
     @FXML
     public GridPane Right;
+    @FXML
+    public TextField SearchIngredient;
 
     public boolean prova = true;
 
@@ -133,6 +135,24 @@ public class AllProductsController {
         printProduct("Fiber: ", rowData.getFiber(), 6);
         printProduct("Carbs", rowData.getCarbs(), 7);
         printProduct("Category: ", rowData.getCategory(), 8);
+    }
+
+    public void Search_for_ingredient()
+    {
+        String ingredientName = SearchIngredient.getText();
+        if(!ingredientName.equals("")) {
+            try {
+                IngredientDTO searched_ingredients = IngredientDAO.getIngredient(ingredientName);
+                if(searched_ingredients != null)
+                {
+                    data.clear();
+                    data.add(searched_ingredients);
+                    AllProductsTable.setItems(data);
+                }
+            } catch (Error e){
+                System.out.println(e);
+            }
+        }
     }
 
     @FXML
