@@ -20,6 +20,13 @@
                         </ImageView>
                     </graphic>
                 </Button>
+
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" layoutY="20.0" prefHeight="45.0" prefWidth="250.0" text="Users">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Label>
+
                 <Pane prefHeight="6.0" prefWidth="533.0" />
             </items>
         </ToolBar>
@@ -27,11 +34,10 @@
     <bottom>
         <Pane prefHeight="650.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="270.0" layoutY="20.0" prefHeight="45.0" prefWidth="250.0" text="Users">
-                    <font>
-                        <Font size="30.0" />
-                    </font>
-                </Label>
+                <TextField fx:id="SearchUser" layoutX="170.0" layoutY="35.0" promptText="Seach for a user" />
+                <Button fx:id="SearchUserButton" layoutX="343.0" layoutY="35.0" mnemonicParsing="false"
+                        onAction="#Search_for_user" text="Search" />
+
                 <Button fx:id = "IncrementButton" alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="570.0"
                         mnemonicParsing="false" text="Show more" onAction="#fillTable">
                     <font>
