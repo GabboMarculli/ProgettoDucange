@@ -3,6 +3,7 @@ package com.example.progettoducange.Controller;
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.RecipeDao;
 import com.example.progettoducange.DTO.RecipeDTO;
+import com.example.progettoducange.Utils.Utils;
 import com.example.progettoducange.model.Recipe;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -37,60 +38,60 @@ public class AddRecipeController {
     @FXML
     private void addRecipe()
     {
-        if (RecipeTitle.getText().isBlank() || Ingredients.getText().isBlank() || Directions.getText().isBlank()) {
+        if (RecipeTitle.getText().isBlank() || Ingredients.getText().isBlank() || Directions.getText().isBlank()
+            || CookTime.getText().isBlank() || TotalTime.getText().isBlank() || PreparationTime.getText().isBlank()) {
             invalidRecipe.setText("The recipe fields are required!");
             invalidRecipe.setStyle(errorMessage);
 
             if (RecipeTitle.getText().isBlank()) {
                 RecipeTitle.setStyle(errorStyle);
-            } else if (Ingredients.getText().isBlank()) {
+            } else if (PreparationTime.getText().isBlank()) {
+                PreparationTime.setStyle(errorStyle);
+            } else if (CookTime.getText().isBlank()) {
+                CookTime.setStyle(errorStyle);
+            } else if (TotalTime.getText().isBlank()){
+                TotalTime.setStyle(errorStyle);
+            }else if (Ingredients.getText().isBlank()) {
                 Ingredients.setStyle(errorStyle);
             } else if (Directions.getText().isBlank()) {
                 Directions.setStyle(errorStyle);
             }
-        }
+        } else if(!Utils.isNumeric(CookTime.getText()) || !Utils.isNumeric(TotalTime.getText()) ||
+                !Utils.isNumeric(PreparationTime.getText())){
+            invalidRecipe.setText("The time fields required integer values!");
+            invalidRecipe.setStyle(errorMessage);
 
-        // ######################################################################
-        // Come glielo passo l'id?
-        // ingredients dev'essere una lista di prodotti o va bene metterlo stringa dentro 'recipe' ?  -> va messo come array
-        // E poi, possono esistere due ricette con lo stesso nome? -> ma si
-        // ######################################################################
-
-        // Commento perchè altrimenti darebbe errore
-        /*
-        RecipeDTO new_recipe = new RecipeDTO(
-                Application.authenticatedUser,
-                Ingredients.getText() ,
-                RecipeTitle.getText(),
-                Directions.getText(), 0);
-        */
-        RecipeDTO new_recipe = new RecipeDTO(
-                RecipeTitle.getText(),
-                RecipeDao.get_id_recipe(), //add id
-                0, // at the beginning it has no reviews
-                null, //add photo
-                Application.authenticatedUser.getUsername(),
-                PreparationTime.getText(),
-                CookTime.getText(),
-                TotalTime.getText(),
-                Ingredients.getText(),
-                Directions.getText(),
-                return_list_of_ingredient(Ingredients.getText()),
-                null
+            if(!Utils.isNumeric(CookTime.getText())) {
+                CookTime.setStyle(errorStyle);
+            } else if(!Utils.isNumeric(TotalTime.getText())) {
+                TotalTime.setStyle(errorStyle);
+            } else if(!Utils.isNumeric(PreparationTime.getText())) {
+                PreparationTime.setStyle(errorStyle);
+            }
+        } else{
+            RecipeDTO new_recipe = new RecipeDTO(
+                        RecipeTitle.getText(),
+                        RecipeDao.get_id_recipe(), //add id
+                        0, // at the beginning it has no reviews
+                        null, //add photo
+                        Application.authenticatedUser.getUsername(),
+                        PreparationTime.getText(),
+                        CookTime.getText(),
+                        TotalTime.getText(),
+                        Ingredients.getText(),
+                        Directions.getText(),
+                        return_list_of_ingredient(Ingredients.getText()),
+                        null
                 );
 
-        //insert this recipe into mongodB and in Neo4j;
-        RecipeDao.addRecipe(new_recipe);
-
-        /*
-        if(RecipeDao.addRecipe(new_recipe)){
-            invalidRecipe.setText("Recipe adding is failed!");
-            invalidRecipe.setStyle(errorMessage);
-        } else {
-            invalidRecipe.setText("Add Successful!");
-            invalidRecipe.setStyle(successMessage);
-        }
-         */
+                if (!RecipeDao.addRecipe(new_recipe)) {
+                    invalidRecipe.setText("Recipe adding is failed!");
+                    invalidRecipe.setStyle(errorMessage);
+                } else {
+                    invalidRecipe.setText("Add Successful!");
+                    invalidRecipe.setStyle(successMessage);
+                }
+            }
     }
 
     private String[] return_list_of_ingredient(String list){

@@ -32,4 +32,21 @@ public class Utils {
 
         return PASSWORD_REGEX.matcher(password).matches();
     }
+
+    public static boolean isNumeric(String string) {
+        int intValue;
+
+        if(string == null || string.equals("")) {
+            System.out.println("String cannot be parsed, it is null or empty.");
+            return false;
+        }
+
+        try {
+            intValue = Integer.parseInt(string);
+            return true;
+        } catch (NumberFormatException e) {
+            System.out.println("Input String cannot be parsed to Integer.");
+        }
+        return false;
+    }
 }
