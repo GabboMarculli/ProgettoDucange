@@ -55,6 +55,7 @@ public class ViewRecipeController {
             RecipeDao.addReview(rev, Recipe.getId());
             invalidSubmit.setText("Successfull add!");
             invalidSubmit.setStyle(successMessage);
+
         }
     }
 

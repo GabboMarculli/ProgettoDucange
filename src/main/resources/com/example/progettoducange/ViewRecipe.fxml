@@ -11,6 +11,7 @@
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.geometry.Insets?>
+
 <AnchorPane prefHeight="548.0" prefWidth="714.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progettoducange.Controller.ViewRecipeController">
 <children>
