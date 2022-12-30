@@ -55,7 +55,7 @@
 
                 <TableView fx:id="UserTable" layoutX="103.0" layoutY="76.0" prefHeight="477.0" prefWidth="480.0">
                     <columns>
-                        <TableColumn fx:id="UsernameColumn" prefWidth="200" text="Name" />
+                        <TableColumn fx:id="UsernameColumn" prefWidth="200" text="Username" />
                         <TableColumn fx:id="CountryColumn" prefWidth="155" text="Country" />
                         <TableColumn fx:id="NumberOfRecipe" prefWidth="130" text="Number of recipe" />
                     </columns>

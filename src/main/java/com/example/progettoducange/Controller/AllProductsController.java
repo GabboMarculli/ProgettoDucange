@@ -3,6 +3,7 @@ package com.example.progettoducange.Controller;
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.*;
 import com.example.progettoducange.DTO.*;
+import com.example.progettoducange.Utils.Utils;
 import com.example.progettoducange.model.ProductInFridge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 public class AllProductsController {
     @FXML
@@ -27,6 +29,10 @@ public class AllProductsController {
     public GridPane Right;
     @FXML
     public TextField SearchIngredient;
+    @FXML
+    public TextField Quantity;
+    @FXML
+    public TextField Expire_date;
 
     public boolean prova = true;
 
@@ -100,6 +106,27 @@ public class AllProductsController {
         }
     }
 
+    public boolean checkAddToFridge()
+    {
+        return true;
+        // dà errore dio bestia
+        //return (!Quantity.getText().isBlank() && Utils.isNumeric(Quantity.getText()) && !Expire_date.getText().isBlank());
+    }
+
+    public void printAddToFridge(String label, String _id, Integer row_index)
+    {
+        final Label lab = new Label(label);
+        final TextField field = new TextField();
+        field.setId(_id);
+
+        GridPane.setRowIndex(lab, row_index);
+        GridPane.setRowIndex(field, row_index);
+        GridPane.setColumnIndex(field, 2);
+
+        Right.getChildren().add(lab);
+        Right.getChildren().add(field);
+    }
+
     public void printProduct(String name, String text, Integer index)
     {
         final Label label = new Label(name);
@@ -132,7 +159,22 @@ public class AllProductsController {
         printProduct("Carbs", rowData.getCarbs(), 7);
         printProduct("Category: ", rowData.getCategory(), 8);
 
-        //funzione che aggiunge button e due textfield
+        printAddToFridge("Quantity: ", "Quantity", 10);
+        printAddToFridge("Expire_date: ", "Expire_date", 11);
+
+        final Button Submit_in_fridge = new Button("Add ");
+        GridPane.setRowIndex(Submit_in_fridge,12);
+        Right.getChildren().add(Submit_in_fridge);
+
+        Submit_in_fridge.setOnAction(event -> {
+            if(checkAddToFridge()){
+                ProductInFridge p = new ProductInFridge(rowData.getFood(), Integer.parseInt(Quantity.getText()),
+                            LocalDate.parse(Expire_date.getText()));
+                ObservableList<ProductInFridge> p_list = null;
+                p_list.add(p);
+                FridgeDAO.updateFridge(p_list);
+            }
+        });
     }
 
     public void Search_for_ingredient()

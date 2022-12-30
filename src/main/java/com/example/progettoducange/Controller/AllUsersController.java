@@ -45,13 +45,10 @@ public class AllUsersController {
 
     public void initialize() {
         UsernameColumn.setCellValueFactory(
-                new PropertyValueFactory<userDTO, String>("name")
+                new PropertyValueFactory<userDTO, String>("username")
         );
         CountryColumn.setCellValueFactory(
                 new PropertyValueFactory<userDTO, String>("country")
-        );
-        NumberOfRecipe.setCellValueFactory(
-                new PropertyValueFactory<userDTO, LocalDate>("id")
         );
         FollowButtonColumn.setCellValueFactory(
                 new PropertyValueFactory<>(""));
