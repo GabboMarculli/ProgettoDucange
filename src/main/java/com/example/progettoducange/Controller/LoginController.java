@@ -113,18 +113,19 @@ public class LoginController {
     @FXML
     protected void onSignUpButtonClick() {
         if (signUpUsernameTextField.getText().isBlank() || signUpEmailTextField.getText().isBlank() || signUpUsernameTextField.getText().equals("admin") ||
-                signUpPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().isBlank()) {
-            invalidSignupCredentials.setText("Please fill in all fields!");
+                signUpPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().isBlank() || signUpUsernameTextField.getText().length() > 16 ||
+                signUpPasswordField.getText().length() > 16 || signUpRepeatPasswordField.getText().length()> 16) {
+            invalidSignupCredentials.setText("Please fill in all fields! Max length is 16.");
             invalidSignupCredentials.setStyle(errorMessage);
             invalidLoginCredentials.setText("");
 
-            if (signUpUsernameTextField.getText().isBlank()) {
+            if (signUpUsernameTextField.getText().isBlank() || signUpUsernameTextField.getText().length() > 16) {
                 signUpUsernameTextField.setStyle(errorStyle);
             } else if (signUpEmailTextField.getText().isBlank()) {
                 signUpEmailTextField.setStyle(errorStyle);
-            } else if (signUpPasswordField.getText().isBlank()) {
+            } else if (signUpPasswordField.getText().isBlank() || signUpPasswordField.getText().length() > 16) {
                 signUpPasswordField.setStyle(errorStyle);
-            } else if (signUpRepeatPasswordField.getText().isBlank()) {
+            } else if (signUpRepeatPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().length()> 16) {
                 signUpRepeatPasswordField.setStyle(errorStyle);
             }
         } else if (!Utils.CheckEmail(signUpEmailTextField.getText())) {
@@ -150,16 +151,8 @@ public class LoginController {
             signUpUsernameTextField.setStyle(errorStyle);
             invalidLoginCredentials.setText("");
         } else {
-
-
-            // ########################################################################################################
-            // Il problema è: lascio l'email da inserire nel signup? in questo caso bisogna modificare il db aggiungendo le email
-            // o altrimenti non metto l'email e cambio il resto dei campi nel signup (probabilmente questa seconda è la più veloce)
-            // Per recuperare l'id, in ogni caso, forse è meglio salvare in una variabile globale l'id più alto e aggiornarlo via via
-
-
-            RegisteredUser user = new RegisteredUser(0, signUpUsernameTextField.getText(),signUpPasswordField.getText(),signUpEmailTextField.getText());
-            //registriamo lo usera e otteniamo il suo id;
+            RegisteredUser user = new RegisteredUser(0, signUpUsernameTextField.getText(),signUpPasswordField.getText(), signUpEmailTextField.getText());
+            //registriamo lo user e otteniamo il suo id;
             int user_index = userDAO.signup(user);
 
             if(user_index == 0){

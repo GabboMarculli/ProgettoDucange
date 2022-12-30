@@ -54,21 +54,25 @@ public class FridgePageController {
         fillTable();
 
         DecrementButton.setOnAction(event -> {
-            Integer index = FridgeTable.getSelectionModel().getSelectedIndex();
-            ProductInFridge prod = FridgeTable.getItems().get(index);
-            if(prod.getQuantity()-1 != 0){
-                prod.setQuantity(prod.getQuantity() - 1);
-                FridgeTable.getItems().set(index, prod);
+            if(FridgeTable.getSelectionModel().getSelectedIndex() >= 0)
+            {
+                Integer index = FridgeTable.getSelectionModel().getSelectedIndex();
+                ProductInFridge prod = FridgeTable.getItems().get(index);
+                if (prod.getQuantity() - 1 != 0) {
+                    prod.setQuantity(prod.getQuantity() - 1);
+                    FridgeTable.getItems().set(index, prod);
+                } else
+                    remove_product(event);
             }
-            else
-                remove_product(event);
         });
 
         IncrementButton.setOnAction(event -> {
-            Integer index = FridgeTable.getSelectionModel().getSelectedIndex();
-            ProductInFridge prod = FridgeTable.getItems().get(index);
-            prod.setQuantity(prod.getQuantity() + 1);
-            FridgeTable.getItems().set(index, prod);
+            if(FridgeTable.getSelectionModel().getSelectedIndex() >= 0) {
+                Integer index = FridgeTable.getSelectionModel().getSelectedIndex();
+                ProductInFridge prod = FridgeTable.getItems().get(index);
+                prod.setQuantity(prod.getQuantity() + 1);
+                FridgeTable.getItems().set(index, prod);
+            }
         });
     }
 
@@ -108,17 +112,17 @@ public class FridgePageController {
     }
 
     public void remove_product(ActionEvent actionEvent) {
-
-        ProductInFridge selectedItem = FridgeTable.getSelectionModel().getSelectedItem();
-        FridgeTable.getItems().remove(selectedItem);
-        //create a product and remove it from the db
-        productDTO product_to_delete = new productDTO(
-                selectedItem.getName(),
-                selectedItem.getQuantity(),
-                selectedItem.getExpireDate()
-        );
-        ProductDAO.remove_product_mongo(product_to_delete,Application.authenticatedUser.getId());
-
+        if(FridgeTable.getSelectionModel().getSelectedIndex() >= 0) {
+            ProductInFridge selectedItem = FridgeTable.getSelectionModel().getSelectedItem();
+            FridgeTable.getItems().remove(selectedItem);
+            //create a product and remove it from the db
+            productDTO product_to_delete = new productDTO(
+                    selectedItem.getName(),
+                    selectedItem.getQuantity(),
+                    selectedItem.getExpireDate()
+            );
+            ProductDAO.remove_product_mongo(product_to_delete, Application.authenticatedUser.getId());
+        }
     }
 
 
