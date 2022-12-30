@@ -64,7 +64,6 @@ public class ProductDAO {
         }
     }
 
-
     //function to get a LocalDate type from a String. I'll do the cascade of try-catch cause the format of the date may vary
     private static LocalDate getExpiringDateFormatted(String myinput){
         DateTimeFormatter pattern;
@@ -94,7 +93,7 @@ public class ProductDAO {
         return datetime;
     }
 
-    //da completare -> non so come rimuovere un prodotto dal frigo
+    //DA COMPLETARE -> non so come rimuovere un prodotto dal frigo
     /*
         db.User.aggregate([
 	        { $unwind: "$fridge" },

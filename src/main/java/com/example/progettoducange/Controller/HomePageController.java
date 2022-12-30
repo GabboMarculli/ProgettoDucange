@@ -47,7 +47,7 @@ public class HomePageController {
     /*
     @FXML
     protected void goToSavedRecipes() throws IOException {
-        Application.changeScene("SavedRecipes");
+        Application.changeScene("FollowedUser");
     }
      */
 

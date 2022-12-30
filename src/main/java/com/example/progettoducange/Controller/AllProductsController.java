@@ -114,6 +114,7 @@ public class AllProductsController {
         GridPane.setColumnIndex(labelText, 2);
 
         Right.getChildren().add(label);
+
         Right.getChildren().add(labelText);
     }
 
@@ -130,6 +131,8 @@ public class AllProductsController {
         printProduct("Fiber: ", rowData.getFiber(), 6);
         printProduct("Carbs", rowData.getCarbs(), 7);
         printProduct("Category: ", rowData.getCategory(), 8);
+
+        //funzione che aggiunge button e due textfield
     }
 
     public void Search_for_ingredient()

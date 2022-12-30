@@ -103,7 +103,7 @@ public class LoginController {
                     loginPasswordField.setStyle(errorStyle);
                     invalidLoginCredentials.setText("");
                 }
-        }
+          }
     }
 
     protected void goToHomePage() throws IOException {

@@ -59,7 +59,6 @@ public class FridgePageController {
             if(prod.getQuantity() != 0)
                 prod.setQuantity(prod.getQuantity() - 1);
             FridgeTable.getItems().set(index, prod);
-
         });
 
         IncrementButton.setOnAction(event -> {

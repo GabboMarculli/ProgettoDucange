@@ -119,10 +119,11 @@ public class AllUsersController {
             if(!username.equals("")) {
                 try {
                     String[] searched_user = userDAO.getUser(username);
-                    userDTO us = new userDTO(Long.parseLong(searched_user[0]),searched_user[1], null, searched_user[3],
-                            searched_user[4],null, searched_user[2]);
+
                     if(searched_user != null)
                     {
+                        userDTO us = new userDTO(Long.parseLong(searched_user[0]),searched_user[1], null, searched_user[3],
+                                searched_user[4],null, searched_user[2]);
                         data.clear();
                         data.add(us);
                         UserTable.setItems(data);

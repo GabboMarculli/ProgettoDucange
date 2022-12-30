@@ -95,6 +95,7 @@ public class userDAO {
 
         // we search for username
         Document resultDoc = collection.find(eq("username", username)).projection(excludeId()).first();
+
         String return_fields[]={
                 String.valueOf(resultDoc.getInteger("id")),
                 resultDoc.getString("username"),
