@@ -57,7 +57,7 @@
                 <Button fx:id="MyFridge" contentDisplay="TOP" mnemonicParsing="false" onAction ="#goToFridge"
                         prefHeight="100.0" prefWidth="170.0" text="My fridge" GridPane.columnIndex="1" GridPane.rowIndex="1">
                 </Button>
-                <Button fx:id="FollowedUser" contentDisplay="TOP" mnemonicParsing="false"
+                <Button fx:id="FollowedUser" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToFolloewdUser"
                         prefHeight="100.0" prefWidth="170.0" text="Followed User" GridPane.rowIndex="1">
                 </Button>
             </children>

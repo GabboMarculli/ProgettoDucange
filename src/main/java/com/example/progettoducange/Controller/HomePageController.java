@@ -44,11 +44,9 @@ public class HomePageController {
     protected void goToRecipes() throws IOException {
         Application.changeScene("AllRecipes");
     }
-    /*
+
     @FXML
-    protected void goToSavedRecipes() throws IOException {
+    protected void goToFolloewdUser() throws IOException {
         Application.changeScene("FollowedUser");
     }
-     */
-
 }

@@ -56,9 +56,12 @@ public class FridgePageController {
         DecrementButton.setOnAction(event -> {
             Integer index = FridgeTable.getSelectionModel().getSelectedIndex();
             ProductInFridge prod = FridgeTable.getItems().get(index);
-            if(prod.getQuantity() != 0)
+            if(prod.getQuantity()-1 != 0){
                 prod.setQuantity(prod.getQuantity() - 1);
-            FridgeTable.getItems().set(index, prod);
+                FridgeTable.getItems().set(index, prod);
+            }
+            else
+                remove_product(event);
         });
 
         IncrementButton.setOnAction(event -> {
