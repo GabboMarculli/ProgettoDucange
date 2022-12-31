@@ -4,6 +4,7 @@ import com.example.progettoducange.DTO.productDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.model.ProductInFridge;
 import com.example.progettoducange.model.RegisteredUser;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
@@ -95,27 +96,32 @@ public class ProductDAO {
         return datetime;
     }
 
-    //DA COMPLETARE -> non so come rimuovere un prodotto dal frigo
-    /*
-        db.User.aggregate([
-	        { $unwind: "$fridge" },
-	        { $match: { "fridge.name": "YYmargarine" }
-        }])
 
-     */
+    //function to remore an element
     public static void remove_product_mongo(productDTO product_to_delete, int id) {
-        Document ciao;
+
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+            Document doc = collection.find(eq("id", id)).first();
 
 
-            List<DBObject> criteria = new ArrayList<DBObject>();
-            criteria.add(new BasicDBObject("id", new BasicDBObject("$eq", id)));
-            criteria.add(new BasicDBObject("fridge.name", new BasicDBObject("$eq", product_to_delete.getName())));
-            criteria.add(new BasicDBObject("fridge.quantity", new BasicDBObject("$eq", product_to_delete.getQuantity())));
-            //criteria.add(new BasicDBObject("fridge.expiringDate", new BasicDBObject("$eq", product_to_delete.getDate())));
-            ciao = collection.find(new BasicDBObject("$and", criteria)).first();
-        } catch (Exception error) {
+            String date = product_to_delete.getDate().getDayOfMonth() + "/" +
+                    product_to_delete.getDate().getMonthValue() + "/" +
+                    product_to_delete.getDate().getYear();
+
+            Bson query = eq("id", Application.authenticatedUser.getId());
+
+            BasicDBObject update =
+                    new BasicDBObject("fridge",
+                            new BasicDBObject("name", product_to_delete.getName())
+                                    .append("expiringDate", date)
+                    );
+            collection.updateOne(query, new BasicDBObject("$pull", update));
+
+
+            /******/
+
+            } catch (Exception error) {
             System.out.println( error );
         }
     }
@@ -129,7 +135,10 @@ public class ProductDAO {
             BasicDBObject product_mongo = new BasicDBObject();
             product_mongo.put("name", p.getName());
             product_mongo.put("quantity", p.getQuantity());
-            product_mongo.put("expiringDate", p.getDate());
+                LocalDate date = p.getDate();
+                DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
+                String text = date.format(formatters);
+            product_mongo.put("expiringDate", text);
 
             BasicDBObject update = new BasicDBObject();
             update.put("$push", new BasicDBObject("fridge",product_mongo));
@@ -141,6 +150,36 @@ public class ProductDAO {
     }
 }
 
+/*
+    Bson query = and(
+            eq("_id", Application.authenticatedUser.getId()),
+            eq("fridge.name", p.getName()),
+            eq("fridge.expiringDate", date )
+    );
+
+    Document documentList = new Document();
+        documentList.append(String.format("%s.$.%s","fridge","quantity"), "quantity update 1");
+        Document document = new Document("$set",documentList));
+
+    Single.fromPublisher(
+            this.repository.getCollection(
+            ConstantValues.PRODUCT_CATEGORY_COLLECTION_NAME, Category.class)
+            .updateOne(query, document)).subscribe();
 
 
+Bson query = and(
+        eq("id", Application.authenticatedUser.getId()),
+        eq("fridge.name", p.getName()),
+        eq("fridge.expiringDate", date )
+);
+
+    BasicDBObject set = new BasicDBObject(
+            "$set",
+            new BasicDBObject("System.system_type.Tenant.$.Tenant_Info", p.getQuantity())
+    );
+collection.updateOne(query, set);
+
+
+
+ */
 

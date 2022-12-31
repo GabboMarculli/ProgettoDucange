@@ -15,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -174,8 +175,13 @@ public void printAddToFridge(String label, String _id, Integer row_index)
 
         Submit_in_fridge.setOnAction(event -> {
             if(checkAddToFridge()){
-                //ProductInFridge p = new ProductInFridge(rowData.getFood(), Integer.parseInt(Quantity.getText()), LocalDate.parse(Expire_date.getText()));
-                productDTO p = new productDTO(rowData.getFood(), Integer.parseInt(Quantity.getText()), ProductDAO.getExpiringDateFormatted("3/3/2000"));
+
+                String date = Expire_date.getText();
+                DateTimeFormatter pattern =
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                LocalDate formattedDate = LocalDate.parse(date, pattern);
+
+                productDTO p = new productDTO(rowData.getFood(), Integer.parseInt(Quantity.getText()),formattedDate );
                 ProductDAO.add_product(p);
             }
         });
