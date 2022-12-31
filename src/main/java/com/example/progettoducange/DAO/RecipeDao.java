@@ -243,7 +243,6 @@ public class RecipeDao {
         return return_Array;
     }
 
-
     public static String[] getIngedientList(String d){
         return rubahFormat(d).split(",");
     }
@@ -265,8 +264,6 @@ public class RecipeDao {
         }
         return array_of_reviews;
     }
-
-
 
     public static void addReview(ReviewDTO review, int id_recipe){
         try {

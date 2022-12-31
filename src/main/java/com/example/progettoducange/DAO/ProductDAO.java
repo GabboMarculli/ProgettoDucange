@@ -1,6 +1,8 @@
 package com.example.progettoducange.DAO;
+import com.example.progettoducange.Application;
 import com.example.progettoducange.DTO.productDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
+import com.example.progettoducange.model.ProductInFridge;
 import com.example.progettoducange.model.RegisteredUser;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -65,7 +67,7 @@ public class ProductDAO {
     }
 
     //function to get a LocalDate type from a String. I'll do the cascade of try-catch cause the format of the date may vary
-    private static LocalDate getExpiringDateFormatted(String myinput){
+    public static LocalDate getExpiringDateFormatted(String myinput){
         DateTimeFormatter pattern;
         LocalDate datetime;
         try {
@@ -113,13 +115,28 @@ public class ProductDAO {
             criteria.add(new BasicDBObject("fridge.quantity", new BasicDBObject("$eq", product_to_delete.getQuantity())));
             //criteria.add(new BasicDBObject("fridge.expiringDate", new BasicDBObject("$eq", product_to_delete.getDate())));
             ciao = collection.find(new BasicDBObject("$and", criteria)).first();
-
-
-
-
         } catch (Exception error) {
             System.out.println( error );
+        }
+    }
 
+    public static void add_product(productDTO p){
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+            BasicDBObject query = new BasicDBObject();
+            query.put( "id", Application.authenticatedUser.getId());
+
+            BasicDBObject product_mongo = new BasicDBObject();
+            product_mongo.put("name", p.getName());
+            product_mongo.put("quantity", p.getQuantity());
+            product_mongo.put("expiringDate", p.getDate());
+
+            BasicDBObject update = new BasicDBObject();
+            update.put("$push", new BasicDBObject("fridge",product_mongo));
+
+            collection.updateOne(query, update);
+        } catch (Exception error) {
+            System.err.println( error );
         }
     }
 }

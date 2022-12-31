@@ -16,6 +16,8 @@ import javafx.util.Callback;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+
 public class AllProductsController {
     @FXML
     public TableView<IngredientDTO> AllProductsTable;
@@ -49,35 +51,6 @@ public class AllProductsController {
         );
         AllProductsTable.setItems(data);
 
-        Callback<TableColumn<IngredientDTO, String>, TableCell<IngredientDTO, String>> cellFactory
-                =   new Callback<>() {
-            @Override
-            public TableCell call(final TableColumn<IngredientDTO, String> param) {
-                final TableCell<IngredientDTO, String> cell = new TableCell<IngredientDTO, String>() {
-
-                    final Button btn = new Button("View");
-
-                    @Override
-                    public void updateItem(String item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                            setText(null);
-                        } else {
-                            btn.setOnAction(event -> {
-                                IngredientDTO ingredientDTO = getTableView().getItems().get(getIndex());
-                                IngredientDAO.addToFridge(ingredientDTO);
-                            });
-                            setGraphic(btn);
-                            setText(null);
-                        }
-                    }
-                };
-                return cell;
-            }
-        };
-
-        AddToFridge.setCellFactory(cellFactory);
         AllProductsTable.setItems(data);
 
         AllProductsTable.setRowFactory( tv -> {
@@ -106,14 +79,8 @@ public class AllProductsController {
         }
     }
 
-    public boolean checkAddToFridge()
-    {
-        return true;
-        // dà errore dio bestia
-        //return (!Quantity.getText().isBlank() && Utils.isNumeric(Quantity.getText()) && !Expire_date.getText().isBlank());
-    }
-
-    public void printAddToFridge(String label, String _id, Integer row_index)
+/*
+public void printAddToFridge(String label, String _id, Integer row_index)
     {
         final Label lab = new Label(label);
         final TextField field = new TextField();
@@ -125,6 +92,45 @@ public class AllProductsController {
 
         Right.getChildren().add(lab);
         Right.getChildren().add(field);
+
+        if(label.equals("quantity")){
+            Quantity = field;
+        }
+        if(label.equals("Expire_date")){
+            Expire_date = field;
+        }
+
+    }
+ */
+
+    public void printAddToFridge(String label, String _id, Integer row_index) {
+
+        if (_id.equals("Quantity")) {
+            final Label lab = new Label(label);
+            Quantity = new TextField();
+            Quantity.setId(_id);
+
+            GridPane.setRowIndex(lab, row_index);
+            GridPane.setRowIndex(Quantity, row_index);
+            GridPane.setColumnIndex(Quantity, 2);
+
+            Right.getChildren().add(lab);
+            Right.getChildren().add(Quantity);
+        }
+        if (_id.equals("Expire_date")) {
+            final Label lab = new Label(label);
+            Expire_date = new TextField();
+            Expire_date.setId(_id);
+
+            GridPane.setRowIndex(lab, row_index);
+            GridPane.setRowIndex(Expire_date, row_index);
+            GridPane.setColumnIndex(Expire_date, 2);
+
+            Right.getChildren().add(lab);
+            Right.getChildren().add(Expire_date);
+        }
+
+
     }
 
     public void printProduct(String name, String text, Integer index)
@@ -168,13 +174,18 @@ public class AllProductsController {
 
         Submit_in_fridge.setOnAction(event -> {
             if(checkAddToFridge()){
-                ProductInFridge p = new ProductInFridge(rowData.getFood(), Integer.parseInt(Quantity.getText()),
-                            LocalDate.parse(Expire_date.getText()));
-                ObservableList<ProductInFridge> p_list = null;
-                p_list.add(p);
-                FridgeDAO.updateFridge(p_list);
+                //ProductInFridge p = new ProductInFridge(rowData.getFood(), Integer.parseInt(Quantity.getText()), LocalDate.parse(Expire_date.getText()));
+                productDTO p = new productDTO(rowData.getFood(), Integer.parseInt(Quantity.getText()), ProductDAO.getExpiringDateFormatted("3/3/2000"));
+                ProductDAO.add_product(p);
             }
         });
+    }
+
+    public boolean checkAddToFridge()
+    {
+        return true;
+        // dà errore dio bestia
+        //return (!Quantity.getText().isBlank() && Utils.isNumeric(Quantity.getText()) && !Expire_date.getText().isBlank());
     }
 
     public void Search_for_ingredient()

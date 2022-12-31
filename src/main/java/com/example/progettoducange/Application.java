@@ -26,6 +26,7 @@ public class Application extends javafx.application.Application {
     Neo4jDriver neo4j;
     private Stage primaryStage;
     private static Scene primaryScene;
+
     public static RegisteredUser authenticatedUser;
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.progettoducange.DAO;
 
 import com.example.progettoducange.Application;
+import com.example.progettoducange.DTO.productDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.model.ProductInFridge;
 import com.example.progettoducange.model.RegisteredUser;
@@ -8,6 +9,8 @@ import com.mongodb.client.MongoCollection;
 import javafx.collections.ObservableList;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+
+import java.util.*;
 
 public class FridgeDAO {
 

@@ -45,11 +45,15 @@ public class IngredientDAO {
         MongoCollection<Document> collection = MongoDbDriver.getProductCollection();
 
         ArrayList<IngredientDTO> ingredients_to_return = new ArrayList<>();
-
+        System.out.println("SKIPPED TIME VALORE:" + skipped_times);
+        if(skipped_times == 6){
+            System.out.println("analyze moment");
+        }
+        JSONObject obj;
         try (MongoCursor<Document> cursor = collection.find().skip(limit*skipped_times).limit(limit).projection(Projections.excludeId()).iterator()) {
             while (cursor.hasNext()) {
                 String text = cursor.next().toJson(); //i get a json
-                JSONObject obj = new JSONObject(text);
+                obj = new JSONObject(text);
                 ingredients_to_return.add(
                         new IngredientDTO(
                                 obj.getString("food"),

@@ -54,7 +54,6 @@ public class MongoDbDriver {
         try{
              mongoclient = MongoClients.create(uri);
             database = mongoclient.getDatabase("Progetto");
-
             Bson command = new BsonDocument("ping", new BsonInt64(1));
             Document commandResult = database.runCommand(command);
             System.out.println("Connected successfully to server.");

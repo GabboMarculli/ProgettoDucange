@@ -142,7 +142,6 @@ public class userDAO {
                     .append("profilePic", user.getProfilePicUrl())
                     .append("email", user.getEmail())
                     .append("id", new_index);
-
             collection.insertOne(doc);
             return new_index;
         } catch (Exception error) {
