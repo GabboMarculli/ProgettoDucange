@@ -109,6 +109,19 @@ public class AllUsersController {
         }
         called_times++;
     }
+    /* carina la roba del formatter, cancellateliamola alla fine sennò è uno sbattimento costante con queste LocalDate
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
+            userDTO newrow = new userDTO(Integer.parseInt(
+                    us.get("id").toString()),
+                    us.get("username").toString(),
+                    us.get("password").toString(),
+                    us.get("name").toString(),
+                    us.get("surname").toString(),
+                    LocalDate.parse(us.get("registrationdate").toString(), formatter),
+                    us.get("country").toString());
+            data.add(newrow);
+    **/
+
 
     public void Search_for_user()
     {

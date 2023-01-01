@@ -37,11 +37,11 @@
         <Pane prefHeight="650.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
             <children>
                 <TextField fx:id="SearchUser" layoutX="170.0" layoutY="35.0" promptText="Seach for a user" />
-                <Button fx:id="SearchUserButton" layoutX="343.0" layoutY="35.0" mnemonicParsing="false"
+                <Button fx:id="SearchUserButton" layoutX="343.0" layoutY="35.0" mnemonicParsing="false" onAction="#Search_for_followed_user"
                         text="Search" />
 
                 <Button fx:id = "IncrementButton" alignment="CENTER" contentDisplay="CENTER" layoutX="500.0" layoutY="570.0"
-                        mnemonicParsing="false" text="Show more">
+                        mnemonicParsing="false" text="Show more" onAction="#fillTable">
                     <font>
                         <Font size="15.0" />
                     </font>
@@ -53,11 +53,11 @@
                     </font>
                 </Button>
 
-                <TableView fx:id="UserTable" layoutX="103.0" layoutY="76.0" prefHeight="477.0" prefWidth="480.0">
+                <TableView fx:id="UserTable" layoutX="103.0" layoutY="76.0" prefHeight="477.0" prefWidth="470.0">
                     <columns>
                         <TableColumn fx:id="UsernameColumn" prefWidth="200" text="Username" />
                         <TableColumn fx:id="CountryColumn" prefWidth="155" text="Country" />
-                        <TableColumn fx:id="NumberOfRecipe" prefWidth="130" text="Number of recipe" />
+                        <TableColumn fx:id="UnFollowButtonColumn" prefWidth="120" text="UnFollow" />
                     </columns>
                 </TableView>
             </children>

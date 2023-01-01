@@ -29,7 +29,11 @@ public class userDTO {
         country.set(c);
     }
 
-
+    public userDTO(long id, String country,String username) {
+        this.id.set(id);
+        this.username.set(username);
+        this.country.set(country);
+    }
 
     public long getId() {
         return id.get();

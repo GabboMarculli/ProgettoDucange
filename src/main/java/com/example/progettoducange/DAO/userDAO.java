@@ -77,17 +77,99 @@ public class userDAO {
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
-        // we search for username
-        MongoCursor<Document> cursor =  collection.find().iterator();
-
-        //List<userDTO> resultDoc = FXCollections.observableArrayList();
         ArrayList<Document> results = collection.find().limit(limit).skip(called_times*20).into(new ArrayList<>());
 
-        System.out.println(results);
+        //retrive list of unflowwed user from the graph db
 
         return results;
     }
 
+    public static List<userDTO> getListOfFollowedUser(Integer limit,Integer called_times) {
+        List<userDTO> UserList = null;
+        int skipped_calculated = limit*called_times;
+        try (Session session = Neo4jDriver.getDriver().session()) {
+            UserList = session.readTransaction((TransactionWork<List<userDTO>>) tx -> {
+                Result result = tx.run(
+                        "MATCH (p: User)-[:FOLLOW]->(m:User) " +
+                                "Where p.id = $id " +
+                                " RETURN m.id AS id, m.country AS country , m.name AS username " +
+                                "SKIP $skip LIMIT $limit ",
+                        parameters(
+                                "id", Application.authenticatedUser.getId(),
+                                "limit", limit,
+                                "skip", skipped_calculated
+                        ));
+                List<userDTO> User_to_send = new ArrayList<>();
+                while (result.hasNext()) {
+                    Record r = result.next();
+                    User_to_send.add(new userDTO(
+                                    r.get("id").asInt(),
+                                    r.get("country").asString(),
+                                    r.get("username").asString()
+                            ));
+
+                }
+                return User_to_send;
+            });
+            return UserList;
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+    public static List<userDTO> Search_for_followed_user(String name_searched) {
+        List<userDTO> UserList = null;
+        try (Session session = Neo4jDriver.getDriver().session()) {
+            UserList = session.readTransaction((TransactionWork<List<userDTO>>) tx -> {
+                Result result = tx.run(
+                        "MATCH (p: User)-[:FOLLOW]->(m:User) " +
+                                "Where p.id = $id " +
+                                "AND m.name CONTAINS $name " +
+                                "RETURN m.id AS id, m.country AS country , m.name AS username",
+                        parameters("id", Application.authenticatedUser.getId(),
+                                "name",name_searched));
+                List<userDTO> User_to_send = new ArrayList<>();
+                while (result.hasNext()) {
+                    Record r = result.next();
+                    User_to_send.add(new userDTO(
+                            r.get("id").asInt(),
+                            r.get("country").asString(),
+                            r.get("username").asString()
+                    ));
+
+                }
+                return User_to_send;
+            });
+            return UserList;
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+
+/*
+    public static ArrayList<userDTO> getListOfUnfollowedUser(Integer limit,Integer called_times) {
+        List<Integer> UserList = null;
+        try (Session session = Neo4jDriver.getDriver().session()) {
+            UserList = session.readTransaction((TransactionWork<List<Integer>>) tx -> {
+                Result result = tx.run(
+                        "MATCH (p: User)-[:FOLLOW]->(m:User) Where p.id = $id RETURN m.id AS id",
+                        parameters("id", Application.authenticatedUser.getId()));
+                List<Integer> Id_User_to_send = new ArrayList<>();
+                while (result.hasNext()) {
+                    Record r = result.next();
+                    Id_User_to_send.add(r.get("id").asInt());
+                }
+                return Id_User_to_send;
+            });
+            return UserList;
+        } catch (Exception e) {
+            System.err.println(e);
+        }
+        return null;
+    }
+*/
     public static String[] getUser(String username)
     {
         // retrieve user collection
@@ -196,7 +278,7 @@ public class userDAO {
     }
 
     //function to unfollow a user
-    public boolean unfollowUser(long id_user1, long id_user2){
+    public static boolean unfollowUser(long id_user1, long id_user2){
 
         try (Session session = Neo4jDriver.getDriver().session()) {
 
@@ -206,11 +288,11 @@ public class userDAO {
                                 "MATCH (a)-[r:FOLLOW]->(b)"+
                                 "DELETE r",
                         parameters("id1", id_user1, "id2", id_user2)).consume();
-                System.out.println("I due utenti si seguono");
+                System.out.println("I due utenti hanno smesso di seguirsi");
                 return 1;
             });
         }catch (Exception e){
-            System.out.println("errore nella unfollow");
+            System.err.println("errore nella unfollow");
             return false;
         }
         return true;
@@ -218,7 +300,7 @@ public class userDAO {
 
     //i will return a list of id of user followed by id_user
     // to call it List<Integer> list_ids_of_followed_user = userDAO.getFollowesUser(Application.authenticatedUser.getId());
-    public static List<Integer> getFollowesUser(long id_user){
+    public static List<Integer> getFollowedUser(long id_user){
 
         List<Integer> UserList = null;
         try (Session session = Neo4jDriver.getDriver().session())

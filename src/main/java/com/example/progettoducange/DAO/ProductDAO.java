@@ -104,7 +104,6 @@ public class ProductDAO {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
             Document doc = collection.find(eq("id", id)).first();
 
-
             String date = product_to_delete.getDate().getDayOfMonth() + "/" +
                     product_to_delete.getDate().getMonthValue() + "/" +
                     product_to_delete.getDate().getYear();
@@ -117,9 +116,6 @@ public class ProductDAO {
                                     .append("expiringDate", date)
                     );
             collection.updateOne(query, new BasicDBObject("$pull", update));
-
-
-            /******/
 
             } catch (Exception error) {
             System.out.println( error );
