@@ -73,7 +73,6 @@ public class ViewRecipeController {
     {
         try {
             AllCommentsController.Recipe = Recipe;
-            Recipe = null;
             Application.changeScene("AllComments");
         } catch (IOException e) {
             throw new RuntimeException(e);
