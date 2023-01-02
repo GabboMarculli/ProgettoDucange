@@ -167,12 +167,16 @@ public void printAddToFridge(String label, String _id, Integer row_index)
         printProduct("Category: ", rowData.getCategory(), 8);
 
         if(Application.authenticatedUser.getUsername().equals("admin")){
-            final Button Delete_user = new Button("Delete ");
-            GridPane.setRowIndex(Delete_user, 10);
-            Right.getChildren().add(Delete_user);
+            final Button Delete_product = new Button("Delete ");
+            GridPane.setRowIndex(Delete_product, 10);
+            Right.getChildren().add(Delete_product);
 
-            Delete_user.setOnAction(event -> {
-                ProductDAO.deleteProduct(rowData);
+            Delete_product.setOnAction(event -> {
+                if (AllProductsTable.getSelectionModel().getSelectedIndex() >= 0) {
+                    IngredientDTO selectedItem = AllProductsTable.getSelectionModel().getSelectedItem();
+                    AllProductsTable.getItems().remove(selectedItem);
+                    ProductDAO.deleteProduct(selectedItem);
+                }
             });
         } else {
             printAddToFridge("Quantity: ", "Quantity", 10);
