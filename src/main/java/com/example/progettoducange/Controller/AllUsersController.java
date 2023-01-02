@@ -10,6 +10,7 @@ import com.example.progettoducange.model.RegisteredUser;
 import com.example.progettoducange.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.example.progettoducange.DAO.userDAO.getListOfUser;
+import static com.example.progettoducange.DAO.userDAO.*;
 import static java.time.LocalDate.now;
 
 public class AllUsersController {
@@ -39,6 +40,22 @@ public class AllUsersController {
     public TableColumn FollowButtonColumn;
     @FXML
     public TextField SearchUser;
+
+    @FXML
+    private Button Show_Suggested_User;
+
+    @FXML
+    private Button show_more;
+    int called_times = 0;
+    /*
+    token used to the following feauture: when i want to see the suggested user, i click on it, then
+    the "show more" button will be disable cause i will upload only max 40 suggested user,
+    and the button "Show_Suggested_User" will be transformed to "show_all_user" which will show all the user not followed yet.
+    . When we will click on that button, the "show user" button will not be disable anymore, and Show_Suggested_User will return
+    to the funcionality of showing the the suggested user. The token allows to switch
+    the button functionality from Show_Suggested_User to show_all_user and viceversa
+    */
+    private boolean token_show_suggested_all = true;
 
 
     private ObservableList<userDTO> data = FXCollections.observableArrayList();
@@ -73,6 +90,8 @@ public class AllUsersController {
                                 //userDAO.follow_a_user(Integer.parseInt(Application.authenticatedUser.id),user.getId());
                                 userDAO.follow_a_user(Application.authenticatedUser.id, user.getId());
                                 //System.out.println(Application.authenticatedUser.getUsername()+ " FOLLOWS " + user.getUsername());
+                                btn.setDisable(true);
+                                btn.setText("Following");
                             });
                             setGraphic(btn);
                             setText(null);
@@ -88,10 +107,37 @@ public class AllUsersController {
         fillTable();
     }
 
-    int called_times = 0;
+    public void show_suggested_user(ActionEvent actionEvent) {
+        if(token_show_suggested_all) {
+            List<userDTO> users = userDAO.getListOfSuggesteUser();
+            if (users != null) {
+                data.clear();
+                for (userDTO us : users) {
+                    data.add(us);
+                }
+            } else {
+                data.clear();
+                UserTable.setItems(data);
+            }
+            //this beacuse i will load all the suggested user at once
+            show_more.setDisable(true);
+            Show_Suggested_User.setText("Show all user");
+            token_show_suggested_all=false;
+        }
+        else{
+            data.clear();
+            UserTable.setItems(data);
+            called_times=0;
+            show_more.setDisable(false);
+            fillTable();
+            Show_Suggested_User.setText("Show suggested user");
+            token_show_suggested_all=true;
+        }
+    }
 
-    //fill the table with 20 user. By pressing the button the user will visualize
-    // 20 user in plus appended at the end of the previous list of user
+
+
+    /*
     public void fillTable() {
         int limit_views_user = 20;
         ArrayList<Document> users = getListOfUser(limit_views_user, called_times);
@@ -109,7 +155,59 @@ public class AllUsersController {
         }
         called_times++;
     }
-    /* carina la roba del formatter, cancellateliamola alla fine sennò è uno sbattimento costante con queste LocalDate
+    */
+
+
+    //fill the table with 20 user. By pressing the button the user will visualize
+    // 20 user in plus appended at the end of the previous list of user
+
+
+    public void fillTable() {
+        String username = SearchUser.getText();
+        int limit_views_user = 20;
+        List<userDTO> users = Search_for_Unfollowed_user(username,limit_views_user, called_times);
+        if(users == null || users.size() == 0) return;
+        for (userDTO us : users) {
+            data.add(us);
+        }
+        called_times++;
+    }
+
+    public void Search_for_user()
+    {
+            String username = SearchUser.getText();
+            if(!username.equals("")) {
+                try {
+                    List<userDTO> searched_user = userDAO.Search_for_Unfollowed_user(username,20,0);
+
+                    data.clear();
+                    if(searched_user != null)
+                    {
+                        for(userDTO us: searched_user) {
+                            data.add(us);
+                        }
+                        UserTable.setItems(data);
+                    }
+                } catch (Error e){
+                    System.out.println(e);
+                }
+            }else{
+                data.clear();
+                UserTable.setItems(data);
+                //restore all the user
+                called_times=0;
+                fillTable();
+            }
+    }
+
+    @FXML
+    protected void goToHome() throws IOException {
+        Application.changeScene("HomePage");
+    }
+}
+
+
+/* carina la roba del formatter, cancellateliamola alla fine sennò è uno sbattimento costante con queste LocalDate
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
             userDTO newrow = new userDTO(Integer.parseInt(
                     us.get("id").toString()),
@@ -121,32 +219,4 @@ public class AllUsersController {
                     us.get("country").toString());
             data.add(newrow);
     **/
-
-
-    public void Search_for_user()
-    {
-            String username = SearchUser.getText();
-            if(!username.equals("")) {
-                try {
-                    String[] searched_user = userDAO.getUser(username);
-
-                    if(searched_user != null)
-                    {
-                        userDTO us = new userDTO(Long.parseLong(searched_user[0]),searched_user[1], null, searched_user[3],
-                                searched_user[4],null, searched_user[2]);
-                        data.clear();
-                        data.add(us);
-                        UserTable.setItems(data);
-                    }
-                } catch (Error e){
-                    System.out.println(e);
-                }
-            }
-    }
-
-    @FXML
-    protected void goToHome() throws IOException {
-        Application.changeScene("HomePage");
-    }
-}
 

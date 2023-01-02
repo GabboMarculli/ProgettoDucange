@@ -5,6 +5,7 @@ import com.example.progettoducange.DAO.userDAO;
 import com.example.progettoducange.DTO.userDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -32,6 +33,7 @@ public class FollowedUserController {
     public TableColumn UnFollowButtonColumn;
     @FXML
     public TextField SearchUser;
+
 
     private ObservableList<userDTO> data = FXCollections.observableArrayList();
 
@@ -65,7 +67,7 @@ public class FollowedUserController {
                                 //userDAO.follow_a_user(Integer.parseInt(Application.authenticatedUser.id),user.getId());
                                 userDAO.unfollowUser(Application.authenticatedUser.id, user.getId());
                                 btn.setDisable(true);
-                                //System.out.println(Application.authenticatedUser.getUsername()+ " FOLLOWS " + user.getUsername());
+                                btn.setText("Unfollowed");
                             });
                             setGraphic(btn);
                             setText(null);
@@ -129,9 +131,13 @@ public class FollowedUserController {
         else fillTable();
     }
 
+
+
     @FXML
     protected void goToHome() throws IOException {
         Application.changeScene("HomePage");
     }
+
+
 }
 

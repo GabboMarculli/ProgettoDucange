@@ -38,7 +38,7 @@
                 <Button fx:id="SearchUserButton" layoutX="343.0" layoutY="35.0" mnemonicParsing="false"
                         onAction="#Search_for_user" text="Search" />
 
-                <Button fx:id = "IncrementButton" alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="570.0"
+                <Button fx:id = "show_more" alignment="CENTER" contentDisplay="CENTER" layoutX="600.0" layoutY="570.0"
                         mnemonicParsing="false" text="Show more" onAction="#fillTable">
                     <font>
                         <Font size="15.0" />
@@ -58,6 +58,7 @@
                         <TableColumn fx:id="FollowButtonColumn" prefWidth="120" text="Follow" />
                     </columns>
                 </TableView>
+                <Button fx:id ="Show_Suggested_User" layoutX="260.0" layoutY="572.0" mnemonicParsing="false" text="Show Suggested User" onAction="#show_suggested_user"/>
             </children>
         </Pane>
     </bottom>
