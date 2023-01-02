@@ -9,9 +9,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import org.bson.Document;
 
 import java.io.IOException;
@@ -35,8 +38,8 @@ public class AllRecipesController {
     public TextField SearchRecipe;
     @FXML
     public GridPane Right;
-
-
+    @FXML
+    private AnchorPane bottom;
 
     private ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
 
@@ -47,7 +50,10 @@ public class AllRecipesController {
     private void goToHome()
     {
         try {
-            Application.changeScene("HomePage");
+            if(Application.authenticatedUser.getUsername().equals("admin"))
+                Application.changeScene("HomePageAdmin");
+            else
+                Application.changeScene("HomePage");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -77,6 +83,33 @@ public class AllRecipesController {
             return row ;
         });
         FillTable();
+
+        // se l'utente è l'admin, metto il pulsante "elimina ricetta", altrimenti se sei un utente normale vedi "aggiungi ricetta"
+        Button button = new Button();
+        button.setAlignment(Pos.valueOf("CENTER"));
+        button.setContentDisplay(ContentDisplay.valueOf("CENTER"));
+        button.setLayoutX(203);
+        button.setLayoutY(552);
+        button.setMnemonicParsing(false);
+
+        if(Application.authenticatedUser.getUsername().equals("admin"))
+            button.setText("Delete recipe");
+        else
+            button.setText("Add a recipe");
+
+        button.setOnAction(event->{
+            if(Application.authenticatedUser.getUsername().equals("admin")) {
+                if (AllRecipesTable.getSelectionModel().getSelectedIndex() >= 0) {
+                    RecipeDTO selectedItem = AllRecipesTable.getSelectionModel().getSelectedItem();
+                    AllRecipesTable.getItems().remove(selectedItem);
+                    RecipeDao.removerecipe(selectedItem);
+                }
+            } else {
+                    addRecipe();
+            }
+        });
+
+        bottom.getChildren().add(button);
     }
 
     //funcion that pressed will show "limit" recipe at a time.

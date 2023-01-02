@@ -42,10 +42,10 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Button fx:id="Products" contentDisplay="TOP" mnemonicParsing="false"
+                <Button fx:id="Products" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToProducts"
                         prefHeight="100.0" prefWidth="170.0" text="Delete products">
                 </Button>
-                <Button fx:id="Recipes" contentDisplay="TOP" mnemonicParsing="false"
+                <Button fx:id="Recipes" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToRecipes"
                         prefHeight="100.0" prefWidth="170.0"  text="Delete recipes" GridPane.columnIndex="1">
                 </Button>
                 <Button fx:id="Users" contentDisplay="TOP" mnemonicParsing="false"

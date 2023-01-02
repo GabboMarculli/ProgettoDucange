@@ -2,6 +2,7 @@ package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.userDAO;
+import com.example.progettoducange.model.RegisteredUser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,13 +26,7 @@ public class HomePageAdminController {
             // vai alla pagina degli utenti
         });
 
-        Products.setOnAction(event->{
-            // vai alla pagina dei prodotti
-        });
-
-        Recipes.setOnAction(event->{
-            // vai alla pagina delle ricette
-        });
+        Application.authenticatedUser = new RegisteredUser(-1, "admin", null, null, null);
     }
     @FXML
     protected void logout() throws IOException {
@@ -41,5 +36,14 @@ public class HomePageAdminController {
     @FXML
     protected void goToLogin() throws IOException {
         Application.changeScene("LoginPage");
+    }
+    @FXML
+    protected void goToProducts() throws IOException {
+        Application.changeScene("AllProducts");
+    }
+
+    @FXML
+    protected void goToRecipes() throws IOException {
+        Application.changeScene("AllRecipes");
     }
 }

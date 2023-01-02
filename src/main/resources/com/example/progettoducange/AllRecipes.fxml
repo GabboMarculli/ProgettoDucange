@@ -30,7 +30,7 @@
     </top>
     <left>
         <!-- An AnchorPane in the Left BorderPane -->
-        <AnchorPane prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="bottom" prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
             <children>
                 <TableView fx:id="AllRecipesTable" layoutX="35.0" layoutY="76.0" prefHeight="477.0" prefWidth="439.0">
                     <columns>
@@ -44,12 +44,8 @@
                         <Font size="15.0" />
                     </font>
                 </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="203.0" layoutY="552.0" mnemonicParsing="false" onAction="#addRecipe" text="Add a recipe ">
-                    <font>
-                        <Font size="15.0" />
-                    </font>
-                </Button>
-            <Button fx:id="ShowMoreRecipe" layoutX="389.0" layoutY="553.0" mnemonicParsing="false" onAction="#FillTable" text="Show more" />
+
+                <Button fx:id="ShowMoreRecipe" layoutX="389.0" layoutY="553.0" mnemonicParsing="false" onAction="#FillTable" text="Show more" />
             <TextField fx:id="SearchRecipe" layoutX="170.0" layoutY="34.0" promptText="Seach for a recipe" />
             <Button fx:id="SearchRecipeButton" layoutX="343.0" layoutY="35.0" mnemonicParsing="false" onAction="#Search_for_recipe" text="Button" />
             </children>

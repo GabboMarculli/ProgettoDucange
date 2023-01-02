@@ -1,9 +1,11 @@
 package com.example.progettoducange.DAO;
 import com.example.progettoducange.Application;
+import com.example.progettoducange.DTO.IngredientDTO;
 import com.example.progettoducange.DTO.productDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.model.ProductInFridge;
 import com.example.progettoducange.model.RegisteredUser;
+import com.example.progettoducange.model.User;
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -144,7 +146,21 @@ public class ProductDAO {
             System.err.println( error );
         }
     }
+
+    public static boolean deleteProduct(IngredientDTO ingred)
+    {
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+            collection.deleteOne(eq("food", ingred.getFood()));
+            return true;
+        } catch (Exception error) {
+            System.out.println( error );
+            return false;
+        }
+    }
 }
+
+
 
 /*
     Bson query = and(

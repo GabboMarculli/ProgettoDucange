@@ -166,25 +166,35 @@ public void printAddToFridge(String label, String _id, Integer row_index)
         printProduct("Carbs", rowData.getCarbs(), 7);
         printProduct("Category: ", rowData.getCategory(), 8);
 
-        printAddToFridge("Quantity: ", "Quantity", 10);
-        printAddToFridge("Expire_date: ", "Expire_date", 11);
+        if(Application.authenticatedUser.getUsername().equals("admin")){
+            final Button Delete_user = new Button("Delete ");
+            GridPane.setRowIndex(Delete_user, 10);
+            Right.getChildren().add(Delete_user);
 
-        final Button Submit_in_fridge = new Button("Add ");
-        GridPane.setRowIndex(Submit_in_fridge,12);
-        Right.getChildren().add(Submit_in_fridge);
+            Delete_user.setOnAction(event -> {
+                ProductDAO.deleteProduct(rowData);
+            });
+        } else {
+            printAddToFridge("Quantity: ", "Quantity", 10);
+            printAddToFridge("Expire_date: ", "Expire_date", 11);
 
-        Submit_in_fridge.setOnAction(event -> {
-            if(checkAddToFridge()){
+            final Button Submit_in_fridge = new Button("Add ");
+            GridPane.setRowIndex(Submit_in_fridge, 12);
+            Right.getChildren().add(Submit_in_fridge);
 
-                String date = Expire_date.getText();
-                DateTimeFormatter pattern =
-                        DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                LocalDate formattedDate = LocalDate.parse(date, pattern);
+            Submit_in_fridge.setOnAction(event -> {
+                if (checkAddToFridge()) {
 
-                productDTO p = new productDTO(rowData.getFood(), Integer.parseInt(Quantity.getText()),formattedDate );
-                ProductDAO.add_product(p);
-            }
-        });
+                    String date = Expire_date.getText();
+                    DateTimeFormatter pattern =
+                            DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                    LocalDate formattedDate = LocalDate.parse(date, pattern);
+
+                    productDTO p = new productDTO(rowData.getFood(), Integer.parseInt(Quantity.getText()), formattedDate);
+                    ProductDAO.add_product(p);
+                }
+            });
+        }
     }
 
     public boolean checkAddToFridge()
@@ -214,7 +224,10 @@ public void printAddToFridge(String label, String _id, Integer row_index)
     private void goToHome()
     {
         try {
-            Application.changeScene("HomePage");
+            if(Application.authenticatedUser.getUsername().equals("admin"))
+                Application.changeScene("HomePageAdmin");
+            else
+                Application.changeScene("HomePage");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
