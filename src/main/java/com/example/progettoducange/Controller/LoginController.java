@@ -92,13 +92,20 @@ public class LoginController {
 
                         int id = Integer.parseInt(credentials[0]);
                         String username = credentials[1];
-                        String country = credentials[2];
-                        String firstName = credentials[3];
-                        String lastName = credentials[4];
-                        String email = credentials[5];
 
-                        Application.authenticatedUser = new RegisteredUser(id, username, firstName,lastName, country, email);
-                        goToHomePage();
+                        if(username.equals("admin"))
+                        {
+                            goToAdminPage();
+
+                        } else {
+                            String country = credentials[2];
+                            String firstName = credentials[3];
+                            String lastName = credentials[4];
+                            String email = credentials[5];
+
+                            Application.authenticatedUser = new RegisteredUser(id, username, firstName, lastName, country, email);
+                            goToHomePage();
+                        }
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -113,6 +120,10 @@ public class LoginController {
 
     protected void goToHomePage() throws IOException {
         Application.changeScene("HomePage");
+    }
+
+    protected void goToAdminPage() throws IOException {
+        Application.changeScene("HomePageAdmin");
     }
 
     @FXML

@@ -1,0 +1,45 @@
+package com.example.progettoducange.Controller;
+
+import com.example.progettoducange.Application;
+import com.example.progettoducange.DAO.userDAO;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+
+import java.io.IOException;
+
+public class HomePageAdminController {
+    @FXML
+    private Label Username;
+    @FXML
+    private Button Products;
+    @FXML
+    private Button Recipes;
+    @FXML
+    private Button Users;
+
+    public void initialize() {
+        Username.setText("Admin");
+
+        Users.setOnAction(event -> {
+            // vai alla pagina degli utenti
+        });
+
+        Products.setOnAction(event->{
+            // vai alla pagina dei prodotti
+        });
+
+        Recipes.setOnAction(event->{
+            // vai alla pagina delle ricette
+        });
+    }
+    @FXML
+    protected void logout() throws IOException {
+        Application.authenticatedUser = null;
+        goToLogin();
+    }
+    @FXML
+    protected void goToLogin() throws IOException {
+        Application.changeScene("LoginPage");
+    }
+}
