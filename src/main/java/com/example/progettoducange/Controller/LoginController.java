@@ -9,12 +9,15 @@ import com.example.progettoducange.model.RegisteredUser;
 import com.example.progettoducange.model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.json.JSONException;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.Locale;
 import java.util.Objects;
 
 // ######################################################################################################################
@@ -54,6 +57,8 @@ public class LoginController {
     private TextField signUpPasswordField;
     @FXML
     private TextField signUpRepeatPasswordField;
+    @FXML
+    private DatePicker signUpDateDatePicker;
 
     // Creation of methods which are activated on events in the forms
     @FXML
@@ -114,6 +119,7 @@ public class LoginController {
     protected void onSignUpButtonClick() {
         if (signUpUsernameTextField.getText().isBlank() || signUpEmailTextField.getText().isBlank() || signUpUsernameTextField.getText().equals("admin") ||
                 signUpPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().isBlank() || signUpUsernameTextField.getText().length() > 16 ||
+                signUpDateDatePicker.getEditor().getText().isBlank() ||
                 signUpPasswordField.getText().length() > 16 || signUpRepeatPasswordField.getText().length()> 16) {
             invalidSignupCredentials.setText("Please fill in all fields! Max length is 16.");
             invalidSignupCredentials.setStyle(errorMessage);
@@ -127,6 +133,8 @@ public class LoginController {
                 signUpPasswordField.setStyle(errorStyle);
             } else if (signUpRepeatPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().length()> 16) {
                 signUpRepeatPasswordField.setStyle(errorStyle);
+            }else if(signUpDateDatePicker.getEditor().getText().isBlank()){
+                invalidSignupCredentials.setText("set date of birth");
             }
         } else if (!Utils.CheckEmail(signUpEmailTextField.getText())) {
             invalidSignupCredentials.setText("The email is in incorrect format!");
@@ -151,7 +159,13 @@ public class LoginController {
             signUpUsernameTextField.setStyle(errorStyle);
             invalidLoginCredentials.setText("");
         } else {
-            RegisteredUser user = new RegisteredUser(0, signUpUsernameTextField.getText(),signUpPasswordField.getText(), signUpEmailTextField.getText());
+            RegisteredUser user = new RegisteredUser(
+                    0,
+                    signUpUsernameTextField.getText(),
+                    signUpPasswordField.getText(),
+                    signUpEmailTextField.getText(),
+                    LocalDate.now()
+            );
             //registriamo lo user e otteniamo il suo id;
             int user_index = userDAO.signup(user);
 

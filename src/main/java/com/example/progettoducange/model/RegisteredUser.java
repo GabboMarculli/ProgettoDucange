@@ -1,5 +1,6 @@
 package com.example.progettoducange.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -13,12 +14,14 @@ public class RegisteredUser extends User{
             super.setId(id);
         }
 
-        public RegisteredUser(int id, String username, String password, String email)
+        public RegisteredUser(int id, String username, String password, String email, LocalDate registrationDate)
         {
             super.setId(id);
             super.setUsername(username);
             super.setPassword(password);
             super.setEmail(email);
+            super.setRegistrationDate(registrationDate);
+
         }
 
         public RegisteredUser(int id, String username,String firstName, String lastName, String country, String email)

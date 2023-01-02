@@ -1,5 +1,6 @@
 package com.example.progettoducange.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public abstract class User {
@@ -9,16 +10,16 @@ public abstract class User {
     private String username;
     private String password;
     private String country;
-    private String profilePic;
-    private Date createdDate;
-    private Date updatedDate;
+
+    private LocalDate registrationDate;
     private String email;
 
-    public void User(int id, String username, String password)
+    public void User(int id, String username, String password,LocalDate registrationDate )
     {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.registrationDate=registrationDate;
     }
 
     public int getId() {
@@ -26,6 +27,14 @@ public abstract class User {
     }
     public void setId(int id) {
         this.id = id;
+    }
+
+    public LocalDate getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(LocalDate registrationDate) {
+        this.registrationDate = registrationDate;
     }
 
     public String getFirstName() {
@@ -56,27 +65,6 @@ public abstract class User {
         this.password = password;
     }
 
-    public String getProfilePicUrl() {
-        return profilePic;
-    }
-    public void setProfilePicUrl(String profilePic) {
-        this.profilePic = profilePic;
-    }
-
-    public Date getCreatedDate() {
-        return createdDate;
-    }
-    public void setCreatedDate(Date createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public Date getUpdatedDate() {
-        return updatedDate;
-    }
-    public void setUpdatedDate(Date updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -102,9 +90,6 @@ public abstract class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", country='" + country + '\'' +
-                ", profilePic='" + profilePic + '\'' +
-                ", createdDate=" + createdDate +
-                ", updatedDate=" + updatedDate +
                 ", email='" + email + '\'' +
                 '}';
     }

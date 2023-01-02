@@ -227,8 +227,6 @@ LIMIT 4
     }
 
 
-
-
     public static List<userDTO> Search_for_Unfollowed_user(String name_searched,Integer limit,Integer called_times) {
         List<userDTO> UserList = null;
         int skipped_calculated = limit*called_times;
@@ -308,6 +306,10 @@ LIMIT 4
             //i will assign the id to the user
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
+            String text = user.getRegistrationDate().getDayOfMonth() + "/" +
+                    user.getRegistrationDate().getMonthValue() + "/" +
+                    user.getRegistrationDate().getYear();
+
             // we search for the last id
             Document resultDoc = collection.find().sort(descending("id")).first();
             int new_index = resultDoc.getInteger("id") + 1;
@@ -316,9 +318,9 @@ LIMIT 4
                     .append("password", user.getPassword())
                     .append("firstName", user.getFirstName())
                     .append("lastName", user.getLastName())
-                    .append("profilePic", user.getProfilePicUrl())
                     .append("email", user.getEmail())
-                    .append("id", new_index);
+                    .append("id", new_index)
+                    .append("registrationdate", text);
             collection.insertOne(doc);
             return new_index;
         } catch (Exception error) {
