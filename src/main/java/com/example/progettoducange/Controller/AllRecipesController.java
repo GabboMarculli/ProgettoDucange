@@ -1,6 +1,7 @@
 package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
+import com.example.progettoducange.DAO.IngredientDAO;
 import com.example.progettoducange.DAO.RecipeDao;
 import com.example.progettoducange.DTO.*;
 import com.example.progettoducange.model.ProductInFridge;
@@ -117,29 +118,19 @@ public class AllRecipesController {
     //function that will search for a user
 
     public void Search_for_recipe(ActionEvent actionEvent) {
-
-
-
         String recipeName = SearchRecipe.getText();
-        if(recipeName.equals("")){
-            //retrive the first 20 recipe
-            data.clear();
-            ArrayList<RecipeDTO> recipes = RecipeDao.getRecipe(20,0);
-            for(RecipeDTO us : recipes) {
-                data.add(us);
+        if(!recipeName.equals("")) {
+            try {
+                ArrayList<RecipeDTO> searched_ingredients = RecipeDao.getSearchedRecipe(recipeName);
+                if(searched_ingredients != null)
+                {
+                    data.clear();
+                    data.addAll(searched_ingredients);
+                    AllRecipesTable.setItems(data);
+                }
+            } catch (Error e){
+                System.out.println(e);
             }
         }
-        else{
-            //search for the requested, there could may be more with that title
-            ArrayList<RecipeDTO> searched_recipe = RecipeDao.getSearchedRecipe(recipeName);
-            if(searched_recipe.isEmpty()){
-                return ;
-            }
-            data.clear();
-            for(RecipeDTO us : searched_recipe) {
-                data.add(us);
-            }
-        }
-        AllRecipesTable.setItems(data);
     }
 }

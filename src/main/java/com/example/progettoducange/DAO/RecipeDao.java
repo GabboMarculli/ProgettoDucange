@@ -16,6 +16,7 @@ import org.bson.conversions.Bson;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
@@ -193,19 +194,14 @@ public class RecipeDao {
     }
 
     public static ArrayList<RecipeDTO> getSearchedRecipe(String recipeName) {
-        // retrieve information
-        Bson projectionFields = Projections.fields(
-                excludeId());
-
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
         ArrayList<RecipeDTO> recipes_to_return = new ArrayList<>();
+        JSONObject obj;
 
-        String pattern = ".*" + recipeName + ".*";
-
-        try (MongoCursor<Document> cursor = collection.find(regex("RecipeName", pattern)).projection(projectionFields).iterator()) {
+        try (MongoCursor<Document> cursor = collection.find(regex("RecipeName", ".*" + Pattern.quote(recipeName) + ".*")).iterator()) {
             while (cursor.hasNext()) {
-                String text = cursor.next().toJson(); //i get a json
-                JSONObject obj = new JSONObject(text);
+                String text = cursor.next().toJson();
+                obj = new JSONObject(text);
                 recipes_to_return.add(
                         new RecipeDTO(
                                 obj.getString("RecipeName"),
@@ -223,7 +219,6 @@ public class RecipeDao {
                         )
                 );
             }
-
             return recipes_to_return;
         } catch (JSONException e) {
             throw new RuntimeException(e);

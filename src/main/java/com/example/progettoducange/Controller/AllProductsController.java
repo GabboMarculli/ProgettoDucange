@@ -189,9 +189,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
 
     public boolean checkAddToFridge()
     {
-        return true;
-        // dà errore dio bestia
-        //return (!Quantity.getText().isBlank() && Utils.isNumeric(Quantity.getText()) && !Expire_date.getText().isBlank());
+        return (!Quantity.getText().isBlank() && Utils.isNumeric(Quantity.getText()) && !Expire_date.getText().isBlank());
     }
 
     public void Search_for_ingredient()
@@ -199,11 +197,11 @@ public void printAddToFridge(String label, String _id, Integer row_index)
         String ingredientName = SearchIngredient.getText();
         if(!ingredientName.equals("")) {
             try {
-                IngredientDTO searched_ingredients = IngredientDAO.getIngredient(ingredientName);
+                ArrayList<IngredientDTO> searched_ingredients = IngredientDAO.search_ingredient(ingredientName);
                 if(searched_ingredients != null)
                 {
                     data.clear();
-                    data.add(searched_ingredients);
+                    data.addAll(searched_ingredients);
                     AllProductsTable.setItems(data);
                 }
             } catch (Error e){
