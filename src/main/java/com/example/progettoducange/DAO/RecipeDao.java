@@ -225,7 +225,7 @@ public class RecipeDao {
         }
     }
 
-    private static ReviewDTO[] return_array_reviews(List<Object> l) {
+    public static ReviewDTO[] return_array_reviews(List<Object> l) {
         ReviewDTO return_Array[] = new ReviewDTO[l.size()];
         for(int i=0; i<l.size();i++){
             Object support = l.get(i);

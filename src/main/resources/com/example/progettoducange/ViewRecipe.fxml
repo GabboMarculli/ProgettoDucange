@@ -131,5 +131,11 @@
             <Font size="14.0"/>
         </font>
     </RadioButton>
+    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+            onAction="#goToComments" text="View comments" layoutX="720" layoutY="530">
+        <font>
+            <Font size="15.0" />
+        </font>
+    </Button>
 </children>
 </AnchorPane>

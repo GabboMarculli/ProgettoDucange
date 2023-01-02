@@ -68,4 +68,16 @@ public class ViewRecipeController {
             throw new RuntimeException(e);
         }
     }
+
+    public void goToComments()
+    {
+        try {
+            AllCommentsController.Recipe = Recipe;
+            Recipe = null;
+            Application.changeScene("AllComments");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
