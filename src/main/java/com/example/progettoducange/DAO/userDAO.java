@@ -395,6 +395,18 @@ LIMIT 4
         return true;
     }
 
+    public static boolean delete_user(userDTO user)
+    {
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+            collection.deleteOne(eq("username", user.getUsername()));
+            return true;
+        } catch (Exception error) {
+            System.out.println( error );
+            return false;
+        }
+    }
+
 
 }
 

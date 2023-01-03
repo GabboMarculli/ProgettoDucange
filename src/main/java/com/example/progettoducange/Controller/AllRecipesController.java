@@ -4,6 +4,7 @@ import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.IngredientDAO;
 import com.example.progettoducange.DAO.RecipeDao;
 import com.example.progettoducange.DTO.*;
+import com.example.progettoducange.DbMaintaince.Neo4jDriverExample;
 import com.example.progettoducange.model.ProductInFridge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -103,6 +104,7 @@ public class AllRecipesController {
                     RecipeDTO selectedItem = AllRecipesTable.getSelectionModel().getSelectedItem();
                     AllRecipesTable.getItems().remove(selectedItem);
                     RecipeDao.removerecipe(selectedItem);
+                    Neo4jDriverExample.delete_Recipe(selectedItem.getName(), selectedItem.getId());
                 }
             } else {
                     addRecipe();

@@ -9,7 +9,7 @@ import static org.neo4j.driver.Values.parameters;
 
 
 public class Neo4jDriverExample {
-    private final Driver driver;
+    private static Driver driver = null;
 
     /*
     NEL MIO
@@ -30,6 +30,16 @@ public class Neo4jDriverExample {
             session.writeTransaction(tx -> {
                 tx.run("MERGE (a:User {name: $name, id: $id})",
                         parameters("name", name, "id", id)).consume();
+                return 1;
+            });
+        }
+    }
+
+    public static void delete_User(String name, int id){ //ok
+        try (Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+                tx.run("MATCH (a:User {name: $name, id: $id}) DELETE a",
+                        parameters("name", name, "id", id)).consume();;
                 return 1;
             });
         }
@@ -84,9 +94,19 @@ public class Neo4jDriverExample {
                     parameters("id", id_user, "id1",id_receipe)).consume();
 
             return 1;
-        });
+            });
+        }
     }
 
-    }}
+    public static void delete_Recipe(String name, int id){ //ok
+        try (Session session = driver.session()) {
+            session.writeTransaction(tx -> {
+                tx.run("MATCH (a:Recipe {name: $name, id: $id}) DELETE a",
+                        parameters("name", name, "id", id)).consume();;
+                return 1;
+            });
+        }
+    }
+}
 
 //function of analytics

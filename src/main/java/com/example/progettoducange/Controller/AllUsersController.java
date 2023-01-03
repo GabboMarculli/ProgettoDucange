@@ -2,9 +2,12 @@ package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.IngredientDAO;
+import com.example.progettoducange.DAO.RecipeDao;
 import com.example.progettoducange.DAO.userDAO;
 import com.example.progettoducange.DTO.IngredientDTO;
+import com.example.progettoducange.DTO.RecipeDTO;
 import com.example.progettoducange.DTO.userDTO;
+import com.example.progettoducange.DbMaintaince.Neo4jDriverExample;
 import com.example.progettoducange.model.ProductInFridge;
 import com.example.progettoducange.model.RegisteredUser;
 import com.example.progettoducange.model.User;
@@ -76,7 +79,7 @@ public class AllUsersController {
             public TableCell call(final TableColumn<userDTO, String> param) {
                 final TableCell<userDTO, String> cell = new TableCell<userDTO, String>() {
 
-                    final Button btn = new Button("Follow");
+                    Button btn;
 
                     @Override
                     public void updateItem(String item, boolean empty) {
@@ -85,14 +88,26 @@ public class AllUsersController {
                             setGraphic(null);
                             setText(null);
                         } else {
-                            btn.setOnAction(event -> {
-                                userDTO user = getTableView().getItems().get(getIndex());
-                                //userDAO.follow_a_user(Integer.parseInt(Application.authenticatedUser.id),user.getId());
-                                userDAO.follow_a_user(Application.authenticatedUser.id, user.getId());
-                                //System.out.println(Application.authenticatedUser.getUsername()+ " FOLLOWS " + user.getUsername());
-                                btn.setDisable(true);
-                                btn.setText("Following");
-                            });
+                            if(Application.authenticatedUser.getUsername().equals("admin"))
+                            {
+                                btn = new Button("Delete");
+                                btn.setOnAction(event->{
+                                    userDTO selectedItem = getTableView().getItems().get(getIndex());
+                                    UserTable.getItems().remove(selectedItem);
+                                    userDAO.delete_user(selectedItem);
+                                    Neo4jDriverExample.delete_User(selectedItem.getUsername(), (int) selectedItem.getId());
+                                });
+                            } else {
+                                btn = new Button("Follow");
+                                btn.setOnAction(event -> {
+                                    userDTO user = getTableView().getItems().get(getIndex());
+                                    //userDAO.follow_a_user(Integer.parseInt(Application.authenticatedUser.id),user.getId());
+                                    userDAO.follow_a_user(Application.authenticatedUser.id, user.getId());
+                                    //System.out.println(Application.authenticatedUser.getUsername()+ " FOLLOWS " + user.getUsername());
+                                    btn.setDisable(true);
+                                    btn.setText("Following");
+                                });
+                            }
                             setGraphic(btn);
                             setText(null);
                         }
@@ -202,7 +217,14 @@ public class AllUsersController {
 
     @FXML
     protected void goToHome() throws IOException {
-        Application.changeScene("HomePage");
+        try {
+            if(Application.authenticatedUser.getUsername().equals("admin"))
+                Application.changeScene("HomePageAdmin");
+            else
+                Application.changeScene("HomePage");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

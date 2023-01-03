@@ -22,10 +22,6 @@ public class HomePageAdminController {
     public void initialize() {
         Username.setText("Admin");
 
-        Users.setOnAction(event -> {
-            // vai alla pagina degli utenti
-        });
-
         Application.authenticatedUser = new RegisteredUser(-1, "admin", null, null, null);
     }
     @FXML
@@ -45,5 +41,10 @@ public class HomePageAdminController {
     @FXML
     protected void goToRecipes() throws IOException {
         Application.changeScene("AllRecipes");
+    }
+
+    @FXML
+    protected void goToUsers() throws IOException {
+        Application.changeScene("AllUsers");
     }
 }

@@ -130,7 +130,7 @@ public class LoginController {
     protected void onSignUpButtonClick() {
         if (signUpUsernameTextField.getText().isBlank() || signUpEmailTextField.getText().isBlank() || signUpUsernameTextField.getText().equals("admin") ||
                 signUpPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().isBlank() || signUpUsernameTextField.getText().length() > 16 ||
-                signUpDateDatePicker.getEditor().getText().isBlank() ||
+                signUpDateDatePicker.getEditor().getText().isBlank() || signUpPasswordField.getText().equals(signUpUsernameTextField.getText()) ||
                 signUpPasswordField.getText().length() > 16 || signUpRepeatPasswordField.getText().length()> 16) {
             invalidSignupCredentials.setText("Please fill in all fields! Max length is 16.");
             invalidSignupCredentials.setStyle(errorMessage);
