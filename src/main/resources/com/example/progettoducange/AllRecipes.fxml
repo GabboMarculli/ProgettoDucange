@@ -32,7 +32,7 @@
         <!-- An AnchorPane in the Left BorderPane -->
         <AnchorPane fx:id="bottom" prefHeight="700.0" prefWidth="500.0" BorderPane.alignment="CENTER">
             <children>
-                <TableView fx:id="AllRecipesTable" layoutX="35.0" layoutY="76.0" prefHeight="477.0" prefWidth="439.0">
+                <TableView fx:id="AllRecipesTable" layoutX="35.0" layoutY="76.0" prefHeight="477.0" prefWidth="451.0">
                     <columns>
                         <TableColumn fx:id="RecipeNameColumn" prefWidth="203.0" text="Name" />
                         <TableColumn fx:id="ReviewCount" prefWidth="141.0" text="Number of Reviews" />
@@ -77,6 +77,9 @@
 
                     </children>
                 </GridPane>
+                <Button layoutX="76.0" layoutY="234.0" mnemonicParsing="false" onAction="#show_recipe_of_followed_user" text="show recipe of followed user" />
+                <Button layoutX="76.0" layoutY="270.0" mnemonicParsing="false" onAction="#show_suggested_recipe" text="show me suggested recipe" />
+                <Button layoutX="76.0" layoutY="313.0" mnemonicParsing="false" text="Show my published recipe"  onAction="#showMyRecipe"/>
             </children>
         </AnchorPane>
     </right>

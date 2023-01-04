@@ -81,4 +81,9 @@ public class ProfilePageController {
     protected void GoToLoginPage() throws IOException {
         Application.changeScene("LoginPage");
     }
+
+    @FXML
+    protected void showMyRecipe() throws IOException {
+        Application.changeScene("showMyRecipe");
+    }
 }

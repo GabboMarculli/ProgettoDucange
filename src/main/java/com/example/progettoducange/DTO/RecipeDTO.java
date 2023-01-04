@@ -5,7 +5,7 @@ import javafx.beans.property.*;
 public class RecipeDTO {
     private String Name;
     private int Id ;
-    private int  ReviewCount;
+    private int ReviewCount;
     private String Photo;
     private String Author;
     private String PreparationTime;

@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0"
-            xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.progettoducange.Controller.ProfilePageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progettoducange.Controller.ProfilePageController">
     <children>
-        <Pane prefHeight="200.0" style="-fx-background-color: #00bfff;"
-              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Pane prefHeight="200.0" style="-fx-background-color: #00bfff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label layoutX="350.0" layoutY="70.0" text="SmartFridge" textFill="WHITE">
                     <font>
@@ -26,11 +15,11 @@
                 </Label>
             </children>
         </Pane>
-        <GridPane alignment="CENTER" layoutX="165.0" layoutY="228.0" prefHeight="320.0"
-                  prefWidth="650.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
+        <GridPane alignment="CENTER" layoutX="165.0" layoutY="228.0" prefHeight="400.0" prefWidth="670.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="40.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="40.0" />
+            <ColumnConstraints />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -39,6 +28,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
             </rowConstraints>
             <children>
                 <Label prefHeight="18.0" prefWidth="71.0" text="Username">
@@ -48,41 +43,39 @@
 
                 <Label text="First name" GridPane.rowIndex="1">
                 </Label>
-                <Label fx:id="FirstName" GridPane.rowIndex="1" GridPane.columnIndex="2">
+                <Label fx:id="FirstName" GridPane.columnIndex="2" GridPane.rowIndex="1">
                 </Label>
 
                 <Label text="Last name" GridPane.rowIndex="2">
                 </Label>
-                <Label fx:id="LastName" GridPane.rowIndex="2" GridPane.columnIndex="2">
+                <Label fx:id="LastName" GridPane.columnIndex="2" GridPane.rowIndex="2">
                 </Label>
 
                 <Label text="Email" GridPane.rowIndex="3">
                 </Label>
-                <Label fx:id="Email" GridPane.rowIndex="3" GridPane.columnIndex="2">
+                <Label fx:id="Email" GridPane.columnIndex="2" GridPane.rowIndex="3">
                 </Label>
 
                 <Label text="Country" GridPane.rowIndex="4">
                 </Label>
-                <Label fx:id="Country" GridPane.rowIndex="4" GridPane.columnIndex="2">
+                <Label fx:id="Country" GridPane.columnIndex="2" GridPane.rowIndex="4">
                 </Label>
 
                 <Label text="New Password" GridPane.rowIndex="5">
                 </Label>
-                <TextField fx:id="NewPassword" promptText="New Password" GridPane.rowIndex="5" GridPane.columnIndex="2">
+                <TextField fx:id="NewPassword" promptText="New Password" GridPane.columnIndex="2" GridPane.rowIndex="5">
                 </TextField>
 
                 <Label fx:id="invalidChangePassword" prefHeight="16.0" GridPane.rowIndex="6">
                 </Label>
 
-                <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="180.0" text="Change password"
-                        onAction="#onChangePasswordButtonClick" GridPane.rowIndex="8">
+                <Button mnemonicParsing="false" onAction="#onChangePasswordButtonClick" prefHeight="20.0" prefWidth="180.0" text="Change password" GridPane.rowIndex="8">
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="180.0" text="DeleteUser"
-                        onAction="#onDeleteUserClick" GridPane.rowIndex="9" >
+                <Button mnemonicParsing="false" onAction="#onDeleteUserClick" prefHeight="20.0" prefWidth="180.0" text="DeleteUser" GridPane.rowIndex="9">
                 </Button>
-                <Button mnemonicParsing="false" prefHeight="20.0" prefWidth="180.0" text="Go to home"
-                        onAction="#onGoToHomeClick" GridPane.rowIndex="10" >
+                <Button mnemonicParsing="false" onAction="#onGoToHomeClick" prefHeight="20.0" prefWidth="180.0" text="Go to home" GridPane.rowIndex="10">
                 </Button>
+
             </children>
         </GridPane>
         <!--
