@@ -8,6 +8,7 @@ import com.example.progettoducange.model.ProductInFridge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -36,6 +37,8 @@ public class AllProductsController {
     public TextField Quantity;
     @FXML
     public TextField Expire_date;
+    @FXML
+    public AnchorPane my_anchor_pane;
 
     public boolean prova = true;
 
@@ -59,12 +62,27 @@ public class AllProductsController {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     IngredientDTO rowData = row.getItem();
+
+                    if(Application.authenticatedUser.getUsername().equals("admin"))
+                        AddProductController.row = row.getItem();
+
                     viewProductDetail(rowData);
                 }
             });
             return row ;
         });
         fillTable();
+
+        if(Application.authenticatedUser.getUsername().equals("admin")) {
+            final Button Add_product = new Button("Add product ");
+            Add_product.setLayoutX(Double.parseDouble("240"));
+            Add_product.setLayoutY(Double.parseDouble("560"));
+            my_anchor_pane.getChildren().add(Add_product);
+
+            Add_product.setOnAction(event -> {
+                goToAddProduct();
+            });
+        }
     }
 
     int called_times_products = 0;
@@ -130,15 +148,12 @@ public void printAddToFridge(String label, String _id, Integer row_index)
             Right.getChildren().add(lab);
             Right.getChildren().add(Expire_date);
         }
-
-
     }
 
     public void printProduct(String name, String text, Integer index)
     {
         final Label label = new Label(name);
-
-        final Label labelText = new Label(text);
+        Label labelText = new Label(text);
 
         if(index!= 0){
             GridPane.setRowIndex(labelText, index);
@@ -152,10 +167,8 @@ public void printAddToFridge(String label, String _id, Integer row_index)
         Right.getChildren().add(labelText);
     }
 
-    @FXML
-    public void viewProductDetail(IngredientDTO rowData)
+    public void call_print_product(IngredientDTO rowData,String use)
     {
-        Right.getChildren().clear();
         printProduct("Name: ",rowData.getFood(),0);
         printProduct("Measure: ", rowData.getMeasure(), 1);
         printProduct("Grams: ", rowData.getGrams(), 2);
@@ -165,6 +178,13 @@ public void printAddToFridge(String label, String _id, Integer row_index)
         printProduct("Fiber: ", rowData.getFiber(), 6);
         printProduct("Carbs", rowData.getCarbs(), 7);
         printProduct("Category: ", rowData.getCategory(), 8);
+    }
+
+    @FXML
+    public void viewProductDetail(IngredientDTO rowData)
+    {
+        Right.getChildren().clear();
+        call_print_product(rowData, "view");
 
         if(Application.authenticatedUser.getUsername().equals("admin")){
             final Button Delete_product = new Button("Delete ");
@@ -178,6 +198,17 @@ public void printAddToFridge(String label, String _id, Integer row_index)
                     ProductDAO.deleteProduct(selectedItem);
                 }
             });
+
+            final Button Modify_product = new Button("Modify ");
+            GridPane.setRowIndex(Modify_product, 10);
+            GridPane.setColumnIndex(Modify_product, 2);
+            Right.getChildren().add(Modify_product);
+
+            Modify_product.setOnAction(event -> {
+                AddProductController.modify = true;
+                goToAddProduct();
+            });
+
         } else {
             printAddToFridge("Quantity: ", "Quantity", 10);
             printAddToFridge("Expire_date: ", "Expire_date", 11);
@@ -232,6 +263,16 @@ public void printAddToFridge(String label, String _id, Integer row_index)
                 Application.changeScene("HomePageAdmin");
             else
                 Application.changeScene("HomePage");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    private void goToAddProduct()
+    {
+        try {
+            Application.changeScene("AddProduct");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

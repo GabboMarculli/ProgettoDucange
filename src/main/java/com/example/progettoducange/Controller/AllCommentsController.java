@@ -1,7 +1,9 @@
 package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
+import com.example.progettoducange.DAO.ProductDAO;
 import com.example.progettoducange.DAO.RecipeDao;
+import com.example.progettoducange.DTO.IngredientDTO;
 import com.example.progettoducange.DTO.RecipeDTO;
 import com.example.progettoducange.DTO.ReviewDTO;
 import com.example.progettoducange.model.ProductInFridge;
@@ -28,6 +30,17 @@ public class AllCommentsController {
         Label profile = new Label(name);
         content.setPrefHeight(content.getPrefHeight() + profile.getPrefHeight());
         content.getChildren().add(profile);
+
+        if(Application.authenticatedUser.getUsername().equals("admin"))
+        {
+            Button button = new Button("Delete");
+            button.setOnAction(event->{
+                // elimina commento
+                // si bugga
+                content.getChildren().remove(i+2,i+5);
+            });
+            content.getChildren().add(button);
+        }
 
         TextArea field = new TextArea(r[i].getComment());
         Integer charachters = r[i].getComment().length();

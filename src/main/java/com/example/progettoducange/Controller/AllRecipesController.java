@@ -84,7 +84,12 @@ public class AllRecipesController {
             row.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
                     RecipeDTO rowData = row.getItem();
-                    viewRecipe(rowData);
+                    if(Application.authenticatedUser.getUsername().equals("admin"))
+                    {
+                        modifyRecipe(rowData);
+                    } else {
+                        viewRecipe(rowData);
+                    }
                 }
             });
             return row ;
@@ -141,6 +146,18 @@ public class AllRecipesController {
     {
         try {
             Application.changeScene("AddRecipe");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    private void modifyRecipe(RecipeDTO rowData)
+    {
+        try {
+            rowData = RecipeDao.getSingleRecipe(rowData);
+            ModifyRecipeController.Recipe = rowData;
+            Application.changeScene("ModifyRecipe");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

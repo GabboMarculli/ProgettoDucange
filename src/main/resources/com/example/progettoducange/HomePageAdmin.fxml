@@ -43,7 +43,7 @@
             </rowConstraints>
             <children>
                 <Button fx:id="Products" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToProducts"
-                        prefHeight="100.0" prefWidth="170.0" text="Delete products">
+                        prefHeight="100.0" prefWidth="170.0" text="Modify products">
                 </Button>
                 <Button fx:id="Recipes" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToRecipes"
                         prefHeight="100.0" prefWidth="170.0"  text="Delete recipes" GridPane.columnIndex="1">

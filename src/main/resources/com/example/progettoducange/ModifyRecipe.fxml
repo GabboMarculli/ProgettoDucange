@@ -1,0 +1,91 @@
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.geometry.Insets?>
+
+<?import javafx.scene.control.TextField?>
+<AnchorPane prefHeight="548.0" prefWidth="714.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progettoducange.Controller.ModifyRecipeController">
+    <children>
+        <Pane prefHeight="200.0" style="-fx-background-color: #00bfff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label layoutX="350.0" layoutY="70.0" text="Modify recipe" textFill="WHITE">
+                    <font>
+                        <Font size="50.0" />
+                    </font>
+                </Label>
+            </children>
+        </Pane>
+        <GridPane alignment="CENTER" layoutX="165.0" layoutY="228.0" prefHeight="320.0" prefWidth="650.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label text="Title" prefHeight="18.0" prefWidth="30.0">
+                </Label>
+                <TextField fx:id="RecipeTitle" GridPane.columnIndex="2">
+                </TextField>
+
+                <Label text="Author" prefHeight="18.0" prefWidth="30.0" GridPane.rowIndex="1">
+                </Label>
+                <TextField fx:id="RecipeAuthor" GridPane.rowIndex="1" GridPane.columnIndex="2">
+                </TextField>
+
+                <Label text="Ingredients" GridPane.rowIndex="3" prefHeight="18.0" prefWidth="90.0">
+                </Label>
+                <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                    <TextArea fx:id="RecipeIngredients" prefHeight="100.0" prefWidth="300.0"
+                              promptText="Write the ingredients..." wrapText="true">
+                    </TextArea>
+                </VBox>
+
+                <Label text="Directions" GridPane.rowIndex="5" prefHeight="18.0" prefWidth="90.0">
+                </Label>
+                <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
+                    <TextArea fx:id="RecipeDirections" prefHeight="130.0" prefWidth="300.0"
+                              promptText="Write the directions..." wrapText="true">
+                    </TextArea>
+                </VBox>
+
+                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                         text="Back" GridPane.rowIndex="8" onAction="#goBack">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Label fx:id="invalidSubmit" alignment="CENTER" contentDisplay="CENTER"
+                       prefHeight="16.0" prefWidth="100.0" textAlignment="CENTER" GridPane.rowIndex="9" GridPane.columnIndex="2"
+                       textFill="RED">
+                    <opaqueInsets>
+                        <Insets/>
+                    </opaqueInsets>
+                </Label>
+            </children>
+        </GridPane>
+        <Button fx:id="Modify" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                 text="Modify recipe" layoutX="720" layoutY="530">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
+    </children>
+</AnchorPane>
