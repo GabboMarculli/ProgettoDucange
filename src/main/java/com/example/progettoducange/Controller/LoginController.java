@@ -170,6 +170,9 @@ public class LoginController {
             signUpUsernameTextField.setStyle(errorStyle);
             invalidLoginCredentials.setText("");
         } else {
+            ///////
+            /////// MIRKO MODIFICARE QUI
+            ///////
             RegisteredUser user = new RegisteredUser(
                     0,
                     signUpUsernameTextField.getText(),

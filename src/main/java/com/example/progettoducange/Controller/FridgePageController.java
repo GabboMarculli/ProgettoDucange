@@ -104,7 +104,7 @@ public class FridgePageController {
 
         //retrive ingredient from fridge
         ArrayList<productDTO> ingredientList = new ArrayList<>();
-        ingredientList = ProductDAO.getIngredients(Application.authenticatedUser);
+        ingredientList = ProductDAO.getProduct(Application.authenticatedUser);
 
         for (productDTO us : ingredientList) {
             ProductInFridge newrow = new ProductInFridge(us.getName(), us.getQuantity(), us.getDate());
