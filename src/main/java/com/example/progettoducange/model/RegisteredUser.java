@@ -19,10 +19,22 @@ public class RegisteredUser extends User{
             super.setId(id);
             super.setUsername(username);
             super.setPassword(password);
-            super.setEmail(email);
             super.setRegistrationDate(registrationDate);
 
         }
+
+    public RegisteredUser(int id, String username, String password,String email, String name, String surname, String country, LocalDate registrationDate)
+    {
+        super.setId(id);
+        super.setUsername(username);
+        super.setPassword(password);
+        super.setEmail(email);
+        super.setFirstName(name);
+        super.setLastName(surname);
+        super.setCountry(country);
+        super.setRegistrationDate(registrationDate);
+
+    }
 
         public RegisteredUser(int id, String username,String firstName, String lastName, String country, String email)
         {
@@ -31,10 +43,9 @@ public class RegisteredUser extends User{
             super.setLastName(lastName);
             super.setFirstName(firstName);
             super.setCountry(country);
-            super.setEmail(email);
         }
 
-        public Fridge getFridge() {
+    public Fridge getFridge() {
             return fridge;
         }
         public void setFridge(Fridge fridge)

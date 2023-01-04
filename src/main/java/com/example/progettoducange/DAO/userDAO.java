@@ -319,6 +319,7 @@ LIMIT 4
                     .append("firstName", user.getFirstName())
                     .append("lastName", user.getLastName())
                     .append("email", user.getEmail())
+                    .append("country",user.getCountry())
                     .append("id", new_index)
                     .append("registrationdate", text);
             collection.insertOne(doc);

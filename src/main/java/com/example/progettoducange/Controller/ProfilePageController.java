@@ -79,6 +79,6 @@ public class ProfilePageController {
     }
     @FXML
     protected void GoToLoginPage() throws IOException {
-        Application.changeScene("Login");
+        Application.changeScene("LoginPage");
     }
 }

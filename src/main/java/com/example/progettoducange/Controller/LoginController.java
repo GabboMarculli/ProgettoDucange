@@ -58,7 +58,11 @@ public class LoginController {
     @FXML
     private TextField signUpRepeatPasswordField;
     @FXML
-    private DatePicker signUpDateDatePicker;
+    private TextField signUpNameTextField;
+    @FXML
+    private TextField signUpSurnameTextField;
+    @FXML
+    private TextField signUpCountryTextField;
 
     // Creation of methods which are activated on events in the forms
     @FXML
@@ -127,11 +131,13 @@ public class LoginController {
     }
 
     @FXML
-    protected void onSignUpButtonClick() {
+    protected void onSignUpButtonClick() throws IOException {
+        clearField();
         if (signUpUsernameTextField.getText().isBlank() || signUpEmailTextField.getText().isBlank() || signUpUsernameTextField.getText().equals("admin") ||
                 signUpPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().isBlank() || signUpUsernameTextField.getText().length() > 16 ||
-                signUpDateDatePicker.getEditor().getText().isBlank() || signUpPasswordField.getText().equals(signUpUsernameTextField.getText()) ||
-                signUpPasswordField.getText().length() > 16 || signUpRepeatPasswordField.getText().length()> 16) {
+                signUpPasswordField.getText().equals(signUpUsernameTextField.getText()) ||
+                signUpPasswordField.getText().length() > 16 || signUpRepeatPasswordField.getText().length()> 16 || signUpNameTextField.getText().isBlank() ||
+                signUpSurnameTextField.getText().isBlank() || signUpCountryTextField.getText().isBlank() ) {
             invalidSignupCredentials.setText("Please fill in all fields! Max length is 16.");
             invalidSignupCredentials.setStyle(errorMessage);
             invalidLoginCredentials.setText("");
@@ -144,8 +150,12 @@ public class LoginController {
                 signUpPasswordField.setStyle(errorStyle);
             } else if (signUpRepeatPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().length()> 16) {
                 signUpRepeatPasswordField.setStyle(errorStyle);
-            }else if(signUpDateDatePicker.getEditor().getText().isBlank()){
-                invalidSignupCredentials.setText("set date of birth");
+            } else if (signUpNameTextField.getText().isBlank() || signUpNameTextField.getText().length()> 16) {
+                signUpNameTextField.setStyle(errorStyle);
+            } else if (signUpSurnameTextField.getText().isBlank() || signUpSurnameTextField.getText().length()> 16) {
+                signUpSurnameTextField.setStyle(errorStyle);
+            } else if (signUpCountryTextField.getText().isBlank() || signUpCountryTextField.getText().length()> 16) {
+                signUpCountryTextField.setStyle(errorStyle);
             }
         } else if (!Utils.CheckEmail(signUpEmailTextField.getText())) {
             invalidSignupCredentials.setText("The email is in incorrect format!");
@@ -175,6 +185,9 @@ public class LoginController {
                     signUpUsernameTextField.getText(),
                     signUpPasswordField.getText(),
                     signUpEmailTextField.getText(),
+                    signUpNameTextField.getText(),
+                    signUpSurnameTextField.getText(),
+                    signUpCountryTextField.getText(),
                     LocalDate.now()
             );
             //registriamo lo user e otteniamo il suo id;
@@ -188,6 +201,9 @@ public class LoginController {
 
             }else{
                 user.setId(user_index);
+                Application.authenticatedUser = user;
+                goToHomePage();
+                /*
                 invalidSignupCredentials.setText("You are set!");
                 invalidSignupCredentials.setStyle(successMessage);
                 signUpUsernameTextField.setStyle(successStyle);
@@ -195,7 +211,22 @@ public class LoginController {
                 signUpPasswordField.setStyle(successStyle);
                 signUpRepeatPasswordField.setStyle(successStyle);
                 invalidLoginCredentials.setText("");
+                */
             }
         }
+    }
+
+    private void clearField() {
+        invalidLoginCredentials.setStyle(successMessage);
+        loginUsernameTextField.setStyle(successStyle);
+        loginPasswordField.setStyle(successStyle);
+        signUpNameTextField.setStyle(successStyle);
+        signUpPasswordField.setStyle(successStyle);
+        signUpUsernameTextField.setStyle(successStyle);
+        signUpEmailTextField.setStyle(successStyle);
+        signUpSurnameTextField.setStyle(successStyle);
+        signUpRepeatPasswordField.setStyle(successStyle);
+        signUpCountryTextField.setStyle(successStyle);
+        invalidSignupCredentials.setText("");
     }
 }
