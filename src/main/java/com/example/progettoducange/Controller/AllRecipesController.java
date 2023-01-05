@@ -123,8 +123,6 @@ public class AllRecipesController {
         });
 
         bottom.getChildren().add(button);
-
-
     }
 
     //funcion that pressed will show "limit" recipe at a time.
