@@ -1,7 +1,7 @@
 package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
-import com.example.progettoducange.DAO.userDAO;
+import com.example.progettoducange.DAO.UserDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -53,7 +53,7 @@ public class ProfilePageController {
             invalidChangePassword.setText("");
             NewPassword.setStyle(errorStyle);
         } else {
-            userDAO.changePassword(Application.authenticatedUser, NewPassword.getText());
+            UserDAO.changePassword(Application.authenticatedUser, NewPassword.getText());
 
             invalidChangePassword.setText("Passoword changed.");
             invalidChangePassword.setStyle(successMessage);
@@ -66,7 +66,7 @@ public class ProfilePageController {
     protected void onDeleteUserClick()
     {
         try{
-            userDAO.deleteUser(Application.authenticatedUser);
+            UserDAO.deleteUser(Application.authenticatedUser);
             GoToLoginPage();
         } catch (Exception error){
             System.out.println(error);

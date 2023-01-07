@@ -1,10 +1,7 @@
 package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
-import com.example.progettoducange.DAO.IngredientDAO;
-import com.example.progettoducange.DAO.ProductDAO;
 import com.example.progettoducange.DAO.RecipeDao;
-import com.example.progettoducange.DTO.IngredientDTO;
 import com.example.progettoducange.DTO.RecipeDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

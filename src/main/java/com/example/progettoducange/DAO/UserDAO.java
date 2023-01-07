@@ -1,8 +1,6 @@
 package com.example.progettoducange.DAO;
 
 import com.example.progettoducange.Application;
-import com.example.progettoducange.DTO.IngredientDTO;
-import com.example.progettoducange.DTO.productDTO;
 import com.example.progettoducange.DTO.userDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.DbMaintaince.Neo4jDriver;
@@ -12,15 +10,12 @@ import com.example.progettoducange.model.User;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
 
-import java.time.LocalDate;
-import java.time.format.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +25,7 @@ import static com.mongodb.client.model.Sorts.ascending;
 import static com.mongodb.client.model.Sorts.descending;
 import static org.neo4j.driver.Values.parameters;
 
-public class userDAO {
+public class UserDAO {
     // Return a user given his username. If user doesn't exists, return null
     public static String findUser(String username)
     {

@@ -1,25 +1,19 @@
 package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
-import com.example.progettoducange.DAO.userDAO;
+import com.example.progettoducange.DAO.UserDAO;
 import com.example.progettoducange.DTO.userDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-import org.bson.Document;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.progettoducange.DAO.userDAO.getListOfFollowedUser;
-import static com.example.progettoducange.DAO.userDAO.getListOfUser;
+import static com.example.progettoducange.DAO.UserDAO.getListOfFollowedUser;
 
 public class FollowedUserController {
     @FXML
@@ -65,7 +59,7 @@ public class FollowedUserController {
                             btn.setOnAction(event -> {
                                 userDTO user = getTableView().getItems().get(getIndex());
                                 //userDAO.follow_a_user(Integer.parseInt(Application.authenticatedUser.id),user.getId());
-                                userDAO.unfollowUser(Application.authenticatedUser.id, user.getId());
+                                UserDAO.unfollowUser(Application.authenticatedUser.id, user.getId());
                                 btn.setDisable(true);
                                 btn.setText("Unfollowed");
                             });
@@ -116,7 +110,7 @@ public class FollowedUserController {
         String username = SearchUser.getText();
         if(!username.equals("")) {
             try {
-                List<userDTO> searched_user = userDAO.Search_for_followed_user(username);
+                List<userDTO> searched_user = UserDAO.Search_for_followed_user(username);
 
                 if(searched_user.size()!=0)
                 {

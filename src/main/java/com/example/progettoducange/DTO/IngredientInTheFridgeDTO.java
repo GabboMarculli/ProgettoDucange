@@ -2,13 +2,13 @@ package com.example.progettoducange.DTO;
 
 import java.time.LocalDate;
 
-public class productDTO {
+public class IngredientInTheFridgeDTO {
 
     private String name;
     private int quantity;
     private LocalDate expireDate;
 
-    public productDTO(String name, int quantity, LocalDate expireDate) {
+    public IngredientInTheFridgeDTO(String name, int quantity, LocalDate expireDate) {
         this.name = name;
         this.quantity = quantity;
         this.expireDate = expireDate;

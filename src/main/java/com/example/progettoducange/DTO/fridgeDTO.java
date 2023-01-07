@@ -6,13 +6,13 @@ public class fridgeDTO {
     private String name;
     private String owner;
 
-    private  ArrayList<productDTO> product;
+    private  ArrayList<IngredientInTheFridgeDTO> product;
 
-    public void setProduct(ArrayList<productDTO> products){
+    public void setProduct(ArrayList<IngredientInTheFridgeDTO> products){
         this.product = products;
     }
 
-    public ArrayList<productDTO> getProduct(){
+    public ArrayList<IngredientInTheFridgeDTO> getProduct(){
         return product;
     }
 

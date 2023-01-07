@@ -1,16 +1,9 @@
 package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
-import com.example.progettoducange.DAO.IngredientDAO;
-import com.example.progettoducange.DAO.RecipeDao;
-import com.example.progettoducange.DAO.userDAO;
-import com.example.progettoducange.DTO.IngredientDTO;
-import com.example.progettoducange.DTO.RecipeDTO;
+import com.example.progettoducange.DAO.UserDAO;
 import com.example.progettoducange.DTO.userDTO;
 import com.example.progettoducange.DbMaintaince.Neo4jDriverExample;
-import com.example.progettoducange.model.ProductInFridge;
-import com.example.progettoducange.model.RegisteredUser;
-import com.example.progettoducange.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,16 +11,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-import org.bson.Document;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import static com.example.progettoducange.DAO.userDAO.*;
+import static com.example.progettoducange.DAO.UserDAO.*;
 import static java.time.LocalDate.now;
 
 public class AllUsersController {
@@ -94,7 +83,7 @@ public class AllUsersController {
                                 btn.setOnAction(event->{
                                     userDTO selectedItem = getTableView().getItems().get(getIndex());
                                     UserTable.getItems().remove(selectedItem);
-                                    userDAO.delete_user(selectedItem);
+                                    UserDAO.delete_user(selectedItem);
                                     Neo4jDriverExample.delete_User(selectedItem.getUsername(), (int) selectedItem.getId());
                                 });
                             } else {
@@ -102,7 +91,7 @@ public class AllUsersController {
                                 btn.setOnAction(event -> {
                                     userDTO user = getTableView().getItems().get(getIndex());
                                     //userDAO.follow_a_user(Integer.parseInt(Application.authenticatedUser.id),user.getId());
-                                    userDAO.follow_a_user(Application.authenticatedUser.id, user.getId());
+                                    UserDAO.follow_a_user(Application.authenticatedUser.id, user.getId());
                                     //System.out.println(Application.authenticatedUser.getUsername()+ " FOLLOWS " + user.getUsername());
                                     btn.setDisable(true);
                                     btn.setText("Following");
@@ -124,7 +113,7 @@ public class AllUsersController {
 
     public void show_suggested_user(ActionEvent actionEvent) {
         if(token_show_suggested_all) {
-            List<userDTO> users = userDAO.getListOfSuggesteUser();
+            List<userDTO> users = UserDAO.getListOfSuggesteUser();
             if (users != null) {
                 data.clear();
                 for (userDTO us : users) {
@@ -193,7 +182,7 @@ public class AllUsersController {
             String username = SearchUser.getText();
             if(!username.equals("")) {
                 try {
-                    List<userDTO> searched_user = userDAO.Search_for_Unfollowed_user(username,20,0);
+                    List<userDTO> searched_user = UserDAO.Search_for_Unfollowed_user(username,20,0);
 
                     data.clear();
                     if(searched_user != null)

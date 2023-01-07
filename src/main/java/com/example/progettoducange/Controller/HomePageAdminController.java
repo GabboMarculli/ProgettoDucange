@@ -1,7 +1,6 @@
 package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
-import com.example.progettoducange.DAO.userDAO;
 import com.example.progettoducange.model.RegisteredUser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

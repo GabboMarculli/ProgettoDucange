@@ -2,22 +2,17 @@ package com.example.progettoducange.Controller;
 
 
 import com.example.progettoducange.Application;
-import com.example.progettoducange.DTO.userDTO;
 import com.example.progettoducange.Utils.Utils;
-import com.example.progettoducange.DAO.userDAO;
+import com.example.progettoducange.DAO.UserDAO;
 import com.example.progettoducange.model.RegisteredUser;
-import com.example.progettoducange.model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.json.JSONException;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Locale;
 import java.util.Objects;
 
 // ######################################################################################################################
@@ -84,7 +79,7 @@ public class LoginController {
                 loginPasswordField.setStyle(errorStyle);
             }
         } else {
-                if(userDAO.checkPassword(loginUsernameTextField.getText(), loginPasswordField.getText())) {
+                if(UserDAO.checkPassword(loginUsernameTextField.getText(), loginPasswordField.getText())) {
                     invalidLoginCredentials.setText("Login Successful!");
                     invalidLoginCredentials.setStyle(successMessage);
                     loginUsernameTextField.setStyle(successStyle);
@@ -92,7 +87,7 @@ public class LoginController {
                     invalidSignupCredentials.setText("");
 
                     try {
-                        String[] credentials = userDAO.getUser(loginUsernameTextField.getText());
+                        String[] credentials = UserDAO.getUser(loginUsernameTextField.getText());
 
                         int id = Integer.parseInt(credentials[0]);
                         String username = credentials[1];
@@ -174,7 +169,7 @@ public class LoginController {
             signUpPasswordField.setStyle(errorStyle);
             signUpRepeatPasswordField.setStyle(errorStyle);
             invalidLoginCredentials.setText("");
-        } else if (Objects.equals(userDAO.findUser(signUpUsernameTextField.getText()), signUpUsernameTextField.getText())) {
+        } else if (Objects.equals(UserDAO.findUser(signUpUsernameTextField.getText()), signUpUsernameTextField.getText())) {
             invalidSignupCredentials.setText("Username already exists!");
             invalidSignupCredentials.setStyle(errorMessage);
             signUpUsernameTextField.setStyle(errorStyle);
@@ -194,7 +189,7 @@ public class LoginController {
                     LocalDate.now()
             );
             //registriamo lo user e otteniamo il suo id;
-            int user_index = userDAO.signup(user);
+            int user_index = UserDAO.signup(user);
 
             if(user_index == 0){
                 System.out.println();

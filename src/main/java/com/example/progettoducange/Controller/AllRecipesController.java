@@ -1,13 +1,10 @@
 package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
-import com.example.progettoducange.DAO.FridgeDAO;
-import com.example.progettoducange.DAO.IngredientDAO;
-import com.example.progettoducange.DAO.ProductDAO;
+import com.example.progettoducange.DAO.IngredientInTheFridgeDAO;
 import com.example.progettoducange.DAO.RecipeDao;
 import com.example.progettoducange.DTO.*;
 import com.example.progettoducange.DbMaintaince.Neo4jDriverExample;
-import com.example.progettoducange.model.ProductInFridge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,16 +14,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Font;
-import org.bson.Document;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.example.progettoducange.DAO.userDAO.getListOfUser;
 
 
 public class AllRecipesController {
@@ -211,7 +202,7 @@ public class AllRecipesController {
     public void show_suggested_recipe(ActionEvent actionEvent) {
         ShowMoreRecipe.setDisable(true);
         //retrive fridge of the user
-        ArrayList<productDTO> list_of_product = ProductDAO.getProduct(Application.authenticatedUser);
+        ArrayList<IngredientInTheFridgeDTO> list_of_product = IngredientInTheFridgeDAO.getProduct(Application.authenticatedUser);
         //retrive the suggested recipe
         String[] searched_ingredients = new String[list_of_product.size()];
         for(int i=0; i<list_of_product.size();i++){

@@ -1,19 +1,13 @@
 package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
-import com.example.progettoducange.DAO.ProductDAO;
-import com.example.progettoducange.DAO.RecipeDao;
-import com.example.progettoducange.DTO.IngredientDTO;
 import com.example.progettoducange.DTO.RecipeDTO;
 import com.example.progettoducange.DTO.ReviewDTO;
-import com.example.progettoducange.model.ProductInFridge;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 public class AllCommentsController {
     @FXML

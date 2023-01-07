@@ -1,16 +1,11 @@
 package com.example.progettoducange.DAO;
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DTO.IngredientDTO;
-import com.example.progettoducange.DTO.productDTO;
+import com.example.progettoducange.DTO.IngredientInTheFridgeDTO;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
-import com.example.progettoducange.model.ProductInFridge;
 import com.example.progettoducange.model.RegisteredUser;
-import com.example.progettoducange.model.User;
-import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -20,42 +15,27 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 
-
-import com.example.progettoducange.DTO.productDTO;
-import com.example.progettoducange.DbMaintaince.MongoDbDriver;
-import com.example.progettoducange.model.RegisteredUser;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.model.Projections;
-import org.bson.Document;
-import org.bson.conversions.Bson;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.mongodb.client.model.Filters.*;
 
-public class ProductDAO {
+public class IngredientInTheFridgeDAO {
 
     //get ingredients from the fridge
-    public static ArrayList<productDTO> getProduct(RegisteredUser user){
+    public static ArrayList<IngredientInTheFridgeDTO> getProduct(RegisteredUser user){
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
             Bson projectionFields = Projections.fields(
                     Projections.include("fridge"),
                     Projections.excludeId());
 
-            ArrayList<productDTO> products_return = new ArrayList<>();
+            ArrayList<IngredientInTheFridgeDTO> products_return = new ArrayList<>();
             Document obj = collection.find(eq("username", user.getUsername())).projection(projectionFields).first();
             ArrayList<Document> array_of_document = (ArrayList<Document>) obj.get("fridge");
 
             for (int i = 0; i < array_of_document.size(); i++) {
                 Document appoggio = array_of_document.get(i);
                 products_return.add(
-                        new productDTO(
+                        new IngredientInTheFridgeDTO(
                                 appoggio.getString("name"),
                                 appoggio.getInteger("quantity"),
                                 getExpiringDateFormatted(appoggio.getString("expiringDate"))
@@ -100,7 +80,7 @@ public class ProductDAO {
 
 
     //function to remore an element
-    public static void remove_product_mongo(productDTO product_to_delete, int id) {
+    public static void remove_product_mongo(IngredientInTheFridgeDTO product_to_delete, int id) {
 
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
@@ -124,7 +104,7 @@ public class ProductDAO {
         }
     }
 
-    public static void add_product(productDTO p){
+    public static void add_product(IngredientInTheFridgeDTO p){
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
             BasicDBObject query = new BasicDBObject();

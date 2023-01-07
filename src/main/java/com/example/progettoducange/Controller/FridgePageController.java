@@ -2,10 +2,8 @@ package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.*;
-import com.example.progettoducange.DTO.productDTO;
-import com.example.progettoducange.DbMaintaince.MongoDbDriver;
+import com.example.progettoducange.DTO.IngredientInTheFridgeDTO;
 import com.example.progettoducange.model.ProductInFridge;
-import com.mongodb.client.MongoCollection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,15 +12,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.bson.Document;
-import org.bson.conversions.Bson;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
@@ -103,10 +96,10 @@ public class FridgePageController {
         // ########################################################################################################
 
         //retrive ingredient from fridge
-        ArrayList<productDTO> ingredientList = new ArrayList<>();
-        ingredientList = ProductDAO.getProduct(Application.authenticatedUser);
+        ArrayList<IngredientInTheFridgeDTO> ingredientList = new ArrayList<>();
+        ingredientList = IngredientInTheFridgeDAO.getProduct(Application.authenticatedUser);
 
-        for (productDTO us : ingredientList) {
+        for (IngredientInTheFridgeDTO us : ingredientList) {
             ProductInFridge newrow = new ProductInFridge(us.getName(), us.getQuantity(), us.getDate());
             data.add(newrow);
         }
@@ -118,12 +111,12 @@ public class FridgePageController {
             ProductInFridge selectedItem = FridgeTable.getSelectionModel().getSelectedItem();
             FridgeTable.getItems().remove(selectedItem);
             //create a product and remove it from the db
-            productDTO product_to_delete = new productDTO(
+            IngredientInTheFridgeDTO product_to_delete = new IngredientInTheFridgeDTO(
                     selectedItem.getName(),
                     selectedItem.getQuantity(),
                     selectedItem.getExpireDate()
             );
-            ProductDAO.remove_product_mongo(product_to_delete, Application.authenticatedUser.getId());
+            IngredientInTheFridgeDAO.remove_product_mongo(product_to_delete, Application.authenticatedUser.getId());
         }
     }
 

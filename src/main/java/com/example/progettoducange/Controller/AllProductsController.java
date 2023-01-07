@@ -4,21 +4,18 @@ import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.*;
 import com.example.progettoducange.DTO.*;
 import com.example.progettoducange.Utils.Utils;
-import com.example.progettoducange.model.ProductInFridge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
+
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AllProductsController {
     @FXML
@@ -195,7 +192,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
                 if (AllProductsTable.getSelectionModel().getSelectedIndex() >= 0) {
                     IngredientDTO selectedItem = AllProductsTable.getSelectionModel().getSelectedItem();
                     AllProductsTable.getItems().remove(selectedItem);
-                    ProductDAO.deleteProduct(selectedItem);
+                    IngredientInTheFridgeDAO.deleteProduct(selectedItem);
                 }
             });
 
@@ -225,8 +222,8 @@ public void printAddToFridge(String label, String _id, Integer row_index)
                             DateTimeFormatter.ofPattern("dd-MM-yyyy");
                     LocalDate formattedDate = LocalDate.parse(date, pattern);
 
-                    productDTO p = new productDTO(rowData.getFood(), Integer.parseInt(Quantity.getText()), formattedDate);
-                    ProductDAO.add_product(p);
+                    IngredientInTheFridgeDTO p = new IngredientInTheFridgeDTO(rowData.getFood(), Integer.parseInt(Quantity.getText()), formattedDate);
+                    IngredientInTheFridgeDAO.add_product(p);
                 }
             });
         }

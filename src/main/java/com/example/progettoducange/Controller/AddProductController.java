@@ -2,15 +2,13 @@ package com.example.progettoducange.Controller;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.IngredientDAO;
-import com.example.progettoducange.DAO.ProductDAO;
+import com.example.progettoducange.DAO.IngredientInTheFridgeDAO;
 import com.example.progettoducange.DTO.IngredientDTO;
 import com.example.progettoducange.Utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import org.controlsfx.control.spreadsheet.Grid;
 
 import java.io.IOException;
 
@@ -60,7 +58,7 @@ public class AddProductController {
 
             add.setOnAction(actionEvent -> {
                 IngredientDTO new_row = row;
-                ProductDAO.deleteProduct(row);
+                IngredientInTheFridgeDAO.deleteProduct(row);
                 row = new_row;
                 IngredientDAO.addIngredient(new_row);
             });
