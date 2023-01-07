@@ -37,7 +37,7 @@ public class HomePageController {
 
     @FXML
     protected void goToProducts() throws IOException {
-        Application.changeScene("AllProducts");
+        Application.changeScene("AllIngredient");
     }
 
     @FXML

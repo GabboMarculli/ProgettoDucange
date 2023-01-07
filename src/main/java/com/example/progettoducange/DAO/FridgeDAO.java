@@ -2,7 +2,7 @@ package com.example.progettoducange.DAO;
 
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
-import com.example.progettoducange.model.ProductInFridge;
+import com.example.progettoducange.model.IngredientInFridge;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 import javafx.collections.ObservableList;
@@ -18,13 +18,13 @@ public class FridgeDAO {
     //  NON FUNZIONA
     // ###########################################################################
 
-    public static boolean updateFridge2(ObservableList<ProductInFridge> fridge)
+    public static boolean updateFridge2(ObservableList<IngredientInFridge> fridge)
     {
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
             Document doc = new Document();
-            for(ProductInFridge p : fridge){
+            for(IngredientInFridge p : fridge){
                 String date = p.getExpireDate().getDayOfMonth()+"/"+
                         p.getExpireDate().getMonthValue()+"/"+
                         p.getExpireDate().getYear();
@@ -41,7 +41,7 @@ public class FridgeDAO {
         }
     }
 
-    public static boolean updateFridge22(ObservableList<ProductInFridge> fridge)
+    public static boolean updateFridge22(ObservableList<IngredientInFridge> fridge)
     {
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
@@ -51,7 +51,7 @@ public class FridgeDAO {
             query.put( "id", Application.authenticatedUser.getId());
 
 
-            for(ProductInFridge p : fridge) {
+            for(IngredientInFridge p : fridge) {
 
                 BasicDBObject product_mongo = new BasicDBObject();
                 product_mongo.put("name", p.getName());
@@ -71,12 +71,12 @@ public class FridgeDAO {
         }
     }
 
-    public static boolean updateFridge(ObservableList<ProductInFridge> fridge)
+    public static boolean updateFridge(ObservableList<IngredientInFridge> fridge)
     {
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
-            for(ProductInFridge p : fridge) {
+            for(IngredientInFridge p : fridge) {
 
                 String date = p.getExpireDate().getDayOfMonth() + "/" +
                         p.getExpireDate().getMonthValue() + "/" +

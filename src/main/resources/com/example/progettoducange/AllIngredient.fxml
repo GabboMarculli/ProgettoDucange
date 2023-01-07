@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progettoducange.Controller.AllProductsController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.progettoducange.Controller.AllIngredientsController">
     <top>
         <ToolBar prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #00bfff;" BorderPane.alignment="CENTER">
             <items>
@@ -18,7 +18,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="450.0" layoutY="20.0" prefHeight="45.0" prefWidth="250.0" text="All the products">
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="450.0" layoutY="20.0" prefHeight="45.0" prefWidth="250.0" text="All the ingredient">
                     <font>
                         <Font size="25.0" />
                     </font>
@@ -37,7 +37,7 @@
                 <TableView fx:id="AllProductsTable" layoutX="63.0" layoutY="76.0" prefHeight="477.0" prefWidth="390.0">
                     <columns>
                         <TableColumn fx:id="ProductNameColumn" prefWidth="189.0" text="Name" />
-                        <TableColumn fx:id="QuantityInMyFridge" minWidth="9.0" prefWidth="193.0" text="Measure" />
+                        <TableColumn fx:id="QuantityInMyFridge" minWidth="9.0" prefWidth="193.0" text="Calories" />
                     </columns>
                 </TableView>
                 <Button alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="560.0" mnemonicParsing="false" onAction="#goToHome" text="Back ">

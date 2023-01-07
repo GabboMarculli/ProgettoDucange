@@ -6,12 +6,12 @@ public class Recipe {
     private Integer id;
     private User author;
     private Integer like;
-    private List<Product> ingredients;
+    private List<Ingredient> ingredients;
     private String title;
     private List<Review> reviews;
     private String directions;
 
-    public Recipe(User author, List<Product> ingredients, String title, String directions, Integer id)
+    public Recipe(User author, List<Ingredient> ingredients, String title, String directions, Integer id)
     {
         this.id = id;
         this.author= author;
@@ -40,7 +40,7 @@ public class Recipe {
         return like;
     }
 
-    public List<Product> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
@@ -64,7 +64,7 @@ public class Recipe {
         this.directions = directions;
     }
 
-    public void setIngredients(List<Product> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 

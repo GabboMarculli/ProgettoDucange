@@ -233,7 +233,7 @@ public class RecipeDao {
     }
 
     //skipped_time is used for retriving limit recipe at a time belonging to interval [skipped_times*limit, (skipped_times+1)*limit]
-    /*THIS WAS FOR RETRIVING RECIPE FROM MONGODB
+    //THIS WAS FOR RETRIVING RECIPE FROM MONGODB
     public static ArrayList<RecipeDTO> getRecipe(int limit, int skipped_times) {
 
         // retrieve user collection
@@ -264,7 +264,8 @@ public class RecipeDao {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
-    }*/
+    }
+    /*GET RECIPE FROM NEO4j
     public static List<RecipeDTO> getRecipe(int limit, int skipped_times) {
         List<RecipeDTO> RecipeList = null;
         int skipped_calculated = limit*skipped_times;
@@ -298,7 +299,7 @@ public class RecipeDao {
         }
         return null;
     }
-
+*/
     public static RecipeDTO getSingleRecipe(RecipeDTO recipe) {
 
         // retrieve information

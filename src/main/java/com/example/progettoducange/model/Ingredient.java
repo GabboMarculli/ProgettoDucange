@@ -1,7 +1,7 @@
 package com.example.progettoducange.model;
 
 
-public class Product {
+public class Ingredient {
     private String name;
     private Long productId;
     private String description;

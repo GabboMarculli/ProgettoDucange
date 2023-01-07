@@ -3,7 +3,7 @@ package com.example.progettoducange.Controller;
 import com.example.progettoducange.Application;
 import com.example.progettoducange.DAO.*;
 import com.example.progettoducange.DTO.IngredientInTheFridgeDTO;
-import com.example.progettoducange.model.ProductInFridge;
+import com.example.progettoducange.model.IngredientInFridge;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,18 +22,18 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class FridgePageController {
     @FXML
-    private TableView<ProductInFridge> FridgeTable;
+    private TableView<IngredientInFridge> FridgeTable;
     @FXML
-    public TableColumn<ProductInFridge, String> ProductNameColumn;
+    public TableColumn<IngredientInFridge, String> ProductNameColumn;
     @FXML
-    public TableColumn<ProductInFridge, Integer> ProductQuantityColumn;
+    public TableColumn<IngredientInFridge, Integer> ProductQuantityColumn;
     @FXML
-    public TableColumn<ProductInFridge, Date> ProductExpireDateColumn;
+    public TableColumn<IngredientInFridge, Date> ProductExpireDateColumn;
     @FXML
     private Button IncrementButton;
     @FXML
     private Button DecrementButton;
-    private ObservableList<ProductInFridge> data = FXCollections.observableArrayList();
+    private ObservableList<IngredientInFridge> data = FXCollections.observableArrayList();
     private boolean prova = true;
 
     @FXML
@@ -52,7 +52,7 @@ public class FridgePageController {
         DecrementButton.setOnAction(event -> {
             if (FridgeTable.getSelectionModel().getSelectedIndex() >= 0) {
                 Integer index = FridgeTable.getSelectionModel().getSelectedIndex();
-                ProductInFridge prod = FridgeTable.getItems().get(index);
+                IngredientInFridge prod = FridgeTable.getItems().get(index);
                 if (prod.getQuantity() - 1 != 0) {
                     prod.setQuantity(prod.getQuantity() - 1);
                     FridgeTable.getItems().set(index, prod);
@@ -64,7 +64,7 @@ public class FridgePageController {
         IncrementButton.setOnAction(event -> {
             if (FridgeTable.getSelectionModel().getSelectedIndex() >= 0) {
                 Integer index = FridgeTable.getSelectionModel().getSelectedIndex();
-                ProductInFridge prod = FridgeTable.getItems().get(index);
+                IngredientInFridge prod = FridgeTable.getItems().get(index);
                 prod.setQuantity(prod.getQuantity() + 1);
                 FridgeTable.getItems().set(index, prod);
             }
@@ -74,13 +74,13 @@ public class FridgePageController {
     public void fillTable() {
         if (prova) {
             ProductNameColumn.setCellValueFactory(
-                    new PropertyValueFactory<ProductInFridge, String>("name")
+                    new PropertyValueFactory<IngredientInFridge, String>("name")
             );
             ProductQuantityColumn.setCellValueFactory(
-                    new PropertyValueFactory<ProductInFridge, Integer>("quantity")
+                    new PropertyValueFactory<IngredientInFridge, Integer>("quantity")
             );
             ProductExpireDateColumn.setCellValueFactory(
-                    new PropertyValueFactory<ProductInFridge, Date>("expireDate")
+                    new PropertyValueFactory<IngredientInFridge, Date>("expireDate")
             );
             FridgeTable.setItems(data);
 
@@ -100,7 +100,7 @@ public class FridgePageController {
         ingredientList = IngredientInTheFridgeDAO.getProduct(Application.authenticatedUser);
 
         for (IngredientInTheFridgeDTO us : ingredientList) {
-            ProductInFridge newrow = new ProductInFridge(us.getName(), us.getQuantity(), us.getDate());
+            IngredientInFridge newrow = new IngredientInFridge(us.getName(), us.getQuantity(), us.getDate());
             data.add(newrow);
         }
 
@@ -108,7 +108,7 @@ public class FridgePageController {
 
     public void remove_product(ActionEvent actionEvent) {
         if (FridgeTable.getSelectionModel().getSelectedIndex() >= 0) {
-            ProductInFridge selectedItem = FridgeTable.getSelectionModel().getSelectedItem();
+            IngredientInFridge selectedItem = FridgeTable.getSelectionModel().getSelectedItem();
             FridgeTable.getItems().remove(selectedItem);
             //create a product and remove it from the db
             IngredientInTheFridgeDTO product_to_delete = new IngredientInTheFridgeDTO(

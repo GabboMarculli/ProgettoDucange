@@ -2,15 +2,14 @@ package com.example.progettoducange.model;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 
 import java.time.LocalDate;
 
-public class ProductInFridge {
+public class IngredientInFridge {
     final private SimpleStringProperty name;
     final private SimpleIntegerProperty quantity;
     final private SimpleLocalDateProperty expireDate;
-    public ProductInFridge(String name, Integer quantity, LocalDate expireDate)
+    public IngredientInFridge(String name, Integer quantity, LocalDate expireDate)
     {
 
         this.quantity = new SimpleIntegerProperty(quantity);

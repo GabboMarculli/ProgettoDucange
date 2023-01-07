@@ -5,18 +5,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Fridge {
-    private List<ProductInFridge> MyFridge;
-
+    private List<IngredientInFridge> MyFridge;
     // constructor
-    public Fridge(List<ProductInFridge> products) {
+    public Fridge(List<IngredientInFridge> products) {
         this.MyFridge = products;
     }
 
-    public void setMyFridge(List<ProductInFridge> myFridge) {
+    public void setMyFridge(List<IngredientInFridge> myFridge) {
         MyFridge = myFridge;
     }
 
-    public List<ProductInFridge> getMyFridge() {
+    public List<IngredientInFridge> getMyFridge() {
         return MyFridge;
     }
 
@@ -30,11 +29,11 @@ public class Fridge {
             }
        }
        // else, add new row to fridge
-        ProductInFridge newProduct = new ProductInFridge(product, 1 , expireDate);
+        IngredientInFridge newProduct = new IngredientInFridge(product, 1 , expireDate);
         MyFridge.add(newProduct);
     }
 
-    public void removeProduct(ProductInFridge product){
+    public void removeProduct(IngredientInFridge product){
         MyFridge.remove(product);
     }
 

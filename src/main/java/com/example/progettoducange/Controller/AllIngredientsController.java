@@ -17,7 +17,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class AllProductsController {
+public class AllIngredientsController {
     @FXML
     public TableView<IngredientDTO> AllProductsTable;
     @FXML
@@ -37,7 +37,6 @@ public class AllProductsController {
     @FXML
     public AnchorPane my_anchor_pane;
 
-    public boolean prova = true;
 
     private ObservableList<IngredientDTO> data = FXCollections.observableArrayList();
 
@@ -48,7 +47,7 @@ public class AllProductsController {
                 new PropertyValueFactory<IngredientDTO,String>("food")
         );
         QuantityInMyFridge.setCellValueFactory(
-                new PropertyValueFactory<IngredientDTO,String>("measure")
+                new PropertyValueFactory<IngredientDTO,String>("calories")
         );
         AllProductsTable.setItems(data);
 
