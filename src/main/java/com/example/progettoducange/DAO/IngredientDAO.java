@@ -23,7 +23,7 @@ public class IngredientDAO {
         MongoCollection<Document> collection = MongoDbDriver.getProductCollection();
         ArrayList<IngredientDTO> ingredients_to_return = new ArrayList<>();
         JSONObject obj;
-        try (MongoCursor<Document> cursor = collection.find(regex("food", ".*" + Pattern.quote(food) + ".*")).iterator()) {
+        try (MongoCursor<Document> cursor = collection.find(regex("food", ".*" + Pattern.quote(food) + ".*", "i")).iterator()) {
             while (cursor.hasNext()) {
                 String text = cursor.next().toJson(); //i get a json
                 obj = new JSONObject(text);

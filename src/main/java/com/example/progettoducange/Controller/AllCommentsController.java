@@ -31,7 +31,15 @@ public class AllCommentsController {
             button.setOnAction(event->{
                 // elimina commento
                 // si bugga
-                content.getChildren().remove(i+2,i+5);
+                System.out.println(i);
+                System.out.println(content.getChildren().get(i));
+                System.out.println(content.getChildren().get(i+1));
+                System.out.println(content.getChildren().get(i+2));
+                System.out.println(content.getChildren().get(i+3));
+                System.out.println(content.getChildren().get(i+4));
+                System.out.println(content.getChildren().get(i+5));
+
+                content.getChildren().remove(i+2, i+5);
             });
             content.getChildren().add(button);
         }

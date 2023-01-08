@@ -65,18 +65,7 @@
                     </TextArea>
                 </children>
             </VBox>
-
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#submitComment" text="Submit comment" GridPane.columnIndex="2" GridPane.rowIndex="8">
-                <font>
-                    <Font size="15.0" />
-                </font>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goBack" text="Back" GridPane.rowIndex="8">
-                <font>
-                    <Font size="15.0" />
-                </font>
-            </Button>
-            <Label fx:id="invalidSubmit" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="100.0" textAlignment="CENTER" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="9">
+            <Label fx:id="invalidSubmit" alignment="CENTER" contentDisplay="CENTER" prefHeight="16.0" prefWidth="100.0" textAlignment="CENTER" textFill="RED" GridPane.columnIndex="2" GridPane.rowIndex="8">
                 <opaqueInsets>
                     <Insets />
                 </opaqueInsets>
@@ -113,6 +102,19 @@
         </font>
     </RadioButton>
     <Button alignment="CENTER" contentDisplay="CENTER" layoutX="720.0" layoutY="575.0" mnemonicParsing="false" onAction="#goToComments" text="View comments">
+        <font>
+            <Font size="15.0" />
+        </font>
+    </Button>
+
+    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#submitComment"
+            text="Submit comment" layoutX="300" layoutY="575">
+        <font>
+            <Font size="15.0" />
+        </font>
+    </Button>
+    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#goBack"
+            text="Back" layoutX="200" layoutY="575">
         <font>
             <Font size="15.0" />
         </font>

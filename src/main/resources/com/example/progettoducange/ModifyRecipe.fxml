@@ -81,6 +81,12 @@
                 </Label>
             </children>
         </GridPane>
+        <Button fx:id="Comments" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
+                text="View comments" layoutX="550" layoutY="530" onAction="#goToComments">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Button>
         <Button fx:id="Modify" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
                  text="Modify recipe" layoutX="720" layoutY="530">
             <font>

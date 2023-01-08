@@ -49,4 +49,14 @@ public class ModifyRecipeController {
         }
     }
 
+    public void goToComments()
+    {
+        try {
+            AllCommentsController.Recipe = Recipe;
+            Application.changeScene("AllComments");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

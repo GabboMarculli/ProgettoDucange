@@ -124,6 +124,7 @@ public class AllRecipesController {
         ShowMoreRecipe.setDisable(false);
         int limit_views_recipe = 20;
         List<RecipeDTO> recipes = RecipeDao.getRecipe(limit_views_recipe,called_times);
+        System.out.println(recipes.toString());
         for(RecipeDTO us : recipes) {
             data.add(us);
         }
@@ -200,10 +201,14 @@ public class AllRecipesController {
     //will retrive the product that she has in their fridge and the system will
     // suggest the recipe that has the same ingredient
     public void show_suggested_recipe(ActionEvent actionEvent) {
+        if(Application.authenticatedUser.getUsername().equals("admin"))
+            return;
+
         ShowMoreRecipe.setDisable(true);
         //retrive fridge of the user
         ArrayList<IngredientInTheFridgeDTO> list_of_product = IngredientInTheFridgeDAO.getProduct(Application.authenticatedUser);
         //retrive the suggested recipe
+        System.out.println(list_of_product);
         String[] searched_ingredients = new String[list_of_product.size()];
         for(int i=0; i<list_of_product.size();i++){
             searched_ingredients[i] = list_of_product.get(i).getName();

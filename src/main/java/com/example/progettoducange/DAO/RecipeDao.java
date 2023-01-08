@@ -341,7 +341,7 @@ public class RecipeDao {
         ArrayList<RecipeDTO> recipes_to_return = new ArrayList<>();
         JSONObject obj;
 
-        try (MongoCursor<Document> cursor = collection.find(regex("RecipeName", ".*" + Pattern.quote(recipeName) + ".*")).iterator()) {
+        try (MongoCursor<Document> cursor = collection.find(regex("RecipeName", ".*" + Pattern.quote(recipeName) + ".*", "i")).iterator()) {
             while (cursor.hasNext()) {
                 String text = cursor.next().toJson();
                 obj = new JSONObject(text);

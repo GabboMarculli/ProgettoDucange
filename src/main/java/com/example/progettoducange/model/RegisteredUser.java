@@ -43,6 +43,7 @@ public class RegisteredUser extends User{
             super.setLastName(lastName);
             super.setFirstName(firstName);
             super.setCountry(country);
+            super.setEmail(email);
         }
 
     public Fridge getFridge() {
