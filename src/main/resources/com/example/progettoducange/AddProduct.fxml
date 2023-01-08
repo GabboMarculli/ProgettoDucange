@@ -83,7 +83,7 @@
                 </TextField>
 
                 <Button alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="10" mnemonicParsing="false"
-                        text="Back " prefWidth="300.0" onAction="#goToAllProducts">
+                        text="Back " prefWidth="300.0" onAction="#goToAllIngredient">
                     <font>
                         <Font size="15.0" />
                     </font>

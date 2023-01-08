@@ -98,12 +98,12 @@ public class AddProductController {
         }
     }
     @FXML
-    private void goToAllProducts()
+    private void goToAllIngredient()
     {
         try {
             row = null;
             modify = false;
-            Application.changeScene("AllProducts");
+            Application.changeScene("AllIngredient");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

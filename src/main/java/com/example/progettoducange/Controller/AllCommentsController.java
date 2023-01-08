@@ -39,7 +39,11 @@ public class AllCommentsController {
                 System.out.println(content.getChildren().get(i+4));
                 System.out.println(content.getChildren().get(i+5));
 
-                content.getChildren().remove(i+2, i+5);
+                int index = content.getChildren().indexOf(event.getSource());
+
+                content.getChildren().remove(index-1);
+                content.getChildren().remove(index-1);
+                content.getChildren().remove(index-1);
             });
             content.getChildren().add(button);
         }

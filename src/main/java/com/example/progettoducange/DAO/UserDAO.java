@@ -188,9 +188,6 @@ LIMIT 4
         return null;
     }
 
-
-
-
     public static List<userDTO> Search_for_followed_user(String name_searched) {
         List<userDTO> UserList = null;
         try (Session session = Neo4jDriver.getDriver().session()) {
