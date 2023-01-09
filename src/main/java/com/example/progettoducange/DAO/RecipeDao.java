@@ -6,6 +6,7 @@ import com.example.progettoducange.DTO.*;
 import com.example.progettoducange.DbMaintaince.MongoDbDriver;
 import com.example.progettoducange.DbMaintaince.Neo4jDriver;
 import com.example.progettoducange.model.Recipe;
+import com.example.progettoducange.model.User;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.MongoCollection;
 
@@ -34,6 +35,48 @@ public class RecipeDao {
 
     public static boolean addRecipe(RecipeDTO recipe) {
         //save recipe into mongoDB
+
+        if(!add_recipe_MongoDB(recipe)){
+            return false;
+        }
+
+        if(!add_recipe_Neo4J(recipe)){
+            return false;
+        }
+
+        return true;
+    }
+
+    private static boolean add_recipe_Neo4J(RecipeDTO recipe) {
+        try (Session session = Neo4jDriver.getDriver().session()) {
+            String name = recipe.getName();
+            int id_receipe = recipe.getId();
+            int id_user = Application.authenticatedUser.getId();
+
+            session.writeTransaction(tx -> {
+                tx.run("MERGE (a:Recipe {name: $name, id: $id, review_count : $review_count, totalTime : $totalTime}) ",
+                        parameters("name", name, "id", id_receipe,
+                                "review_count", recipe.getReviewCount(),
+                                "totalTime", recipe.getTotalTime())).consume();
+                //create a relathionship between the user and the receipe
+
+                tx.run( "MATCH (a:User) WHERE a.id = $id " +
+                                "MATCH (b:Recipe) WHERE b.id = $id1 " +
+                                "CREATE (a)-[:SHARE]->(b)",
+                        parameters("id", id_user, "id1",id_receipe)).consume();
+                return 1;
+            });
+            System.out.println("recipe saved in neo4j");
+        }catch (Exception ex){
+            System.err.println("error during saving recipe on neo4j");
+            //delete recipe in mongodb to mantein consistency
+            delete_Recipe_MongoDB(recipe);
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean add_recipe_MongoDB(RecipeDTO recipe){
         try {
             MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
@@ -47,38 +90,14 @@ public class RecipeDao {
                             .append("CookTime", recipe.getCooktime())
                             .append("TotalTime", recipe.getTotalTime())
                             .append("Ingredients", recipe.getIngrients())
-                            .append("Direction", recipe.getDirection())
-                            .append("IngredientList", Arrays.asList(recipe.getIngredientsList()))
-                            ;
+                            .append("Directions", recipe.getDirection())
+                            .append("IngredientsList", Arrays.asList(recipe.getIngredientsList()));
             collection.insertOne(doc);
-        } catch (Exception error) {
-            System.err.println(error);
+        } catch (Exception e) {
+            System.out.println("error during saving recipe in MongoDB");
             return false;
         }
-
-        //save recipe in Neo4J
-        try (Session session = Neo4jDriver.getDriver().session()) {
-                String name = recipe.getName();
-                int id_receipe = recipe.getId();
-                int id_user = Application.authenticatedUser.getId();
-
-                session.writeTransaction(tx -> {
-                        tx.run("MERGE (a:Receipe {name: $name, id: $id}) ",
-                            parameters("name", name, "id", id_receipe)).consume();
-                    //create a relathionship between the user and the receipe
-
-                    tx.run( "MATCH (a:User) WHERE a.id = $id " +
-                                    "MATCH (b:Receipe) WHERE b.id = $id1 " +
-                                    "CREATE (a)-[:SHARE]->(b)",
-                            parameters("id", id_user, "id1",id_receipe)).consume();
-                    return 1;
-                });
-            }
-        catch (Exception error) {
-            System.out.println(error);
-            return false;
-        }
-
+        System.out.println("Recipe saved in MongoDB");
         return true;
     }
 
@@ -200,11 +219,12 @@ public class RecipeDao {
     }
 
 
-    public boolean deleteRecipe(Recipe recipe)
+    public static boolean delete_Recipe_MongoDB(RecipeDTO recipe)
     {
         try {
             MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
-            collection.deleteOne(eq("id", recipe.getId()));
+            collection.deleteOne(eq("RecipeID", recipe.getId()));
+            System.out.println("Recipe deleted from mongodb");
             return true;
         } catch (Exception error) {
             System.out.println( error );
@@ -327,9 +347,14 @@ public class RecipeDao {
             List<String> support = obj.getList("IngredientsList",String.class);
             String[] return_list_ingredient = support.toArray(new String[0]);
             recipe.setIngredientsList(return_list_ingredient);
+            String review = null;
+            try{
+                review = obj.getString("reviews");
+                List<Object> l = obj.getList("reviews",Object.class);
+                recipe.setReviews(return_array_reviews(l));
+            } //this because some document don't have reviews yet
+            catch (Exception e){recipe.setReviews(null);}
 
-            List<Object> l = obj.getList("reviews",Object.class);
-            recipe.setReviews(return_array_reviews(l));
             return recipe;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -345,22 +370,30 @@ public class RecipeDao {
             while (cursor.hasNext()) {
                 String text = cursor.next().toJson();
                 obj = new JSONObject(text);
-                recipes_to_return.add(
-                        new RecipeDTO(
-                                obj.getString("RecipeName"),
-                                Integer.parseInt(obj.getString("RecipeID")),
-                                Integer.parseInt(obj.getString("ReviewCount")),
-                                obj.getString("RecipePhoto"),
-                                obj.getString("Author"),
-                                obj.getString("PrepareTime"),
-                                obj.getString("CookTime"),
-                                obj.getString("TotalTime"),
-                                obj.getString("Ingredients"),
-                                obj.getString("Directions"),
-                                getIngedientList(obj.getString("IngredientsList")),
-                                return_array_reviews_json("{ reviews: " + obj.getString("reviews") + "}")
-                        )
-                );
+                String review = null;
+                try{review = obj.getString("reviews");} //this because some document don't have reviews yet
+                catch (Exception e){review = null;}
+                try {
+                    recipes_to_return.add(
+                            new RecipeDTO(
+                                    obj.getString("RecipeName"),
+                                    Integer.parseInt(obj.getString("RecipeID")),
+                                    Integer.parseInt(obj.getString("ReviewCount")),
+                                    obj.getString("RecipePhoto"),
+                                    obj.getString("Author"),
+                                    obj.getString("PrepareTime"),
+                                    obj.getString("CookTime"),
+                                    obj.getString("TotalTime"),
+                                    obj.getString("Ingredients"),
+                                    obj.getString("Directions"),
+                                    getIngedientList(obj.getString("IngredientsList")),
+                                    review != null ? return_array_reviews_json("{ reviews: " + review + "}") : null
+                            )
+                    );
+                }
+                catch (Exception e){
+                    //a recipe is not set correctly in the db, continue  scanning
+                }
             }
             return recipes_to_return;
         } catch (JSONException e) {
@@ -440,13 +473,41 @@ public class RecipeDao {
         }
     }
 
-    public static void removerecipe(RecipeDTO recipe) {
-        try {
-            MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
-            collection.deleteOne(eq("RecipeID", recipe.getId()));
-        } catch (Exception error) {
-            System.out.println( error );
+    public static void removerecipe(RecipeDTO selected_recipe) {
+
+        RecipeDTO recipe = getSingleRecipe(selected_recipe); //here i get all the detail for a recipe and reinsert everything
+
+        //delete recipe from mongoDB
+        if(!delete_Recipe_MongoDB(recipe)){
+            return;
         }
+
+        if(!delete_Recipe_Neo4J(recipe)){
+            return;
+        }
+
+        System.out.println("Recipe removed in a correct way");
+        return;
     }
+
+    private static boolean delete_Recipe_Neo4J(RecipeDTO recipe) {
+        try (Session session = Neo4jDriver.getDriver().session()) {
+
+            session.writeTransaction(tx -> {
+                tx.run("MATCH (a:Recipe {id: $id}) " +
+                                "DETACH DELETE a",
+                        parameters("id", recipe.getId())).consume();
+                return 1;
+            });
+        }catch (Exception e){
+            System.err.println( "error verified during the deletion of a recipe in Neo4j" );
+            //here i have to insert the user also from MongoDB
+
+            add_recipe_MongoDB(recipe);
+            return false;
+        }
+        return true;
+    }
+
 }
 

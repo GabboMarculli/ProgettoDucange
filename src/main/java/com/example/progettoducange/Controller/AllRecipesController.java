@@ -106,7 +106,6 @@ public class AllRecipesController {
                     RecipeDTO selectedItem = AllRecipesTable.getSelectionModel().getSelectedItem();
                     AllRecipesTable.getItems().remove(selectedItem);
                     RecipeDao.removerecipe(selectedItem);
-                    Neo4jDriverExample.delete_Recipe(selectedItem.getName(), selectedItem.getId());
                 }
             } else {
                     addRecipe();

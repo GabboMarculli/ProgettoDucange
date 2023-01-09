@@ -9,6 +9,7 @@ import com.example.progettoducange.model.RegisteredUser;
 import com.example.progettoducange.model.User;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
@@ -87,7 +88,7 @@ RETURN p
 SKIP 4
 LIMIT 4
      */
-
+/*
     public static List<userDTO> getListOfUser(Integer limit,Integer called_times) {
         List<userDTO> UserList = null;
         int skipped_calculated = limit*called_times;
@@ -119,7 +120,7 @@ LIMIT 4
         }
         return null;
     }
-
+*/
 
 
     public static List<userDTO> getListOfFollowedUser(Integer limit,Integer called_times) {
@@ -296,42 +297,113 @@ LIMIT 4
     {
         try {
             //i will assign the id to the user
-            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-
-            String text = user.getRegistrationDate().getDayOfMonth() + "/" +
-                    user.getRegistrationDate().getMonthValue() + "/" +
-                    user.getRegistrationDate().getYear();
-
-            // we search for the last id
-            Document resultDoc = collection.find().sort(descending("id")).first();
-            int new_index = resultDoc.getInteger("id") + 1;
-            //insert the user in the collection
-            Document doc = new Document("username",user.getUsername())
-                    .append("password", user.getPassword())
-                    .append("firstName", user.getFirstName())
-                    .append("lastName", user.getLastName())
-                    .append("email", user.getEmail())
-                    .append("country",user.getCountry())
-                    .append("id", new_index)
-                    .append("registrationdate", text);
-            collection.insertOne(doc);
+            int new_index = add_user_to_mongoDB(user);
+            user.setId(new_index);
+            //now we will add the user to neo4j
+            if(!add_user_to_neo4j(user)){
+                return 0;
+            };
+            System.out.println("User correctly added");
             return new_index;
-        } catch (Exception error) {
-            System.out.println( error );
+        } catch (MongoException error) {
+            //an error occurs in mongoDB
+            System.err.println( "error verified during insert a user in MongoDB" );
             return 0;
         }
     }
 
+    private static int add_user_to_mongoDB(User user) throws MongoException{
+        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+
+        String text = user.getRegistrationDate().getDayOfMonth() + "/" +
+                user.getRegistrationDate().getMonthValue() + "/" +
+                user.getRegistrationDate().getYear();
+
+        // we search for the last id
+        Document resultDoc = collection.find().sort(descending("id")).first();
+        int new_index = resultDoc.getInteger("id") + 1;
+        //insert the user in the collection
+        Document doc = new Document("username",user.getUsername())
+                .append("password", user.getPassword())
+                .append("firstName", user.getFirstName())
+                .append("lastName", user.getLastName())
+                .append("email", user.getEmail())
+                .append("country",user.getCountry())
+                .append("id", new_index)
+                .append("registrationdate", text);
+        collection.insertOne(doc);
+        System.out.println("User correctly added in Mongodb");
+        return new_index;
+    }
+
+    private static boolean add_user_to_neo4j(User user) {
+
+        try (Session session = Neo4jDriver.getDriver().session()) {
+            session.writeTransaction(tx -> {
+                tx.run("MERGE (a:User {name: $name, id: $id, country: $country})",
+                        parameters("name", user.getUsername(), "id", user.getId(), "country",user.getCountry())).consume();
+                return 1;
+            });
+        }catch (Exception e){
+            System.err.println( "error verified during insert a user in Neo4j" );
+            //here i have to remove the user also from MongoDB
+            delete_User_from_MongoDB(user);
+            return false;
+        }
+        System.out.println("User correctly added in Neo4j");
+        return true;
+    }
+
+
     public static boolean deleteUser(User user)
     {
         try {
-            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-            collection.deleteOne(eq("username", user.getUsername()));
+            delete_User_from_MongoDB(user);
+            //delete the user from neo4j
+            if(!delete_user_from_neo4j(user)){
+                return false;
+            };
+            System.out.println( "user correctly deleted" );
             return true;
         } catch (Exception error) {
-            System.out.println( error );
+            System.err.println( "an error occurs when deleting a user from MongoDB" );
             return false;
         }
+    }
+
+    public static boolean delete_User_from_MongoDB(User user)
+    {
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+            collection.deleteOne(eq("id", user.getId()));
+            System.out.println( "user correctly deleted from MongoDB" );
+            return true;
+        } catch (Exception error) {
+            System.err.println( "an error occurs when deleting a user from MongoDB" );
+            return false;
+        }
+
+    }
+
+
+    private static boolean delete_user_from_neo4j(User user) {
+
+        try (Session session = Neo4jDriver.getDriver().session()) {
+            session.writeTransaction(tx -> {
+                tx.run("MATCH (a:User {id: $id}) " +
+                                "DETACH DELETE a",
+                        parameters("id", user.getId())).consume();
+                return 1;
+            });
+            System.out.println( "user correctly deleted from Neo4j" );
+        }catch (Exception e){
+            System.err.println( "error verified during the deletion of a user in Neo4j" );
+            //here i have to insert the user also from MongoDB
+            add_user_to_mongoDB(user);
+            return false;
+        }
+        return true;
+
     }
 
     public static boolean changePassword(RegisteredUser user, String newPassword)
@@ -399,7 +471,5 @@ LIMIT 4
             return false;
         }
     }
-
-
 }
 

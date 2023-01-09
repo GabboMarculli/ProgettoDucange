@@ -52,19 +52,8 @@ public class AddRecipeController {
             } else if (Directions.getText().isBlank()) {
                 Directions.setStyle(errorStyle);
             }
-        } else if(!Utils.isNumeric(CookTime.getText()) || !Utils.isNumeric(TotalTime.getText()) ||
-                !Utils.isNumeric(PreparationTime.getText())){
-            invalidRecipe.setText("The time fields required integer values!");
-            invalidRecipe.setStyle(errorMessage);
-
-            if(!Utils.isNumeric(CookTime.getText())) {
-                CookTime.setStyle(errorStyle);
-            } else if(!Utils.isNumeric(TotalTime.getText())) {
-                TotalTime.setStyle(errorStyle);
-            } else if(!Utils.isNumeric(PreparationTime.getText())) {
-                PreparationTime.setStyle(errorStyle);
-            }
-        } else{
+        }
+        else{
             RecipeDTO new_recipe = new RecipeDTO(
                         RecipeTitle.getText(),
                         RecipeDao.get_id_recipe(), //add id
@@ -81,7 +70,7 @@ public class AddRecipeController {
                 );
 
                 if (!RecipeDao.addRecipe(new_recipe)) {
-                    invalidRecipe.setText("Recipe adding is failed!");
+                    invalidRecipe.setText("Recipe adding is failed! retry later");
                     invalidRecipe.setStyle(errorMessage);
                 } else {
                     invalidRecipe.setText("Add Successful!");

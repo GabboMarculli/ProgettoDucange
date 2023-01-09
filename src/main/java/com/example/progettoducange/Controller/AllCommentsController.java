@@ -29,8 +29,6 @@ public class AllCommentsController {
         {
             Button button = new Button("Delete");
             button.setOnAction(event->{
-                // elimina commento
-                // si bugga
                 System.out.println(i);
                 System.out.println(content.getChildren().get(i));
                 System.out.println(content.getChildren().get(i+1));

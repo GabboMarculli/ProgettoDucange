@@ -38,28 +38,28 @@
                 <children>
                     <Label prefHeight="18.0" prefWidth="30.0" text="Title">
                     </Label>
-                    <TextField fx:id="RecipeTitle" GridPane.columnIndex="2">
+                    <TextField fx:id="RecipeTitle" promptText="bacon and chips" GridPane.columnIndex="2">
                     </TextField>
 
                     <Label prefHeight="18.0" prefWidth="90.0" text="Preparation time" GridPane.rowIndex="2">
                     </Label>
-                    <TextField fx:id="PreparationTime" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                    <TextField fx:id="PreparationTime" promptText="1 h 30 m" GridPane.columnIndex="2" GridPane.rowIndex="2">
                     </TextField>
 
                     <Label prefHeight="18.0" prefWidth="90.0" text="Cook time" GridPane.rowIndex="3">
                     </Label>
-                    <TextField fx:id="CookTime" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                    <TextField fx:id="CookTime" promptText="1 h 20 m" GridPane.columnIndex="2" GridPane.rowIndex="3">
                     </TextField>
 
                     <Label prefHeight="18.0" prefWidth="90.0" text="Total time" GridPane.rowIndex="4">
                     </Label>
-                    <TextField fx:id="TotalTime" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                    <TextField fx:id="TotalTime" promptText="2 h 50 m" GridPane.columnIndex="2" GridPane.rowIndex="4">
                     </TextField>
 
                     <Label text="Ingredients" GridPane.rowIndex="5">
                     </Label>
                     <VBox prefHeight="200.0" prefWidth="500.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                        <TextArea fx:id="Ingredients" prefHeight="100.0" prefWidth="300.0" promptText="Write the ingredients..." wrapText="true">
+                        <TextArea fx:id="Ingredients" prefHeight="100.0" prefWidth="300.0" promptText="Write the ingredients like in the following example: milk,bread,water" wrapText="true">
                         </TextArea>
                     </VBox>
 
