@@ -1,7 +1,6 @@
 package com.example.SmartFridge.Controller;
 
 import com.example.SmartFridge.Application;
-import com.example.SmartFridge.DAO.RecipeDao;
 import com.example.SmartFridge.DTO.RecipeDTO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -9,6 +8,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.util.HashMap;
+
+import static com.example.SmartFridge.DAO.RecipeDao.updateRecipe;
 
 public class ModifyRecipeController {
     @FXML
@@ -32,10 +34,22 @@ public class ModifyRecipeController {
         RecipeDirections.setText(Recipe.getDirection());
 
         Modify.setOnAction(actionEvent -> {
-            RecipeDTO new_recipe = Recipe;
-            RecipeDao.removerecipe(Recipe);
-            Recipe = new_recipe;
-            RecipeDao.addRecipe(new_recipe);
+            boolean[] updating = new boolean[4];
+            if(!Recipe.getName().equals(RecipeTitle.getText())){
+                updating[0] = true;
+                Recipe.setName(RecipeTitle.getText());
+            } else if(!Recipe.getAuthor().equals(RecipeAuthor.getText())) {
+                updating[1] = true;
+                Recipe.setAuthor(RecipeAuthor.getText());
+            } else if(!Recipe.getIngrients().equals(RecipeIngredients.getText())) {
+                updating[2] = true;
+                Recipe.setIngrients(RecipeIngredients.getText());
+            } else if(!Recipe.getDirection().equals(RecipeDirections.getText())){
+                updating[3] = true;
+                Recipe.setDirection(RecipeDirections.getText());
+            }
+
+            updateRecipe(Recipe, updating);
         });
     }
 

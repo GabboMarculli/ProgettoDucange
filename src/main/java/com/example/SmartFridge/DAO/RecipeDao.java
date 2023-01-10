@@ -6,10 +6,13 @@ import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
 import com.example.SmartFridge.model.Recipe;
 import com.mongodb.BasicDBObject;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
+import com.mongodb.client.model.Updates;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.util.ArrayList;
@@ -430,6 +433,23 @@ public class RecipeDao {
             array_of_reviews[i] = new ReviewDTO(user, rating, Description);
         }
         return array_of_reviews;
+    }
+
+    public static void updateRecipe(RecipeDTO Recipe, boolean[] modify)
+    {
+        MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
+        Document query = new Document().append("RecipeID",  Recipe.getId());
+        Bson updates = Updates.combine(
+                Updates.set("RecipeName", Recipe.getName()),
+                Updates.addToSet("Author", Recipe.getAuthor()),
+                Updates.addToSet("Ingredients", Recipe.getIngrients()),
+                Updates.addToSet("Directions", Recipe.getDirection()));
+
+        try {
+            UpdateResult result = collection.updateOne(query, updates);
+           } catch (MongoException me) {
+            System.err.println("Unable to update due to an error: " + me);
+        }
     }
 
     public static void addReview(ReviewDTO review, int id_recipe){
