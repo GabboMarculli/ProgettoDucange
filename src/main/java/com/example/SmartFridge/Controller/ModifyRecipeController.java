@@ -38,13 +38,13 @@ public class ModifyRecipeController {
             if(!Recipe.getName().equals(RecipeTitle.getText())){
                 updating[0] = true;
                 Recipe.setName(RecipeTitle.getText());
-            } else if(!Recipe.getAuthor().equals(RecipeAuthor.getText())) {
+            }  if(!Recipe.getAuthor().equals(RecipeAuthor.getText())) {
                 updating[1] = true;
                 Recipe.setAuthor(RecipeAuthor.getText());
-            } else if(!Recipe.getIngrients().equals(RecipeIngredients.getText())) {
+            }  if(!Recipe.getIngrients().equals(RecipeIngredients.getText())) {
                 updating[2] = true;
                 Recipe.setIngrients(RecipeIngredients.getText());
-            } else if(!Recipe.getDirection().equals(RecipeDirections.getText())){
+            }  if(!Recipe.getDirection().equals(RecipeDirections.getText())){
                 updating[3] = true;
                 Recipe.setDirection(RecipeDirections.getText());
             }

@@ -438,15 +438,19 @@ public class RecipeDao {
     public static void updateRecipe(RecipeDTO Recipe, boolean[] modify)
     {
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
-        Document query = new Document().append("RecipeID",  Recipe.getId());
-        Bson updates = Updates.combine(
-                Updates.set("RecipeName", Recipe.getName()),
-                Updates.addToSet("Author", Recipe.getAuthor()),
-                Updates.addToSet("Ingredients", Recipe.getIngrients()),
-                Updates.addToSet("Directions", Recipe.getDirection()));
 
+        Document query = new Document();
+        query.append("RecipeID",  Recipe.getId());
+        Document setData = new Document();
+        setData.append("RecipeName", Recipe.getName())
+                .append("Author", Recipe.getAuthor())
+                .append("Ingredients", Recipe.getIngrients())
+                .append("Directions", Recipe.getDirection());
+        Document update = new Document();
+        update.append("$set", setData);
         try {
-            UpdateResult result = collection.updateOne(query, updates);
+            //To update single Document
+            collection.updateOne(query, update);
            } catch (MongoException me) {
             System.err.println("Unable to update due to an error: " + me);
         }
