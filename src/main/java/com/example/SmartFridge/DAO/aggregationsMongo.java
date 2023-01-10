@@ -7,7 +7,7 @@ import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 
 
-public class analyticsMongo {
+public class aggregationsMongo {
     public void top10votedrecipe(){
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 

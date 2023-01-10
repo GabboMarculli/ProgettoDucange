@@ -270,7 +270,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
     private void goToAddProduct()
     {
         try {
-            Application.changeScene("AddProduct");
+            Application.changeScene("AddIngredient");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
