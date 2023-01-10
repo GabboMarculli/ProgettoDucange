@@ -60,7 +60,7 @@ public class AllIngredientsController {
                     IngredientDTO rowData = row.getItem();
 
                     if(Application.authenticatedUser.getUsername().equals("admin"))
-                        AddProductController.row = row.getItem();
+                        AddIngredientToFridgeController.row = row.getItem();
 
                     viewProductDetail(rowData);
                 }
@@ -124,6 +124,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
             final Label lab = new Label(label);
             Quantity = new TextField();
             Quantity.setId(_id);
+            Quantity.setPromptText("2");
 
             GridPane.setRowIndex(lab, row_index);
             GridPane.setRowIndex(Quantity, row_index);
@@ -136,6 +137,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
             final Label lab = new Label(label);
             Expire_date = new TextField();
             Expire_date.setId(_id);
+            Expire_date.setPromptText("02-13-2024");
 
             GridPane.setRowIndex(lab, row_index);
             GridPane.setRowIndex(Expire_date, row_index);
@@ -201,7 +203,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
             Right.getChildren().add(Modify_product);
 
             Modify_product.setOnAction(event -> {
-                AddProductController.modify = true;
+                AddIngredientToFridgeController.modify = true;
                 goToAddProduct();
             });
 

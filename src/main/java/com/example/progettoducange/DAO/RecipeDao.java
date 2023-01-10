@@ -54,16 +54,14 @@ public class RecipeDao {
             int id_user = Application.authenticatedUser.getId();
 
             session.writeTransaction(tx -> {
-                tx.run("MERGE (a:Recipe {name: $name, id: $id, review_count : $review_count, totalTime : $totalTime}) ",
-                        parameters("name", name, "id", id_receipe,
-                                "review_count", recipe.getReviewCount(),
-                                "totalTime", recipe.getTotalTime())).consume();
-                //create a relathionship between the user and the receipe
-
-                tx.run( "MATCH (a:User) WHERE a.id = $id " +
-                                "MATCH (b:Recipe) WHERE b.id = $id1 " +
-                                "CREATE (a)-[:SHARE]->(b)",
-                        parameters("id", id_user, "id1",id_receipe)).consume();
+                    tx.run("MERGE (b:Recipe {name: $name, id: $id, review_count : $review_count, totalTime : $totalTime}) " +
+                                    "WITH b " +
+                                    "MATCH (a:User) WHERE a.id = $id_user " +
+                                    "CREATE (a)-[:SHARE]->(b)",
+                            parameters("name", name, "id", id_receipe,
+                                    "review_count", recipe.getReviewCount(),
+                                    "totalTime", recipe.getTotalTime(),
+                                    "id_user", id_user)).consume();
                 return 1;
             });
             System.out.println("recipe saved in neo4j");

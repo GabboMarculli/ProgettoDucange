@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="548.0" prefWidth="714.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.progettoducange.Controller.AddProductController">
+            fx:controller="com.example.progettoducange.Controller.AddIngredientToFridgeController">
     <children>
         <Pane prefHeight="200.0" style="-fx-background-color: #00bfff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -89,7 +89,7 @@
                     </font>
                 </Button>
                 <Button fx:id="add" alignment="CENTER" contentDisplay="CENTER" GridPane.rowIndex="10" GridPane.columnIndex="2"
-                        mnemonicParsing="false" text="Add product " prefWidth="300.0">
+                        mnemonicParsing="false" text="Add Ingredient " prefWidth="300.0">
                     <font>
                         <Font size="15.0" />
                     </font>
