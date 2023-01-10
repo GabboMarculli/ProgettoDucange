@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="700.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.SmartFridge.Controller.FollowedUserController">
+    <top>
+        <ToolBar prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: #00bfff;" BorderPane.alignment="CENTER">
+            <items>
+                <Button lineSpacing="10.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="146.0" style="-fx-background-color: transparent;">
+                    <graphic>
+                        <ImageView fitHeight="45.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@img/logo.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="350.0" layoutY="20.0" prefHeight="45.0" prefWidth="250.0" text="Followed Users">
+                    <font>
+                        <Font size="30.0" />
+                    </font>
+                </Label>
+
+                <Pane prefHeight="6.0" prefWidth="533.0" />
+            </items>
+        </ToolBar>
+    </top>
+    <bottom>
+        <Pane prefHeight="650.0" prefWidth="800.0" style="-fx-background-color: #FFFFFF;" BorderPane.alignment="CENTER">
+            <children>
+                <TextField fx:id="SearchUser" layoutX="170.0" layoutY="35.0" promptText="Seach for a user" />
+                <Button fx:id="SearchUserButton" layoutX="343.0" layoutY="35.0" mnemonicParsing="false" onAction="#Search_for_followed_user" text="Search" />
+
+                <Button fx:id="IncrementButton" alignment="CENTER" contentDisplay="CENTER" layoutX="500.0" layoutY="570.0" mnemonicParsing="false" onAction="#fillTable" text="Show more">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+                <Button alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="570.0" mnemonicParsing="false" onAction="#goToHome" text="Back ">
+                    <font>
+                        <Font size="15.0" />
+                    </font>
+                </Button>
+
+                <TableView fx:id="UserTable" layoutX="103.0" layoutY="76.0" prefHeight="477.0" prefWidth="470.0">
+                    <columns>
+                        <TableColumn fx:id="UsernameColumn" prefWidth="200" text="Username" />
+                        <TableColumn fx:id="CountryColumn" prefWidth="155" text="Country" />
+                        <TableColumn fx:id="UnFollowButtonColumn" prefWidth="120" text="UnFollow" />
+                    </columns>
+                </TableView>
+            </children>
+        </Pane>
+    </bottom>
+</BorderPane>

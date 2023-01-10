@@ -18,10 +18,10 @@ module com.example.progettoducange {
 
 
 
-    opens com.example.progettoducange.model to javafx.base;
-    exports com.example.progettoducange;
-    exports com.example.progettoducange.Controller;
-    opens com.example.progettoducange.Controller to javafx.fxml;
-    opens com.example.progettoducange.DTO to javafx.base;
+    opens com.example.SmartFridge.model to javafx.base;
+    exports com.example.SmartFridge;
+    exports com.example.SmartFridge.Controller;
+    opens com.example.SmartFridge.Controller to javafx.fxml;
+    opens com.example.SmartFridge.DTO to javafx.base;
 
 }
