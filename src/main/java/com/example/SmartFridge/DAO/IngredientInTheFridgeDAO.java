@@ -127,16 +127,18 @@ public class IngredientInTheFridgeDAO {
         }
     }
 
-    public static boolean deleteProduct(IngredientDTO ingred)
+    public static boolean deleteIngredient(IngredientDTO ingred)
     {
         try {
-            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+            MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
             collection.deleteOne(eq("food", ingred.getFood()));
+            System.out.println("delete ingredient went ok");
             return true;
         } catch (Exception error) {
-            System.out.println( error );
+            System.out.println("delete ingredient went wrong");
             return false;
         }
+
     }
 }
 

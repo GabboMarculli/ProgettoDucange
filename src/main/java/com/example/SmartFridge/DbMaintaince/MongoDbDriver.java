@@ -98,9 +98,9 @@ public class MongoDbDriver {
         return database.getCollection("Recipe");
     }
 
-    public static MongoCollection<Document> getProductCollection()
+    public static MongoCollection<Document> getIngredientCollection()
     {
-        return database.getCollection("Product");
+        return database.getCollection("Ingredient");
     }
 }
 

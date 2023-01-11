@@ -193,7 +193,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
                 if (AllProductsTable.getSelectionModel().getSelectedIndex() >= 0) {
                     IngredientDTO selectedItem = AllProductsTable.getSelectionModel().getSelectedItem();
                     AllProductsTable.getItems().remove(selectedItem);
-                    IngredientInTheFridgeDAO.deleteProduct(selectedItem);
+                    IngredientInTheFridgeDAO.deleteIngredient(selectedItem);
                 }
             });
 

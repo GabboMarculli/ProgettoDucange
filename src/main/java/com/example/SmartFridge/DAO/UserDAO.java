@@ -68,7 +68,7 @@ public class UserDAO {
         return null;
     }
 /*
-    public static ArrayList<Document> getListOfUser(Integer limit,Integer called_times)
+
     {
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
@@ -121,8 +121,7 @@ LIMIT 4
         return null;
     }
 */
-
-
+    
     public static List<userDTO> getListOfFollowedUser(Integer limit,Integer called_times) {
         List<userDTO> UserList = null;
         int skipped_calculated = limit*called_times;

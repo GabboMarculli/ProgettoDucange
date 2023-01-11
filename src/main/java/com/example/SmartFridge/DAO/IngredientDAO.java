@@ -4,6 +4,7 @@ import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DTO.IngredientDTO;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.mongodb.BasicDBObject;
+import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
@@ -20,7 +21,7 @@ import static com.mongodb.client.model.Filters.regex;
 public class IngredientDAO {
     public static ArrayList<IngredientDTO> search_ingredient(String food)
     {
-        MongoCollection<Document> collection = MongoDbDriver.getProductCollection();
+        MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
         ArrayList<IngredientDTO> ingredients_to_return = new ArrayList<>();
         JSONObject obj;
         try (MongoCursor<Document> cursor = collection.find(regex("food", ".*" + Pattern.quote(food) + ".*", "i")).iterator()) {
@@ -49,7 +50,7 @@ public class IngredientDAO {
 
     public static IngredientDTO getIngredient(String food)
     {
-        MongoCollection<Document> collection = MongoDbDriver.getProductCollection();
+        MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
         try {
             System.out.println(search_ingredient(food));
             Document obj = collection.find(eq("food", food)).first();
@@ -71,7 +72,7 @@ public class IngredientDAO {
 
     public static ArrayList<IngredientDTO> getListOfIngredient(int limit, int skipped_times){
         // retrieve ingredient collection
-        MongoCollection<Document> collection = MongoDbDriver.getProductCollection();
+        MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
 
         ArrayList<IngredientDTO> ingredients_to_return = new ArrayList<>();
         System.out.println("SKIPPED TIME VALORE:" + skipped_times);
@@ -127,7 +128,7 @@ public class IngredientDAO {
 
     public static void removeIngredient(IngredientDTO ingredient) {
         try {
-            MongoCollection<Document> collection = MongoDbDriver.getProductCollection();
+            MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
             collection.deleteOne(eq("food", ingredient.getFood()));
         } catch (Exception error) {
             System.out.println( error );
@@ -136,7 +137,7 @@ public class IngredientDAO {
 
     public static void addIngredient(IngredientDTO ingredient) {
         try {
-            MongoCollection<Document> collection = MongoDbDriver.getProductCollection();
+            MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
             Document doc = new Document()
                     .append("food",ingredient.getFood())
                     .append("measure",ingredient.getMeasure())
@@ -151,6 +152,32 @@ public class IngredientDAO {
         } catch (Exception error) {
             System.out.println( error );
         }
+    }
+
+    public static void updateIngredient(IngredientDTO row) {
+        MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
+
+        Document query = new Document();
+        query.append("food",row.getFood());
+        Document setData = new Document();
+        setData.append("measure", row.getMeasure())
+                .append("grams", row.getGrams())
+                .append("calories", row.getCalories())
+                .append("protein", row.getProtein())
+                .append("fat", row.getFat())
+                .append("fiber", row.getFiber())
+                .append("carbs", row.getCarbs())
+                .append("category", row.getCategory());
+        Document update = new Document();
+        update.append("$set", setData);
+
+        try {
+            //To update single Document
+            collection.updateOne(query, update);
+        } catch (MongoException me) {
+            System.err.println("Ingredient: Unable to update due to an error: " + me);
+        }
+        System.out.println("update ingredient went ok");
     }
 }
 

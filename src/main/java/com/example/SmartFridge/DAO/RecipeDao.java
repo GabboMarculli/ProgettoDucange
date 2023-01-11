@@ -435,8 +435,39 @@ public class RecipeDao {
         return array_of_reviews;
     }
 
-    public static void updateRecipe(RecipeDTO Recipe, boolean[] modify)
+    public static void updateRecipe(RecipeDTO Recipe, RecipeDTO Recipe_old)
     {
+        if(!updateRecipeOnMongoDB(Recipe)){
+            System.err.println("An error occur during updating on mongodb");
+            return;
+        }
+        if(!updateRecipeOnNeo4J(Recipe)){
+            System.err.println("An error occur during updating on Neo4J");
+            updateRecipeOnMongoDB(Recipe_old);
+            return;
+        }
+        System.out.println("the updating went ok");
+    }
+
+    private static boolean updateRecipeOnNeo4J(RecipeDTO recipe) {
+        try (Session session = Neo4jDriver.getDriver().session()) {
+            session.writeTransaction(tx -> {
+                tx.run("MATCH (a:Recipe {id:$id}) " +
+                                "SET a.name = $name , a.review_count = $rw , a.totalTime = $tot",
+                        parameters("id", recipe.getId(),
+                        "name", recipe.getId(),
+                                "rw", recipe.getTotalTime(),
+                                "tot", recipe.getTotalTime())).consume();
+                return 1;
+            });
+            System.out.println("the recipe correctly update on neo4j");
+            return true;
+        }catch (Exception ex){
+            return false;
+        }
+    }
+
+    private static boolean updateRecipeOnMongoDB(RecipeDTO Recipe) {
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
         Document query = new Document();
@@ -451,8 +482,11 @@ public class RecipeDao {
         try {
             //To update single Document
             collection.updateOne(query, update);
-           } catch (MongoException me) {
+            //fare update su neo4j
+            return true;
+        } catch (MongoException me) {
             System.err.println("Unable to update due to an error: " + me);
+            return false;
         }
     }
 
