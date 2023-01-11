@@ -396,7 +396,7 @@ public class RecipeDao {
         }
     }
 
-    public static void removeReviews(RecipeDTO Recipe, int profileID)
+    public static void removeReviews(RecipeDTO Recipe,String username)
     {
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
@@ -404,7 +404,7 @@ public class RecipeDao {
 
         BasicDBObject delete =
                 new BasicDBObject("reviews",
-                        new BasicDBObject("profileID", profileID)
+                        new BasicDBObject("profileID", username)
                 );
         collection.updateOne(query, new BasicDBObject("$pull", delete));
     }

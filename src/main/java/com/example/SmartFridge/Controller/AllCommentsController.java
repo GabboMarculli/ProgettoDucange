@@ -40,12 +40,17 @@ public class AllCommentsController {
 
                 int index = content.getChildren().indexOf(event.getSource());
 
-                // content.getChildren().get(index-1) return 'Username: "some_user_name"\t\t\tRate:"some_number"'
+                //the following three lines to get the username of the user who commented the recipe
+                String my_str = String.valueOf(content.getChildren().get(index-1)); //return 'Username: "some_user_name"\t\t\tRate:"some_number"'
+                my_str = my_str.replace("\t", ":").replace(": ", ":");
+                String username = my_str.split(":")[1];
+
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
 
-                //RecipeDao.removeReviews( Recipe,);
+                RecipeDao.removeReviews(Recipe,username);
+
             });
             content.getChildren().add(button);
         }
@@ -109,6 +114,7 @@ public class AllCommentsController {
     public void goBack()
     {
         try {
+            ViewRecipeController.Recipe = Recipe;
             Recipe = null;
             Application.changeScene("ViewRecipe");
         } catch (IOException e) {

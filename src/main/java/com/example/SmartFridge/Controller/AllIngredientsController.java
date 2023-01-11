@@ -242,8 +242,6 @@ public void printAddToFridge(String label, String _id, Integer row_index)
                         Submit_in_fridge.setText("Retry");
                         Submit_in_fridge.setStyle("-fx-text-fill: RED;");
                     }
-
-
                 }
             });
         }
