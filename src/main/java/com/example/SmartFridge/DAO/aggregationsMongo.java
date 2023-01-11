@@ -84,9 +84,11 @@ public class aggregationsMongo {
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
         List<Bson> query = new ArrayList<>();
 
-
-
-
+        query.add(unwind("$fridge"));
+        query.add(group("$fridge.name"  , sum("$fridge.quantity",1)));
+        query.add(group("$id.country"));
+        query.add(Sorts.descending("sum"));
+        query.add(project(fields(excludeId(), include("RecipeID"), include("ingredient"), include("$id.country"), include("sum"))));
 
         List<Document> results = null;
         try{
