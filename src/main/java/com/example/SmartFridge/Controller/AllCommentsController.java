@@ -45,7 +45,7 @@ public class AllCommentsController {
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
 
-                RecipeDao.removeReviews( Recipe,);
+                //RecipeDao.removeReviews( Recipe,);
             });
             content.getChildren().add(button);
         }

@@ -36,6 +36,7 @@ public class AddIngredientToFridgeController {
     @FXML
     public Button add;
 
+
     public static IngredientDTO row;
     public static boolean modify;
 
@@ -68,7 +69,15 @@ public class AddIngredientToFridgeController {
                 row.setProtein(Protein.getText());
                 row.setCarbs((Carbs.getText()));
 
-                IngredientDAO.updateIngredient(row);
+                boolean esito = IngredientDAO.updateIngredient(row);
+                if(esito){
+                    invalidAdd.setText("Ingredient updated ");
+                    invalidAdd.setStyle(successMessage);
+                }else{
+                    invalidAdd.setText("Ingredient not updated ");
+                    invalidAdd.setStyle(errorMessage);
+                }
+
             });
         } else
             add.setOnAction(event->{
@@ -101,7 +110,7 @@ public class AddIngredientToFridgeController {
             invalidAdd.setText("Product added ");
             invalidAdd.setStyle(successMessage);
         } else {
-            invalidAdd.setText("The Login fields are required!");
+            invalidAdd.setText("Product not added, retry");
             invalidAdd.setStyle(errorMessage);
         }
     }

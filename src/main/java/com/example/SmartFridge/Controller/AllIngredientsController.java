@@ -137,7 +137,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
             final Label lab = new Label(label);
             Expire_date = new TextField();
             Expire_date.setId(_id);
-            Expire_date.setPromptText("02-13-2024");
+            Expire_date.setPromptText("02-12-2024");
 
             GridPane.setRowIndex(lab, row_index);
             GridPane.setRowIndex(Expire_date, row_index);
@@ -221,10 +221,29 @@ public void printAddToFridge(String label, String _id, Integer row_index)
                     String date = Expire_date.getText();
                     DateTimeFormatter pattern =
                             DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                    LocalDate formattedDate = LocalDate.parse(date, pattern);
+                    LocalDate formattedDate;
+                    try{
+                        formattedDate = LocalDate.parse(date, pattern);
+                    }catch (Exception e){
+                        Submit_in_fridge.setText("Retry");
+                        Submit_in_fridge.setStyle("-fx-text-fill: RED;");
+                        Expire_date.setStyle("-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;");
+                        return;
+                    }
+
 
                     IngredientInTheFridgeDTO p = new IngredientInTheFridgeDTO(rowData.getFood(), Integer.parseInt(Quantity.getText()), formattedDate);
-                    IngredientInTheFridgeDAO.add_product(p);
+                    if(IngredientInTheFridgeDAO.add_product(p)){
+                        Submit_in_fridge.setText("Added");
+                        Submit_in_fridge.setStyle("-fx-text-fill: GREEN;");
+                        Expire_date.setStyle("-fx-border-color: GREEN; -fx-border-width: 2; -fx-border-radius: 5;");
+                        Quantity.setStyle("-fx-border-color: GREEN; -fx-border-width: 2; -fx-border-radius: 5;");
+                    } else {
+                        Submit_in_fridge.setText("Retry");
+                        Submit_in_fridge.setStyle("-fx-text-fill: RED;");
+                    }
+
+
                 }
             });
         }

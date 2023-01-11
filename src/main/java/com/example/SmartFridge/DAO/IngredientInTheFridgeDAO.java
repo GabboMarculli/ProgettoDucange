@@ -104,7 +104,7 @@ public class IngredientInTheFridgeDAO {
         }
     }
 
-    public static void add_product(IngredientInTheFridgeDTO p){
+    public static boolean add_product(IngredientInTheFridgeDTO p){
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
             BasicDBObject query = new BasicDBObject();
@@ -122,8 +122,10 @@ public class IngredientInTheFridgeDAO {
             update.put("$push", new BasicDBObject("fridge",product_mongo));
 
             collection.updateOne(query, update);
+            return true;
         } catch (Exception error) {
             System.err.println( error );
+            return false;
         }
     }
 

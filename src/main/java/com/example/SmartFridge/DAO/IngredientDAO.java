@@ -154,7 +154,7 @@ public class IngredientDAO {
         }
     }
 
-    public static void updateIngredient(IngredientDTO row) {
+    public static boolean updateIngredient(IngredientDTO row) {
         MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
 
         Document query = new Document();
@@ -174,10 +174,13 @@ public class IngredientDAO {
         try {
             //To update single Document
             collection.updateOne(query, update);
+            System.out.println("update ingredient went ok");
+            return true;
         } catch (MongoException me) {
             System.err.println("Ingredient: Unable to update due to an error: " + me);
+            return false;
         }
-        System.out.println("update ingredient went ok");
+
     }
 }
 
