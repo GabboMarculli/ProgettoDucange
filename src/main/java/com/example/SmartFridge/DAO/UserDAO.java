@@ -439,17 +439,7 @@ LIMIT 4
         }
     }
 
-    public static boolean delete_user(userDTO user)
-    {
-        try {
-            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-            collection.deleteOne(eq("username", user.getUsername()));
-            return true;
-        } catch (Exception error) {
-            System.out.println( error );
-            return false;
-        }
-    }
+
     //function to unfollow a user
     public static boolean unfollowUser(long id_user1, long id_user2){
 

@@ -43,18 +43,20 @@
             </rowConstraints>
             <children>
                 <Button fx:id="Products" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToProducts"
-                        prefHeight="100.0" prefWidth="170.0" text="Modify products">
+                        prefHeight="100.0" prefWidth="170.0" text="Handle products">
                 </Button>
                 <Button fx:id="Recipes" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToRecipes"
-                        prefHeight="100.0" prefWidth="170.0"  text="Delete recipes" GridPane.columnIndex="1">
+                        prefHeight="100.0" prefWidth="170.0"  text="Handle recipes" GridPane.columnIndex="1">
                 </Button>
                 <Button fx:id="Users" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToUsers"
                         prefHeight="100.0" prefWidth="170.0"  text="Delete users" GridPane.columnIndex="2">
                 </Button>
+                <!--
                 <Button fx:id="Analytics"  contentDisplay="TOP" mnemonicParsing="false"
                         prefHeight="100.0" prefWidth="170.0"  text="View analytics" GridPane.columnIndex="1"
                         GridPane.rowIndex="1">
                 </Button>
+                -->
             </children>
         </GridPane>
     </children>
