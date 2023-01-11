@@ -57,7 +57,6 @@ public class AddRecipeController {
                         RecipeTitle.getText(),
                         RecipeDao.get_id_recipe(), //add id
                         0, // at the beginning it has no reviews
-                        null, //add photo
                         Application.authenticatedUser.getUsername(),
                         PreparationTime.getText(),
                         CookTime.getText(),
