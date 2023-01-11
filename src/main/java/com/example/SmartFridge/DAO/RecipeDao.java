@@ -83,7 +83,6 @@ public class RecipeDao {
                     new Document("RecipeName", recipe.getName())
                             .append("RecipeID", recipe.getId())
                             .append("ReviewCount", 0)
-                            .append("RecipePhoto", recipe.getPhoto())
                             .append("Author", recipe.getAuthor())
                             .append("PrepareTime", recipe.getPreparationTime())
                             .append("CookTime", recipe.getCooktime())
@@ -336,7 +335,6 @@ public class RecipeDao {
         Document obj = collection.find(eq("RecipeID", recipe.getId())).projection(projectionFields).first();
 
         try{
-            recipe.setPhoto(obj.getString("RecipePhoto"));
             recipe.setAuthor(obj.getString("Author"));
             recipe.setPreparationTime(obj.getString("PrepareTime"));
             recipe.setCooktime(obj.getString("CookTime"));
@@ -346,9 +344,7 @@ public class RecipeDao {
             List<String> support = obj.getList("IngredientsList",String.class);
             String[] return_list_ingredient = support.toArray(new String[0]);
             recipe.setIngredientsList(return_list_ingredient);
-            String review = null;
             try{
-                review = obj.getString("reviews");
                 List<Object> l = obj.getList("reviews",Object.class);
                 recipe.setReviews(return_array_reviews(l));
             } //this because some document don't have reviews yet
@@ -378,7 +374,6 @@ public class RecipeDao {
                                     obj.getString("RecipeName"),
                                     Integer.parseInt(obj.getString("RecipeID")),
                                     Integer.parseInt(obj.getString("ReviewCount")),
-                                    obj.getString("RecipePhoto"),
                                     obj.getString("Author"),
                                     obj.getString("PrepareTime"),
                                     obj.getString("CookTime"),
