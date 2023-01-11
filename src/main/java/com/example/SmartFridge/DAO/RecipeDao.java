@@ -396,7 +396,7 @@ public class RecipeDao {
         }
     }
 
-    public static void removeReviews(RecipeDTO Recipe, String profileID)
+    public static void removeReviews(RecipeDTO Recipe, int profileID)
     {
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 

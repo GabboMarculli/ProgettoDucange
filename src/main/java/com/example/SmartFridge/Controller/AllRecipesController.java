@@ -130,6 +130,8 @@ public class AllRecipesController {
         }
     }
 
+
+
     //funcion that pressed will show "limit" recipe at a time.
     //the use of called time is specified in getRecipe function
     int called_times = 0;

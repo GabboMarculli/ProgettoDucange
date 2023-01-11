@@ -40,12 +40,12 @@ public class AllCommentsController {
 
                 int index = content.getChildren().indexOf(event.getSource());
 
+                // content.getChildren().get(index-1) return 'Username: "some_user_name"\t\t\tRate:"some_number"'
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
 
-                // come faccio a passare l'id dell'utente??
-                RecipeDao.removeReviews( Recipe, );
+                RecipeDao.removeReviews( Recipe,);
             });
             content.getChildren().add(button);
         }
