@@ -2,12 +2,14 @@ package com.example.SmartFridge.DAO;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Sorts;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.mongodb.client.model.Accumulators.avg;
 import static com.mongodb.client.model.Accumulators.sum;
 import static com.mongodb.client.model.Aggregates.*;
 import static com.mongodb.client.model.Filters.and;
@@ -23,8 +25,9 @@ public class aggregationsMongo {
         List<Bson> query = new ArrayList<>();
 
         query.add(unwind("$reviews"));
-        query.add(group("$RecipeName", averageRate("reviews.Rate", "$avg")));
-        query.add(sort("count"));
+        query.add(group("$RecipeName", avg("reviews.Rate", "$avg")));
+        query.add(Sorts.descending("count"));
+        query.add(project(fields(excludeId(), include("RecipeID"), include("avg"), include("$id.RecipeName"))));
         query.add(limit(10));
 
         List<Document> results = null;
@@ -42,7 +45,7 @@ public class aggregationsMongo {
 
         query.add(unwind("$reviews"));
         query.add(group("Reviews.profileID", sum("count",1)));
-        query.add(sort("count"));
+        query.add(Sorts.descending("count"));
         query.add(project(fields(excludeId(), include("id"), include("count"), include("$id.profile"))));
         query.add(limit(10));
 
@@ -62,7 +65,7 @@ public class aggregationsMongo {
 
         query.add(unwind("$IngredientList"));
         query.add(group("$IngredientList", sum("count",1)));
-        query.add(sort("count"));
+        query.add(Sorts.descending("count"));
         query.add(project(fields(excludeId(), include("RecipeID"), include("count"), include("$id.ingredient"))));
         query.add(limit(10));
 
