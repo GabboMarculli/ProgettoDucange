@@ -81,6 +81,10 @@ public class AllUsersController {
                         } else {
                             if(Application.authenticatedUser.getUsername().equals("admin"))
                             {
+
+                                //disable Show_Suggested_User button
+                                Show_Suggested_User.setDisable(true);
+
                                 btn = new Button("Delete");
                                 btn.setOnAction(event->{
                                     userDTO selectedItem = getTableView().getItems().get(getIndex());
