@@ -10,6 +10,7 @@ import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
@@ -398,6 +399,19 @@ public class RecipeDao {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void removeReviews(RecipeDTO Recipe, String profileID, Integer index)
+    {
+        MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
+
+        Bson query = eq("RecipeID", Recipe.getId());
+
+        BasicDBObject delete =
+                new BasicDBObject("reviews",
+                        new BasicDBObject("profileID", index)
+                );
+        collection.deleteOne(query);
     }
 
     public static ReviewDTO[] return_array_reviews(List<Object> l) {
