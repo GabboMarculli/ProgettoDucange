@@ -482,7 +482,6 @@ public class RecipeDao {
         try {
             //To update single Document
             collection.updateOne(query, update);
-            //fare update su neo4j
             return true;
         } catch (MongoException me) {
             System.err.println("Unable to update due to an error: " + me);

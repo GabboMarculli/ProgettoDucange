@@ -83,6 +83,7 @@ public class AllUsersController {
                                 btn.setOnAction(event->{
                                     userDTO selectedItem = getTableView().getItems().get(getIndex());
                                     UserTable.getItems().remove(selectedItem);
+
                                     UserDAO.delete_user(selectedItem);
                                     Neo4jDriverExample.delete_User(selectedItem.getUsername(), (int) selectedItem.getId());
                                 });
