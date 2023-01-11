@@ -9,6 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AllCommentsController {
     @FXML
@@ -48,6 +51,21 @@ public class AllCommentsController {
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
+
+
+
+
+                List<ReviewDTO> reviews_list = Arrays.asList(Recipe.getReviews());
+                ArrayList<ReviewDTO> list = new ArrayList<>(reviews_list);
+
+                for(int j=0; j<list.size();j++) {
+                    if (list.get(j).getProfile().equals(username)) {
+                        list.remove(j);
+                        break;
+                    }
+                }
+
+                Recipe.setReviews(list.toArray(new ReviewDTO[list.size()]));
 
                 RecipeDao.removeReviews(Recipe,username);
 
