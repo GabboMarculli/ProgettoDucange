@@ -401,7 +401,7 @@ public class RecipeDao {
         }
     }
 
-    public static void removeReviews(RecipeDTO Recipe, String profileID, Integer index)
+    public static void removeReviews(RecipeDTO Recipe, String profileID)
     {
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
@@ -409,9 +409,9 @@ public class RecipeDao {
 
         BasicDBObject delete =
                 new BasicDBObject("reviews",
-                        new BasicDBObject("profileID", index)
+                        new BasicDBObject("profileID", profileID)
                 );
-        collection.deleteOne(query);
+        collection.updateOne(query, new BasicDBObject("$pull", delete));
     }
 
     public static ReviewDTO[] return_array_reviews(List<Object> l) {

@@ -1,6 +1,7 @@
 package com.example.SmartFridge.Controller;
 
 import com.example.SmartFridge.Application;
+import com.example.SmartFridge.DAO.RecipeDao;
 import com.example.SmartFridge.DTO.RecipeDTO;
 import com.example.SmartFridge.DTO.ReviewDTO;
 import javafx.fxml.FXML;
@@ -42,6 +43,9 @@ public class AllCommentsController {
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
+
+                // come faccio a passare l'id dell'utente??
+                RecipeDao.removeReviews( Recipe, );
             });
             content.getChildren().add(button);
         }
