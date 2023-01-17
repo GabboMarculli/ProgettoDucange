@@ -1,6 +1,7 @@
 package com.example.SmartFridge.DAO;
 
 import com.example.SmartFridge.Application;
+import com.example.SmartFridge.DTO.RecipeDTO;
 import com.example.SmartFridge.DTO.userDTO;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
@@ -68,7 +69,7 @@ public class UserDAO {
         return null;
     }
 /*
-    public static ArrayList<Document> getListOfUser(Integer limit,Integer called_times)
+
     {
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
@@ -121,7 +122,6 @@ LIMIT 4
         return null;
     }
 */
-
 
     public static List<userDTO> getListOfFollowedUser(Integer limit,Integer called_times) {
         List<userDTO> UserList = null;
@@ -439,6 +439,7 @@ LIMIT 4
         }
     }
 
+
     //function to unfollow a user
     public static boolean unfollowUser(long id_user1, long id_user2){
 
@@ -460,14 +461,26 @@ LIMIT 4
         return true;
     }
 
-    public static boolean delete_user(userDTO user)
-    {
+    private static boolean updateUserOnMongoDB(userDTO user) {
+        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+
+        Document query = new Document();
+        query.append("id",  user.getId());
+        Document setData = new Document();
+        setData.append("username", user.getUsername())
+                .append("password", user.getPassword())
+                .append("firstName",user.getName())
+                .append("lastName", user.getSurname())
+                .append("country", user.getCountry())
+                .append("registrationdate", user.getRegistrationDate());
+
+        Document update = new Document();
+        update.append("$set", setData);
         try {
-            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-            collection.deleteOne(eq("username", user.getUsername()));
+            collection.updateOne(query, update);
             return true;
-        } catch (Exception error) {
-            System.out.println( error );
+        } catch (MongoException me) {
+            System.err.println("Unable to update due to an error: " + me);
             return false;
         }
     }

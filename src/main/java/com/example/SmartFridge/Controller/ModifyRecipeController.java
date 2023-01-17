@@ -34,22 +34,14 @@ public class ModifyRecipeController {
         RecipeDirections.setText(Recipe.getDirection());
 
         Modify.setOnAction(actionEvent -> {
-            boolean[] updating = new boolean[4];
-            if(!Recipe.getName().equals(RecipeTitle.getText())){
-                updating[0] = true;
-                Recipe.setName(RecipeTitle.getText());
-            }  if(!Recipe.getAuthor().equals(RecipeAuthor.getText())) {
-                updating[1] = true;
-                Recipe.setAuthor(RecipeAuthor.getText());
-            }  if(!Recipe.getIngrients().equals(RecipeIngredients.getText())) {
-                updating[2] = true;
-                Recipe.setIngrients(RecipeIngredients.getText());
-            }  if(!Recipe.getDirection().equals(RecipeDirections.getText())){
-                updating[3] = true;
-                Recipe.setDirection(RecipeDirections.getText());
-            }
 
-            updateRecipe(Recipe, updating);
+                RecipeDTO Recipe_old = Recipe;
+                Recipe.setName(RecipeTitle.getText());
+                Recipe.setAuthor(RecipeAuthor.getText());
+                Recipe.setIngrients(RecipeIngredients.getText());
+                Recipe.setDirection(RecipeDirections.getText());
+
+                updateRecipe(Recipe,Recipe_old);
         });
     }
 

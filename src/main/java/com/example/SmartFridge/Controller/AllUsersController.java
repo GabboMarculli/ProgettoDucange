@@ -3,7 +3,7 @@ package com.example.SmartFridge.Controller;
 import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DAO.UserDAO;
 import com.example.SmartFridge.DTO.userDTO;
-import com.example.SmartFridge.DbMaintaince.Neo4jDriverExample;
+import com.example.SmartFridge.model.RegisteredUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -79,12 +79,16 @@ public class AllUsersController {
                         } else {
                             if(Application.authenticatedUser.getUsername().equals("admin"))
                             {
+
+                                //disable Show_Suggested_User button
+                                Show_Suggested_User.setDisable(true);
+
                                 btn = new Button("Delete");
                                 btn.setOnAction(event->{
                                     userDTO selectedItem = getTableView().getItems().get(getIndex());
                                     UserTable.getItems().remove(selectedItem);
-                                    UserDAO.delete_user(selectedItem);
-                                    Neo4jDriverExample.delete_User(selectedItem.getUsername(), (int) selectedItem.getId());
+                                    UserDAO.deleteUser(new RegisteredUser(selectedItem));
+                                    btn.setText("Delet");
                                 });
                             } else {
                                 btn = new Button("Follow");
@@ -217,9 +221,4 @@ public class AllUsersController {
     }
 }
 
-
-/* carina la roba del formatter, cancellateliamola alla fine sennò è uno sbattimento costante con queste LocalDate
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    LocalDate.parse(us.get("registrationdate").toString(), formatter),
-**/
 

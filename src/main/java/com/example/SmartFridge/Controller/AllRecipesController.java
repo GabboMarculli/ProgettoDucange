@@ -37,6 +37,16 @@ public class AllRecipesController {
 
     @FXML
     private Button ShowMoreRecipe;
+    @FXML
+    private Button show_recipe_of_followed_user;
+    @FXML
+    private Button show_suggested_recipe;
+    @FXML
+    private Button showMyRecipe;
+
+
+
+
 
     private ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
 
@@ -112,7 +122,15 @@ public class AllRecipesController {
         });
 
         bottom.getChildren().add(button);
+
+        if(Application.authenticatedUser.getUsername().equals("admin")) {
+            show_recipe_of_followed_user.setDisable(true);
+            show_suggested_recipe.setDisable(true);
+            showMyRecipe.setDisable(true);
+        }
     }
+
+
 
     //funcion that pressed will show "limit" recipe at a time.
     //the use of called time is specified in getRecipe function
@@ -200,6 +218,7 @@ public class AllRecipesController {
     // suggest the recipe that has the same ingredient
     public void show_suggested_recipe(ActionEvent actionEvent) {
         if(Application.authenticatedUser.getUsername().equals("admin"))
+
             return;
 
         ShowMoreRecipe.setDisable(true);

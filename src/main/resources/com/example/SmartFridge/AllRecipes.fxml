@@ -77,11 +77,12 @@
 
                     </children>
                 </GridPane>
-                <Button layoutX="76.0" layoutY="234.0" mnemonicParsing="false" onAction="#show_recipe_of_followed_user" text="show recipe of followed user" />
-                <Button layoutX="76.0" layoutY="270.0" mnemonicParsing="false" onAction="#show_suggested_recipe" text="show me suggested recipe" />
-                <Button layoutX="76.0" layoutY="313.0" mnemonicParsing="false" text="Show my published recipe"  onAction="#showMyRecipe"/>
+                <Button fx:id="show_recipe_of_followed_user" layoutX="76.0" layoutY="234.0" mnemonicParsing="false" onAction="#show_recipe_of_followed_user" text="show recipe of followed user" />
+                <Button fx:id="show_suggested_recipe" layoutX="76.0" layoutY="270.0" mnemonicParsing="false" onAction="#show_suggested_recipe" text="show me suggested recipe" />
+                <Button fx:id="showMyRecipe" layoutX="76.0" layoutY="313.0" mnemonicParsing="false" text="Show my published recipe"  onAction="#showMyRecipe"/>
             </children>
         </AnchorPane>
     </right>
 
 </BorderPane>
+

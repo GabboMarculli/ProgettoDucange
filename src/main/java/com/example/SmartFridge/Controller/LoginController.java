@@ -94,6 +94,7 @@ public class LoginController {
 
                         if(username.equals("admin"))
                         {
+                            Application.authenticatedUser = new RegisteredUser(id, username);
                             goToAdminPage();
 
                         } else {
@@ -130,7 +131,7 @@ public class LoginController {
         clearField();
         if (signUpUsernameTextField.getText().isBlank() || signUpEmailTextField.getText().isBlank() || signUpUsernameTextField.getText().equals("admin") ||
                 signUpPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().isBlank() || signUpUsernameTextField.getText().length() > 16 ||
-                signUpPasswordField.getText().equals(signUpUsernameTextField.getText()) ||
+
                 signUpPasswordField.getText().length() > 16 || signUpRepeatPasswordField.getText().length()> 16 || signUpNameTextField.getText().isBlank() ||
                 signUpSurnameTextField.getText().isBlank() || signUpCountryTextField.getText().isBlank() ) {
             invalidSignupCredentials.setText("Please fill in all fields! Max length is 16.");

@@ -1,5 +1,7 @@
 package com.example.SmartFridge.model;
 
+import com.example.SmartFridge.DTO.userDTO;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -44,6 +46,20 @@ public class RegisteredUser extends User{
             super.setCountry(country);
             super.setEmail(email);
         }
+
+    public RegisteredUser(int id, String username) {
+        super.setId(id);
+        super.setUsername(username);
+    }
+
+    public RegisteredUser(userDTO selectedItem) {
+        super.setId((int) selectedItem.getId());
+        super.setUsername(selectedItem.getUsername());
+        super.setLastName(selectedItem.getSurname());
+        super.setFirstName(selectedItem.getName());
+        super.setCountry(selectedItem.getCountry());
+        super.setEmail(selectedItem.getCountry());
+    }
 
     public Fridge getFridge() {
             return fridge;

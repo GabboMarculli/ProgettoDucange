@@ -104,7 +104,7 @@ public class IngredientInTheFridgeDAO {
         }
     }
 
-    public static void add_product(IngredientInTheFridgeDTO p){
+    public static boolean add_product(IngredientInTheFridgeDTO p){
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
             BasicDBObject query = new BasicDBObject();
@@ -122,21 +122,25 @@ public class IngredientInTheFridgeDAO {
             update.put("$push", new BasicDBObject("fridge",product_mongo));
 
             collection.updateOne(query, update);
+            return true;
         } catch (Exception error) {
             System.err.println( error );
+            return false;
         }
     }
 
-    public static boolean deleteProduct(IngredientDTO ingred)
+    public static boolean deleteIngredient(IngredientDTO ingred)
     {
         try {
-            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+            MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
             collection.deleteOne(eq("food", ingred.getFood()));
+            System.out.println("delete ingredient went ok");
             return true;
         } catch (Exception error) {
-            System.out.println( error );
+            System.out.println("delete ingredient went wrong");
             return false;
         }
+
     }
 }
 

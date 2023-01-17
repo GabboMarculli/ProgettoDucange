@@ -36,6 +36,7 @@ public class AddIngredientToFridgeController {
     @FXML
     public Button add;
 
+
     public static IngredientDTO row;
     public static boolean modify;
 
@@ -44,8 +45,9 @@ public class AddIngredientToFridgeController {
 
     public void initialize()
     {
-        if(modify)
+        if(row != null)
         {
+            Name.setDisable(true);
             Name.setText(row.getFood());
             Grams.setText(row.getGrams());
             Fat.setText(row.getFat());
@@ -57,10 +59,25 @@ public class AddIngredientToFridgeController {
             Carbs.setText(row.getCarbs());
 
             add.setOnAction(actionEvent -> {
-                IngredientDTO new_row = row;
-                IngredientInTheFridgeDAO.deleteProduct(row);
-                row = new_row;
-                IngredientDAO.addIngredient(new_row);
+
+                row.setGrams(Grams.getText());
+                row.setFat(Fat.getText());
+                row.setFiber(Fiber.getText());
+                row.setMeasure(Measure.getText());
+                row.setCalories(Calories.getText());
+                row.setCategory(Category.getText());
+                row.setProtein(Protein.getText());
+                row.setCarbs((Carbs.getText()));
+
+                boolean esito = IngredientDAO.updateIngredient(row);
+                if(esito){
+                    invalidAdd.setText("Ingredient updated ");
+                    invalidAdd.setStyle(successMessage);
+                }else{
+                    invalidAdd.setText("Ingredient not updated ");
+                    invalidAdd.setStyle(errorMessage);
+                }
+
             });
         } else
             add.setOnAction(event->{
@@ -93,7 +110,7 @@ public class AddIngredientToFridgeController {
             invalidAdd.setText("Product added ");
             invalidAdd.setStyle(successMessage);
         } else {
-            invalidAdd.setText("The Login fields are required!");
+            invalidAdd.setText("Product not added, retry");
             invalidAdd.setStyle(errorMessage);
         }
     }

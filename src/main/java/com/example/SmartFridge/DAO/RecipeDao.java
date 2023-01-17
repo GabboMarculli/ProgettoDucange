@@ -10,6 +10,7 @@ import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
@@ -83,7 +84,6 @@ public class RecipeDao {
                     new Document("RecipeName", recipe.getName())
                             .append("RecipeID", recipe.getId())
                             .append("ReviewCount", 0)
-                            .append("RecipePhoto", recipe.getPhoto())
                             .append("Author", recipe.getAuthor())
                             .append("PrepareTime", recipe.getPreparationTime())
                             .append("CookTime", recipe.getCooktime())
@@ -336,7 +336,6 @@ public class RecipeDao {
         Document obj = collection.find(eq("RecipeID", recipe.getId())).projection(projectionFields).first();
 
         try{
-            recipe.setPhoto(obj.getString("RecipePhoto"));
             recipe.setAuthor(obj.getString("Author"));
             recipe.setPreparationTime(obj.getString("PrepareTime"));
             recipe.setCooktime(obj.getString("CookTime"));
@@ -346,9 +345,7 @@ public class RecipeDao {
             List<String> support = obj.getList("IngredientsList",String.class);
             String[] return_list_ingredient = support.toArray(new String[0]);
             recipe.setIngredientsList(return_list_ingredient);
-            String review = null;
             try{
-                review = obj.getString("reviews");
                 List<Object> l = obj.getList("reviews",Object.class);
                 recipe.setReviews(return_array_reviews(l));
             } //this because some document don't have reviews yet
@@ -378,7 +375,6 @@ public class RecipeDao {
                                     obj.getString("RecipeName"),
                                     Integer.parseInt(obj.getString("RecipeID")),
                                     Integer.parseInt(obj.getString("ReviewCount")),
-                                    obj.getString("RecipePhoto"),
                                     obj.getString("Author"),
                                     obj.getString("PrepareTime"),
                                     obj.getString("CookTime"),
@@ -398,6 +394,25 @@ public class RecipeDao {
         } catch (JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    //remove a review and update review_count
+    public static void removeReviews(RecipeDTO Recipe,String username) {
+
+        MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
+
+        Bson query = eq("RecipeID", Recipe.getId());
+
+        BasicDBObject delete =
+                new BasicDBObject("reviews",
+                        new BasicDBObject("profileID", username)
+                );
+
+        BasicDBObject update = new BasicDBObject("$pull", delete);
+        update = update.append("$inc", new BasicDBObject().append("ReviewCount", -1));
+
+        collection.updateOne(query, update);
+
     }
 
     public static ReviewDTO[] return_array_reviews(List<Object> l) {
@@ -435,8 +450,39 @@ public class RecipeDao {
         return array_of_reviews;
     }
 
-    public static void updateRecipe(RecipeDTO Recipe, boolean[] modify)
+    public static void updateRecipe(RecipeDTO Recipe, RecipeDTO Recipe_old)
     {
+        if(!updateRecipeOnMongoDB(Recipe)){
+            System.err.println("An error occur during updating on mongodb");
+            return;
+        }
+        if(!updateRecipeOnNeo4J(Recipe)){
+            System.err.println("An error occur during updating on Neo4J");
+            updateRecipeOnMongoDB(Recipe_old);
+            return;
+        }
+        System.out.println("the updating went ok");
+    }
+
+    private static boolean updateRecipeOnNeo4J(RecipeDTO recipe) {
+        try (Session session = Neo4jDriver.getDriver().session()) {
+            session.writeTransaction(tx -> {
+                tx.run("MATCH (a:Recipe {id:$id}) " +
+                                "SET a.name = $name , a.review_count = $rw , a.totalTime = $tot",
+                        parameters("id", recipe.getId(),
+                        "name", recipe.getId(),
+                                "rw", recipe.getTotalTime(),
+                                "tot", recipe.getTotalTime())).consume();
+                return 1;
+            });
+            System.out.println("the recipe correctly update on neo4j");
+            return true;
+        }catch (Exception ex){
+            return false;
+        }
+    }
+
+    private static boolean updateRecipeOnMongoDB(RecipeDTO Recipe) {
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
         Document query = new Document();
@@ -451,8 +497,10 @@ public class RecipeDao {
         try {
             //To update single Document
             collection.updateOne(query, update);
-           } catch (MongoException me) {
+            return true;
+        } catch (MongoException me) {
             System.err.println("Unable to update due to an error: " + me);
+            return false;
         }
     }
 

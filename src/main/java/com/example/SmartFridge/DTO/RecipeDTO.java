@@ -4,7 +4,7 @@ public class RecipeDTO {
     private String Name;
     private int Id ;
     private int ReviewCount;
-    private String Photo;
+
     private String Author;
     private String PreparationTime;
     private String Cooktime;
@@ -21,12 +21,11 @@ public class RecipeDTO {
         TotalTime = totalTime;
     }
 
-    public RecipeDTO(String name, int id, int reviewCount, String photo, String author, String preparationTime, String cooktime, String totalTime, String ingrients, String direction, String[] ingredientsList, ReviewDTO[] reviews) {
+    public RecipeDTO(String name, int id, int reviewCount, String author, String preparationTime, String cooktime, String totalTime, String ingrients, String direction, String[] ingredientsList, ReviewDTO[] reviews) {
         Name = name;
         Id = id;
         Direction = direction;
         ReviewCount = reviewCount;
-        Photo = photo;
         Author = author;
         PreparationTime = preparationTime;
         Cooktime = cooktime;
@@ -60,13 +59,6 @@ public class RecipeDTO {
         ReviewCount = reviewCount;
     }
 
-    public String getPhoto() {
-        return Photo;
-    }
-
-    public void setPhoto(String photo) {
-        Photo = photo;
-    }
 
     public String getAuthor() {
         return Author;

@@ -21,8 +21,7 @@ public class HomePageAdminController {
     public void initialize() {
         Username.setText("Admin");
 
-        Application.authenticatedUser = new RegisteredUser(-1, "admin", null, null, null);
-    }
+        }
     @FXML
     protected void logout() throws IOException {
         Application.authenticatedUser = null;

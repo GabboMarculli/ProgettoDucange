@@ -1,6 +1,7 @@
 package com.example.SmartFridge.Controller;
 
 import com.example.SmartFridge.Application;
+import com.example.SmartFridge.DAO.RecipeDao;
 import com.example.SmartFridge.DTO.RecipeDTO;
 import com.example.SmartFridge.DTO.ReviewDTO;
 import javafx.fxml.FXML;
@@ -8,6 +9,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class AllCommentsController {
     @FXML
@@ -39,9 +43,32 @@ public class AllCommentsController {
 
                 int index = content.getChildren().indexOf(event.getSource());
 
+                //the following three lines to get the username of the user who commented the recipe
+                String my_str = String.valueOf(content.getChildren().get(index-1)); //return 'Username: "some_user_name"\t\t\tRate:"some_number"'
+                my_str = my_str.replace("\t", ":").replace(": ", ":");
+                String username = my_str.split(":")[1];
+
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
+
+
+
+
+                List<ReviewDTO> reviews_list = Arrays.asList(Recipe.getReviews());
+                ArrayList<ReviewDTO> list = new ArrayList<>(reviews_list);
+
+                for(int j=0; j<list.size();j++) {
+                    if (list.get(j).getProfile().equals(username)) {
+                        list.remove(j);
+                        break;
+                    }
+                }
+
+                Recipe.setReviews(list.toArray(new ReviewDTO[list.size()]));
+
+                RecipeDao.removeReviews(Recipe,username);
+
             });
             content.getChildren().add(button);
         }
@@ -105,6 +132,7 @@ public class AllCommentsController {
     public void goBack()
     {
         try {
+            ViewRecipeController.Recipe = Recipe;
             Recipe = null;
             Application.changeScene("ViewRecipe");
         } catch (IOException e) {
