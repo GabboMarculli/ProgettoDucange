@@ -49,6 +49,8 @@ public class MongoDbDriver {
             System.out.println("Connected successfully to server.");
         } catch (Exception me) {
             System.err.println("An error occurred while attempting to run a command: " + me);
+            Error panic = new Error(me);
+            /*
             Stage dialogStage = new Stage();
             dialogStage.initModality(Modality.WINDOW_MODAL);
             Button e = new Button("EXIT");
@@ -67,6 +69,7 @@ public class MongoDbDriver {
             dialogStage.setOnCloseRequest(w->{
                         System.exit(1);
                     });
+        */
         }
     }
 

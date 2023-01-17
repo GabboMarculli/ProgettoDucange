@@ -151,7 +151,11 @@ public class LoginController {
                 signUpSurnameTextField.setStyle(errorStyle);
             } else if (signUpCountryTextField.getText().isBlank() || signUpCountryTextField.getText().length()> 16) {
                 signUpCountryTextField.setStyle(errorStyle);
+            } else if (signUpPasswordField.getText().equals(signUpUsernameTextField.getText())) {
+                signUpCountryTextField.setStyle(errorStyle);
+                invalidSignupCredentials.setText("Password and Username should not match!");
             }
+
         } else if (!Utils.CheckEmail(signUpEmailTextField.getText())) {
             invalidSignupCredentials.setText("The email is in incorrect format!");
             invalidSignupCredentials.setStyle(errorMessage);
