@@ -10,12 +10,12 @@ public class RegisteredUser extends User{
         List<Review> reviews;
 
         // constructor
-        public RegisteredUser(int id)
+        public RegisteredUser(String id)
         {
             super.setId(id);
         }
 
-        public RegisteredUser(int id, String username, String password, String email, LocalDate registrationDate)
+        public RegisteredUser(String id, String username, String password, String email, LocalDate registrationDate)
         {
             super.setId(id);
             super.setUsername(username);
@@ -24,7 +24,7 @@ public class RegisteredUser extends User{
 
         }
 
-    public RegisteredUser(int id, String username, String password,String email, String name, String surname, String country, LocalDate registrationDate)
+    public RegisteredUser(String id, String username, String password,String email, String name, String surname, String country, LocalDate registrationDate)
     {
         super.setId(id);
         super.setUsername(username);
@@ -37,7 +37,7 @@ public class RegisteredUser extends User{
 
     }
 
-        public RegisteredUser(int id, String username,String firstName, String lastName, String country, String email)
+        public RegisteredUser(String id, String username,String firstName, String lastName, String country, String email)
         {
             super.setId(id);
             super.setUsername(username);
@@ -47,13 +47,13 @@ public class RegisteredUser extends User{
             super.setEmail(email);
         }
 
-    public RegisteredUser(int id, String username) {
+    public RegisteredUser(String id, String username) {
         super.setId(id);
         super.setUsername(username);
     }
 
     public RegisteredUser(userDTO selectedItem) {
-        super.setId((int) selectedItem.getId());
+        super.setId(selectedItem.getId());
         super.setUsername(selectedItem.getUsername());
         super.setLastName(selectedItem.getSurname());
         super.setFirstName(selectedItem.getName());

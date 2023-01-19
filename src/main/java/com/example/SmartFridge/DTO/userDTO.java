@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import static java.time.LocalDate.now;
 
 public class userDTO {
-    private SimpleLongProperty id = new SimpleLongProperty();
+    private SimpleStringProperty id = new SimpleStringProperty();
     private SimpleStringProperty username = new SimpleStringProperty();
     private SimpleStringProperty password = new SimpleStringProperty();
     private SimpleStringProperty name = new SimpleStringProperty();
@@ -16,7 +16,7 @@ public class userDTO {
     private SimpleLocalDateProperty registrationDate = new SimpleLocalDateProperty(now());
     private SimpleStringProperty country = new SimpleStringProperty();
 
-    public userDTO(long id,String u,String p, String n,String sn,
+    public userDTO(String id,String u,String p, String n,String sn,
                    LocalDate r, String c) {
         this.id.set(id);
         username.set(u);
@@ -27,21 +27,21 @@ public class userDTO {
         country.set(c);
     }
 
-    public userDTO(long id, String country,String username) {
+    public userDTO(String id, String country,String username) {
         this.id.set(id);
         this.username.set(username);
         this.country.set(country);
     }
 
-    public long getId() {
+    public String getId() {
         return id.get();
     }
 
-    public SimpleLongProperty idProperty() {
+    public SimpleStringProperty idProperty() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id.set(id);
     }
 

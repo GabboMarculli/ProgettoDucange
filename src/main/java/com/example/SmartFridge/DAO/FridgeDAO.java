@@ -8,6 +8,7 @@ import com.mongodb.client.MongoCollection;
 import javafx.collections.ObservableList;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
@@ -48,7 +49,7 @@ public class FridgeDAO {
 
 
             BasicDBObject query = new BasicDBObject();
-            query.put( "id", Application.authenticatedUser.getId());
+            query.put( "_id", new ObjectId(Application.authenticatedUser.getId()));
 
 
             for(IngredientInFridge p : fridge) {
@@ -83,10 +84,9 @@ public class FridgeDAO {
                         p.getExpireDate().getYear();
 
                 Bson query = and(
-                        eq("id", Application.authenticatedUser.getId()),
+                        eq("_id", new ObjectId(Application.authenticatedUser.getId())),
                         eq("fridge.name", p.getName()),
                         eq("fridge.expiringDate", date )
-
                 );
 
                 Document documentList = new Document();
@@ -108,7 +108,7 @@ public class FridgeDAO {
     private static void remove_product_with_0_as_quantity() {
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
-        Bson query = eq("id", Application.authenticatedUser.getId());
+        Bson query = eq("_id", new ObjectId(Application.authenticatedUser.getId()));
 
         BasicDBObject update =
                 new BasicDBObject("fridge",

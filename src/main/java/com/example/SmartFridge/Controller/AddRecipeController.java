@@ -55,7 +55,7 @@ public class AddRecipeController {
         else{
             RecipeDTO new_recipe = new RecipeDTO(
                         RecipeTitle.getText(),
-                        RecipeDao.get_id_recipe(), //add id
+                        "", //add id
                         0, // at the beginning it has no reviews
                         Application.authenticatedUser.getUsername(),
                         PreparationTime.getText(),
@@ -66,8 +66,8 @@ public class AddRecipeController {
                         return_list_of_ingredient(Ingredients.getText()),
                         null
                 );
-
-                if (!RecipeDao.addRecipe(new_recipe)) {
+                String result = RecipeDao.addRecipe(new_recipe);
+                if (result.equals("error")) {
                     invalidRecipe.setText("Recipe adding is failed! retry later");
                     invalidRecipe.setStyle(errorMessage);
                 } else {

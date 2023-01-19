@@ -89,7 +89,7 @@ public class LoginController {
                     try {
                         String[] credentials = UserDAO.getUser(loginUsernameTextField.getText());
 
-                        int id = Integer.parseInt(credentials[0]);
+                        String id = credentials[0];
                         String username = credentials[1];
 
                         if(username.equals("admin"))
@@ -180,7 +180,7 @@ public class LoginController {
             /////// MIRKO MODIFICARE QUI
             ///////
             RegisteredUser user = new RegisteredUser(
-                    0,
+                    "",
                     signUpUsernameTextField.getText(),
                     signUpPasswordField.getText(),
                     signUpEmailTextField.getText(),
@@ -190,9 +190,9 @@ public class LoginController {
                     LocalDate.now()
             );
             //registriamo lo user e otteniamo il suo id;
-            int user_index = UserDAO.signup(user);
+            String user_index = UserDAO.signup(user);
 
-            if(user_index == 0){
+            if(user_index.equals("error")){
                 System.out.println();
                 invalidSignupCredentials.setText("Something went wrong! Retry");
                 invalidSignupCredentials.setStyle(errorMessage);

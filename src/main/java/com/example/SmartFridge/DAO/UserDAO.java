@@ -15,6 +15,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
 
@@ -142,7 +143,7 @@ LIMIT 4
                 while (result.hasNext()) {
                     Record r = result.next();
                     User_to_send.add(new userDTO(
-                                    r.get("id").asInt(),
+                                    r.get("id").asString(),
                                     r.get("country").asString(),
                                     r.get("username").asString()
                             ));
@@ -174,7 +175,7 @@ LIMIT 4
                 while (result.hasNext()) {
                     Record r = result.next();
                     User_to_send.add(new userDTO(
-                            r.get("id").asInt(),
+                            r.get("id").asString(),
                             r.get("country").asString(),
                             r.get("username").asString()
                     ));
@@ -204,7 +205,7 @@ LIMIT 4
                 while (result.hasNext()) {
                     Record r = result.next();
                     User_to_send.add(new userDTO(
-                            r.get("id").asInt(),
+                            r.get("id").asString(),
                             r.get("country").asString(),
                             r.get("username").asString()
                     ));
@@ -240,7 +241,7 @@ LIMIT 4
                 while (result.hasNext()) {
                     Record r = result.next();
                     User_to_send.add(new userDTO(
-                            r.get("id").asInt(),
+                            r.get("id").asString(),
                             r.get("country").asString(),
                             r.get("username").asString()
                     ));
@@ -262,10 +263,10 @@ LIMIT 4
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
         // we search for username
-        Document resultDoc = collection.find(eq("username", username)).projection(excludeId()).first();
+        Document resultDoc = collection.find(eq("username", username)).first();
 
         String return_fields[]={
-                String.valueOf(resultDoc.getInteger("id")),
+                resultDoc.get("_id").toString(),
                 resultDoc.getString("username"),
                 resultDoc.getString("country"),
                 resultDoc.getString("name"),
@@ -293,35 +294,32 @@ LIMIT 4
     // Add new user
     // In LoginPage, user write your informations and than click submit. After that click, check if inserted data are valid
     // and than create new object User, with inserted data. After, call "signup" function to insert in the Db the new user
-    public static int signup(User user)
+    public static String signup(User user)
     {
         try {
             //i will assign the id to the user
-            int new_index = add_user_to_mongoDB(user);
+            String new_index = add_user_to_mongoDB(user);
             user.setId(new_index);
             //now we will add the user to neo4j
             if(!add_user_to_neo4j(user)){
-                return 0;
+                return "error";
             };
             System.out.println("User correctly added");
             return new_index;
         } catch (MongoException error) {
             //an error occurs in mongoDB
             System.err.println( "error verified during insert a user in MongoDB" );
-            return 0;
+            return "error";
         }
     }
 
-    private static int add_user_to_mongoDB(User user) throws MongoException{
+    private static String add_user_to_mongoDB(User user) throws MongoException{
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
         String text = user.getRegistrationDate().getDayOfMonth() + "/" +
                 user.getRegistrationDate().getMonthValue() + "/" +
                 user.getRegistrationDate().getYear();
 
-        // we search for the last id
-        Document resultDoc = collection.find().sort(descending("id")).first();
-        int new_index = resultDoc.getInteger("id") + 1;
         //insert the user in the collection
         Document doc = new Document("username",user.getUsername())
                 .append("password", user.getPassword())
@@ -329,11 +327,10 @@ LIMIT 4
                 .append("lastName", user.getLastName())
                 .append("email", user.getEmail())
                 .append("country",user.getCountry())
-                .append("id", new_index)
                 .append("registrationdate", text);
         collection.insertOne(doc);
         System.out.println("User correctly added in Mongodb");
-        return new_index;
+        return doc.get("_id").toString();
     }
 
     private static boolean add_user_to_neo4j(User user) {
@@ -375,7 +372,7 @@ LIMIT 4
     {
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-            collection.deleteOne(eq("id", user.getId()));
+            collection.deleteOne(eq("_id", new ObjectId(user.getId())));
             System.out.println( "user correctly deleted from MongoDB" );
             return true;
         } catch (Exception error) {
@@ -424,7 +421,7 @@ LIMIT 4
     }
 
     //function to follow a user
-    public static void follow_a_user(long id_user1, long id_user2){
+    public static void follow_a_user(String id_user1, String id_user2){
 
         try (Session session = Neo4jDriver.getDriver().session()) {
 
@@ -441,7 +438,7 @@ LIMIT 4
 
 
     //function to unfollow a user
-    public static boolean unfollowUser(long id_user1, long id_user2){
+    public static boolean unfollowUser(String id_user1, String id_user2){
 
         try (Session session = Neo4jDriver.getDriver().session()) {
 
@@ -465,7 +462,7 @@ LIMIT 4
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
         Document query = new Document();
-        query.append("id",  user.getId());
+        query.append("_id",  new ObjectId(user.getId()));
         Document setData = new Document();
         setData.append("username", user.getUsername())
                 .append("password", user.getPassword())
