@@ -6,9 +6,12 @@ import com.example.SmartFridge.Utils.Utils;
 import com.example.SmartFridge.DAO.UserDAO;
 import com.example.SmartFridge.model.RegisteredUser;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,6 +35,8 @@ public class LoginController {
     String errorMessage = "-fx-text-fill: RED;";
     String errorStyle = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;";
     String successStyle = "-fx-border-color: #A9A9A9; -fx-border-width: 2; -fx-border-radius: 5;";
+    String onOver = "-fx-background-color: #34cfeb;";
+    String exitOver = "-fx-background-color: #24a0ed; -fx-text-fill: WHITE;";
 
     // Import the application's controls
     @FXML
@@ -62,8 +67,19 @@ public class LoginController {
     // Creation of methods which are activated on events in the forms
     @FXML
     protected void onCancelButtonClick() {
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
+        loginUsernameTextField.clear();
+        loginPasswordField.clear();
+    }
+
+    @FXML
+    protected void onCancelButtonClick2() {
+        signUpCountryTextField.clear();
+        signUpEmailTextField.clear();
+        signUpNameTextField.clear();
+        signUpUsernameTextField.clear();
+        signUpPasswordField.clear();
+        signUpRepeatPasswordField.clear();
+        signUpSurnameTextField.clear();
     }
 
     @FXML
@@ -79,43 +95,42 @@ public class LoginController {
                 loginPasswordField.setStyle(errorStyle);
             }
         } else {
-                if(UserDAO.checkPassword(loginUsernameTextField.getText(), loginPasswordField.getText())) {
-                    invalidLoginCredentials.setText("Login Successful!");
-                    invalidLoginCredentials.setStyle(successMessage);
-                    loginUsernameTextField.setStyle(successStyle);
-                    loginPasswordField.setStyle(successStyle);
-                    invalidSignupCredentials.setText("");
+            if (UserDAO.checkPassword(loginUsernameTextField.getText(), loginPasswordField.getText())) {
+                invalidLoginCredentials.setText("Login Successful!");
+                invalidLoginCredentials.setStyle(successMessage);
+                loginUsernameTextField.setStyle(successStyle);
+                loginPasswordField.setStyle(successStyle);
+                invalidSignupCredentials.setText("");
 
-                    try {
-                        String[] credentials = UserDAO.getUser(loginUsernameTextField.getText());
+                try {
+                    String[] credentials = UserDAO.getUser(loginUsernameTextField.getText());
 
-                        int id = Integer.parseInt(credentials[0]);
-                        String username = credentials[1];
+                    int id = Integer.parseInt(credentials[0]);
+                    String username = credentials[1];
 
-                        if(username.equals("admin"))
-                        {
-                            Application.authenticatedUser = new RegisteredUser(id, username);
-                            goToAdminPage();
+                    if (username.equals("admin")) {
+                        Application.authenticatedUser = new RegisteredUser(id, username);
+                        goToAdminPage();
 
-                        } else {
-                            String country = credentials[2];
-                            String firstName = credentials[3];
-                            String lastName = credentials[4];
-                            String email = credentials[5];
+                    } else {
+                        String country = credentials[2];
+                        String firstName = credentials[3];
+                        String lastName = credentials[4];
+                        String email = credentials[5];
 
-                            Application.authenticatedUser = new RegisteredUser(id, username, firstName, lastName, country, email);
-                            goToHomePage();
-                        }
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        Application.authenticatedUser = new RegisteredUser(id, username, firstName, lastName, country, email);
+                        goToHomePage();
                     }
-                } else {
-                    invalidSignupCredentials.setText("Password is wrong");
-                    invalidSignupCredentials.setStyle(errorMessage);
-                    loginPasswordField.setStyle(errorStyle);
-                    invalidLoginCredentials.setText("");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-          }
+            } else {
+                invalidSignupCredentials.setText("Password is wrong");
+                invalidSignupCredentials.setStyle(errorMessage);
+                loginPasswordField.setStyle(errorStyle);
+                invalidLoginCredentials.setText("");
+            }
+        }
     }
 
     protected void goToHomePage() throws IOException {
@@ -132,8 +147,8 @@ public class LoginController {
         if (signUpUsernameTextField.getText().isBlank() || signUpEmailTextField.getText().isBlank() || signUpUsernameTextField.getText().equals("admin") ||
                 signUpPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().isBlank() || signUpUsernameTextField.getText().length() > 16 ||
 
-                signUpPasswordField.getText().length() > 16 || signUpRepeatPasswordField.getText().length()> 16 || signUpNameTextField.getText().isBlank() ||
-                signUpSurnameTextField.getText().isBlank() || signUpCountryTextField.getText().isBlank() ) {
+                signUpPasswordField.getText().length() > 16 || signUpRepeatPasswordField.getText().length() > 16 || signUpNameTextField.getText().isBlank() ||
+                signUpSurnameTextField.getText().isBlank() || signUpCountryTextField.getText().isBlank()) {
             invalidSignupCredentials.setText("Please fill in all fields! Max length is 16.");
             invalidSignupCredentials.setStyle(errorMessage);
             invalidLoginCredentials.setText("");
@@ -144,13 +159,13 @@ public class LoginController {
                 signUpEmailTextField.setStyle(errorStyle);
             } else if (signUpPasswordField.getText().isBlank() || signUpPasswordField.getText().length() > 16) {
                 signUpPasswordField.setStyle(errorStyle);
-            } else if (signUpRepeatPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().length()> 16) {
+            } else if (signUpRepeatPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().length() > 16) {
                 signUpRepeatPasswordField.setStyle(errorStyle);
-            } else if (signUpNameTextField.getText().isBlank() || signUpNameTextField.getText().length()> 16) {
+            } else if (signUpNameTextField.getText().isBlank() || signUpNameTextField.getText().length() > 16) {
                 signUpNameTextField.setStyle(errorStyle);
-            } else if (signUpSurnameTextField.getText().isBlank() || signUpSurnameTextField.getText().length()> 16) {
+            } else if (signUpSurnameTextField.getText().isBlank() || signUpSurnameTextField.getText().length() > 16) {
                 signUpSurnameTextField.setStyle(errorStyle);
-            } else if (signUpCountryTextField.getText().isBlank() || signUpCountryTextField.getText().length()> 16) {
+            } else if (signUpCountryTextField.getText().isBlank() || signUpCountryTextField.getText().length() > 16) {
                 signUpCountryTextField.setStyle(errorStyle);
             } else if (signUpPasswordField.getText().equals(signUpUsernameTextField.getText())) {
                 signUpCountryTextField.setStyle(errorStyle);
@@ -196,13 +211,13 @@ public class LoginController {
             //registriamo lo user e otteniamo il suo id;
             int user_index = UserDAO.signup(user);
 
-            if(user_index == 0){
+            if (user_index == 0) {
                 System.out.println();
                 invalidSignupCredentials.setText("Something went wrong! Retry");
                 invalidSignupCredentials.setStyle(errorMessage);
                 invalidLoginCredentials.setText("");
 
-            }else{
+            } else {
                 user.setId(user_index);
                 Application.authenticatedUser = user;
                 goToHomePage();
@@ -232,4 +247,15 @@ public class LoginController {
         signUpCountryTextField.setStyle(successStyle);
         invalidSignupCredentials.setText("");
     }
+
+    public void setOver(MouseEvent mouseEvent) {
+        ((Button) mouseEvent.getTarget()).setStyle(onOver);
+        Application.setMousePointer();
+    }
+
+    public void unsetOver(MouseEvent mouseEvent) {
+        ((Button) mouseEvent.getTarget()).setStyle(exitOver);
+        Application.unSetMousePointer();
+    }
 }
+
