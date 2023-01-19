@@ -78,7 +78,6 @@ public class IngredientInTheFridgeDAO {
         return datetime;
     }
 
-
     //function to remore an element
     public static void remove_product_mongo(IngredientInTheFridgeDTO product_to_delete, int id) {
 
@@ -113,10 +112,10 @@ public class IngredientInTheFridgeDAO {
             BasicDBObject product_mongo = new BasicDBObject();
             product_mongo.put("name", p.getName());
             product_mongo.put("quantity", p.getQuantity());
-                LocalDate date = p.getDate();
-                DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
-                String text = date.format(formatters);
-            product_mongo.put("expiringDate", text);
+                String date = p.getDate().getDayOfMonth() + "/" +
+                    p.getDate().getMonthValue() + "/" +
+                    p.getDate().getYear();
+            product_mongo.put("expiringDate", date);
 
             BasicDBObject update = new BasicDBObject();
             update.put("$push", new BasicDBObject("fridge",product_mongo));
