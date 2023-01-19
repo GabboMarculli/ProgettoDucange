@@ -25,7 +25,7 @@
                         <Image url="@img/pizza.png" />
                     </image>
                 </ImageView>
-            <Button fx:id="cancelButton1" layoutX="225.0" layoutY="259.0" mnemonicParsing="false" onAction="#onCancelButtonClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-width: 2; -fx-border-radius: 5;" text="Leave">
+            <Button fx:id="cancelButton1" layoutX="225.0" layoutY="259.0" mnemonicParsing="false" onAction="#onLeaveButtonClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-width: 2; -fx-border-radius: 5;" text="Leave">
                <font>
                   <Font size="15.0" />
                </font>
@@ -185,7 +185,7 @@
                   <Image url="@img/lock.png" />
                </image>
             </ImageView>
-                <Button fx:id="cancelButton" layoutX="209.0" layoutY="211.0" mnemonicParsing="false" onAction="#onCancelButtonClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-width: 2; -fx-border-radius: 5;" text="Cancel">
+                <Button fx:id="cancelButton" layoutX="209.0" layoutY="211.0" mnemonicParsing="false" onAction="#onCancelButtonClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-width: 2; -fx-border-radius: 5;" text="Cancel">
                     <font>
                         <Font size="15.0" />
                     </font>

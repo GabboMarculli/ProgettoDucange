@@ -5,6 +5,7 @@ import com.example.SmartFridge.Application;
 import com.example.SmartFridge.Utils.Utils;
 import com.example.SmartFridge.DAO.UserDAO;
 import com.example.SmartFridge.model.RegisteredUser;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -37,6 +38,8 @@ public class LoginController {
     String successStyle = "-fx-border-color: #A9A9A9; -fx-border-width: 2; -fx-border-radius: 5;";
     String onOver = "-fx-background-color: #34cfeb;";
     String exitOver = "-fx-background-color: #24a0ed; -fx-text-fill: WHITE;";
+    String onclick ="-fx-background-color: WHITE;";
+    String unsetclick = "-fx-background-color: #24a0ed;";
 
     // Import the application's controls
     @FXML
@@ -69,17 +72,26 @@ public class LoginController {
     protected void onCancelButtonClick() {
         loginUsernameTextField.clear();
         loginPasswordField.clear();
+        loginUsernameTextField.setStyle(successStyle);
+        loginPasswordField.setStyle(successStyle);
     }
 
     @FXML
     protected void onCancelButtonClick2() {
         signUpCountryTextField.clear();
+        signUpCountryTextField.setStyle(successStyle);
         signUpEmailTextField.clear();
+        signUpEmailTextField.setStyle(successStyle);
         signUpNameTextField.clear();
+        signUpNameTextField.setStyle(successStyle);
         signUpUsernameTextField.clear();
+        signUpUsernameTextField.setStyle(successStyle);
         signUpPasswordField.clear();
+        signUpPasswordField.setStyle(successStyle);
         signUpRepeatPasswordField.clear();
+        signUpRepeatPasswordField.setStyle(successStyle);
         signUpSurnameTextField.clear();
+        signUpSurnameTextField.setStyle(successStyle);
     }
 
     @FXML
@@ -256,6 +268,18 @@ public class LoginController {
     public void unsetOver(MouseEvent mouseEvent) {
         ((Button) mouseEvent.getTarget()).setStyle(exitOver);
         Application.unSetMousePointer();
+    }
+
+    public void setClick(MouseEvent mouseEvent) {
+        ((Button) mouseEvent.getSource()).setStyle(onclick);
+    }
+
+    public void unsetClick(MouseEvent mouseEvent) {
+        ((Button) mouseEvent.getSource()).setStyle(unsetclick);
+    }
+
+    public void onLeaveButtonClick(ActionEvent actionEvent) {
+
     }
 }
 
