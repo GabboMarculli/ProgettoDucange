@@ -20,6 +20,7 @@ public class Neo4jDriver {
         try{
             driver = GraphDatabase.driver(uri, AuthTokens.basic(user, password));
         } catch (Exception me) {
+            System.out.println("ERRORE!");
             System.err.println(me);
         }
     }

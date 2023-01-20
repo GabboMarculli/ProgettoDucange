@@ -5,7 +5,6 @@ import com.example.SmartFridge.Application;
 import com.example.SmartFridge.Utils.Utils;
 import com.example.SmartFridge.DAO.UserDAO;
 import com.example.SmartFridge.model.RegisteredUser;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
 import javafx.scene.control.Button;
@@ -38,8 +37,8 @@ public class LoginController {
     String successStyle = "-fx-border-color: #A9A9A9; -fx-border-width: 2; -fx-border-radius: 5;";
     String onOver = "-fx-background-color: #34cfeb;";
     String exitOver = "-fx-background-color: #24a0ed; -fx-text-fill: WHITE;";
-    String onclick ="-fx-background-color: WHITE;";
-    String unsetclick = "-fx-background-color: #24a0ed;";
+    String onClick = "-fx-background-color: WHITE; -fx-text-fill: BLACK; -fx-border-color: #A9A9A9; -fx-border-width: 2; -fx-border-radius: 5";
+    String onReleased = "-fx-background-color: #24a0ed; -fx-text-fill: WHITE;";
 
     // Import the application's controls
     @FXML
@@ -71,9 +70,10 @@ public class LoginController {
     @FXML
     protected void onCancelButtonClick() {
         loginUsernameTextField.clear();
-        loginPasswordField.clear();
         loginUsernameTextField.setStyle(successStyle);
+        loginPasswordField.clear();
         loginPasswordField.setStyle(successStyle);
+        invalidLoginCredentials.setText("");
     }
 
     @FXML
@@ -90,8 +90,10 @@ public class LoginController {
         signUpPasswordField.setStyle(successStyle);
         signUpRepeatPasswordField.clear();
         signUpRepeatPasswordField.setStyle(successStyle);
-        signUpSurnameTextField.clear();
+
         signUpSurnameTextField.setStyle(successStyle);
+
+        invalidSignupCredentials.setText("");
     }
 
     @FXML
@@ -167,16 +169,16 @@ public class LoginController {
 
             if (signUpUsernameTextField.getText().isBlank() || signUpUsernameTextField.getText().length() > 16) {
                 signUpUsernameTextField.setStyle(errorStyle);
+            } else if (signUpNameTextField.getText().isBlank() || signUpNameTextField.getText().length() > 16) {
+                signUpNameTextField.setStyle(errorStyle);
+            } else if (signUpSurnameTextField.getText().isBlank() || signUpSurnameTextField.getText().length() > 16) {
+                signUpSurnameTextField.setStyle(errorStyle);
             } else if (signUpEmailTextField.getText().isBlank()) {
                 signUpEmailTextField.setStyle(errorStyle);
             } else if (signUpPasswordField.getText().isBlank() || signUpPasswordField.getText().length() > 16) {
                 signUpPasswordField.setStyle(errorStyle);
             } else if (signUpRepeatPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().length() > 16) {
                 signUpRepeatPasswordField.setStyle(errorStyle);
-            } else if (signUpNameTextField.getText().isBlank() || signUpNameTextField.getText().length() > 16) {
-                signUpNameTextField.setStyle(errorStyle);
-            } else if (signUpSurnameTextField.getText().isBlank() || signUpSurnameTextField.getText().length() > 16) {
-                signUpSurnameTextField.setStyle(errorStyle);
             } else if (signUpCountryTextField.getText().isBlank() || signUpCountryTextField.getText().length() > 16) {
                 signUpCountryTextField.setStyle(errorStyle);
             } else if (signUpPasswordField.getText().equals(signUpUsernameTextField.getText())) {
@@ -247,18 +249,15 @@ public class LoginController {
     }
 
     private void clearField() {
-        invalidLoginCredentials.setStyle(successMessage);
-        loginUsernameTextField.setStyle(successStyle);
-        loginPasswordField.setStyle(successStyle);
-        signUpNameTextField.setStyle(successStyle);
-        signUpPasswordField.setStyle(successStyle);
         signUpUsernameTextField.setStyle(successStyle);
-        signUpEmailTextField.setStyle(successStyle);
         signUpSurnameTextField.setStyle(successStyle);
+        signUpPasswordField.setStyle(successStyle);
         signUpRepeatPasswordField.setStyle(successStyle);
+        signUpNameTextField.setStyle(successStyle);
+        signUpEmailTextField.setStyle(successStyle);
         signUpCountryTextField.setStyle(successStyle);
-        invalidSignupCredentials.setText("");
     }
+
 
     public void setOver(MouseEvent mouseEvent) {
         ((Button) mouseEvent.getTarget()).setStyle(onOver);
@@ -271,15 +270,13 @@ public class LoginController {
     }
 
     public void setClick(MouseEvent mouseEvent) {
-        ((Button) mouseEvent.getSource()).setStyle(onclick);
+        ((Button) mouseEvent.getSource()).setStyle(onClick);
+        Application.setMousePointer();
     }
 
     public void unsetClick(MouseEvent mouseEvent) {
-        ((Button) mouseEvent.getSource()).setStyle(unsetclick);
-    }
-
-    public void onLeaveButtonClick(ActionEvent actionEvent) {
-
+        ((Button) mouseEvent.getSource()).setStyle(onReleased);
+        Application.setMousePointer();
     }
 }
 

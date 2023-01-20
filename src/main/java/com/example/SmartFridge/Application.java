@@ -24,6 +24,7 @@ public class Application extends javafx.application.Application {
         Scene scene = new Scene(fxmlLoader.load(), 1000 , 700);
         stage.setTitle("Login or Sign up");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
 
         setPrimaryStage(stage);
