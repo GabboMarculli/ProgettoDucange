@@ -33,6 +33,8 @@ public class userDTO {
         this.country.set(country);
     }
 
+    public userDTO() {}
+
     public String getId() {
         return id.get();
     }

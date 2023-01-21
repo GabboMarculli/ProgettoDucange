@@ -102,8 +102,10 @@ public class LoginController {
                             String firstName = credentials[3];
                             String lastName = credentials[4];
                             String email = credentials[5];
+                            String password = credentials[6];
 
                             Application.authenticatedUser = new RegisteredUser(id, username, firstName, lastName, country, email);
+                            Application.authenticatedUser.setPassword(password);
                             goToHomePage();
                         }
                     } catch (IOException e) {

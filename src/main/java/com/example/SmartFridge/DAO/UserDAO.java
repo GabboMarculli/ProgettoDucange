@@ -271,7 +271,8 @@ LIMIT 4
                 resultDoc.getString("country"),
                 resultDoc.getString("name"),
                 resultDoc.getString("surname"),
-                resultDoc.getString("email")
+                resultDoc.getString("email"),
+                resultDoc.getString("password")
         };
         return return_fields;
     }
@@ -410,9 +411,29 @@ LIMIT 4
             Document doc = new Document().append("password", newPassword);
 
             Bson query = new Document("$set", doc);
-            collection.updateOne(new Document("password", user.getPassword()), query);
+            collection.updateOne(new Document("_id", new ObjectId(user.getId())), query);
 
             user.setPassword(newPassword);
+            return true;
+        } catch (Exception error) {
+            System.out.println( error );
+            return false;
+        }
+    }
+
+    public static boolean changeField(RegisteredUser user, userDTO UserDTO)
+    {
+        try {
+            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+            Document doc = new Document()
+                    .append("password", UserDTO.getPassword())
+                    .append("name", UserDTO.getName())
+                    .append("surname", UserDTO.getSurname())
+                    .append("country", UserDTO.getCountry());
+
+            Bson query = new Document("$set", doc);
+            collection.updateOne(new Document("_id", new ObjectId(user.getId())), query);
+
             return true;
         } catch (Exception error) {
             System.out.println( error );

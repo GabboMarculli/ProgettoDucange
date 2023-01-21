@@ -160,10 +160,24 @@ public class RecipeDao {
         MongoCursor<Document> cursor = collection.find(query).projection(projectionFields).limit(20).iterator();
 
         try {
-            if(!cursor.hasNext()){
-                query = new BasicDBObject("IngredientsList", new BasicDBObject("$in", list_of_product));
-                cursor = collection.find(query).projection(projectionFields).limit(20).iterator();
+
+            while (cursor.hasNext()) {
+                Document obj = cursor.next();
+                recipes_to_return.add(
+                        new RecipeDTO(
+                                obj.getString("RecipeName"),
+                                obj.get("_id").toString(),
+                                obj.getInteger("ReviewCount"),
+                                obj.getString("TotalTime")
+                        )
+                );
             }
+
+            cursor.close();
+
+            query = new BasicDBObject("IngredientsList", new BasicDBObject("$in", list_of_product));
+            cursor = collection.find(query).projection(projectionFields).limit(20).iterator();
+
             while (cursor.hasNext()) {
                 Document obj = cursor.next();
                 recipes_to_return.add(
@@ -176,6 +190,7 @@ public class RecipeDao {
                 );
             }
             cursor.close();
+
             return recipes_to_return;
         } catch (Exception e) {
             cursor.close();
