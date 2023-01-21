@@ -25,6 +25,10 @@ public class Neo4jDriver {
         }
     }
 
+    //DA IMPLEMENTARE
+    public static void close(){}
+
+
     // singleton pattern
     public static Neo4jDriver getInstance() {
         if(NeoDriver == null){

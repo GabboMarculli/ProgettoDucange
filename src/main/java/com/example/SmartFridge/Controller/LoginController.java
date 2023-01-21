@@ -2,14 +2,15 @@ package com.example.SmartFridge.Controller;
 
 
 import com.example.SmartFridge.Application;
+import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
+import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
 import com.example.SmartFridge.Utils.Utils;
 import com.example.SmartFridge.DAO.UserDAO;
 import com.example.SmartFridge.model.RegisteredUser;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Cursor;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -64,7 +65,7 @@ public class LoginController {
     @FXML
     private TextField signUpSurnameTextField;
     @FXML
-    private TextField signUpCountryTextField;
+    private ComboBox signUpCountryTextField;
 
     // Creation of methods which are activated on events in the forms
     @FXML
@@ -76,9 +77,21 @@ public class LoginController {
         invalidLoginCredentials.setText("");
     }
 
+    public void initialize(){
+        ObservableList<String> countries = MongoDbDriver.getCountry();
+        countries.add("");
+        signUpCountryTextField.setItems(countries);
+    }
+    @FXML
+    protected void onLeaveButtonClick() {
+        MongoDbDriver.close();
+        Neo4jDriver.close();
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
+    }
     @FXML
     protected void onCancelButtonClick2() {
-        signUpCountryTextField.clear();
+        signUpCountryTextField.setValue("");
         signUpCountryTextField.setStyle(successStyle);
         signUpEmailTextField.clear();
         signUpEmailTextField.setStyle(successStyle);
@@ -90,23 +103,25 @@ public class LoginController {
         signUpPasswordField.setStyle(successStyle);
         signUpRepeatPasswordField.clear();
         signUpRepeatPasswordField.setStyle(successStyle);
-
         signUpSurnameTextField.setStyle(successStyle);
-
+        signUpSurnameTextField.clear();
         invalidSignupCredentials.setText("");
     }
 
     @FXML
     protected void onLoginButtonClick() {
+        clearloginField();
         if (loginUsernameTextField.getText().isBlank() || loginPasswordField.getText().isBlank()) {
-            invalidLoginCredentials.setText("The Login fields are required!");
+            invalidLoginCredentials.setText("All Login fields are required!");
             invalidLoginCredentials.setStyle(errorMessage);
             invalidSignupCredentials.setText("");
 
             if (loginUsernameTextField.getText().isBlank()) {
                 loginUsernameTextField.setStyle(errorStyle);
+                loginUsernameTextField.requestFocus();
             } else if (loginPasswordField.getText().isBlank()) {
                 loginPasswordField.setStyle(errorStyle);
+                loginPasswordField.requestFocus();
             }
         } else {
             if (UserDAO.checkPassword(loginUsernameTextField.getText(), loginPasswordField.getText())) {
@@ -139,10 +154,11 @@ public class LoginController {
                     throw new RuntimeException(e);
                 }
             } else {
-                invalidSignupCredentials.setText("Password is wrong");
-                invalidSignupCredentials.setStyle(errorMessage);
+                invalidLoginCredentials.setText("Password is wrong or user is not existing.");
                 loginPasswordField.setStyle(errorStyle);
-                invalidLoginCredentials.setText("");
+                loginUsernameTextField.setStyle(errorStyle);
+                invalidLoginCredentials.setStyle(errorMessage);
+                invalidSignupCredentials.setText("");
             }
         }
     }
@@ -157,32 +173,43 @@ public class LoginController {
 
     @FXML
     protected void onSignUpButtonClick() throws IOException {
-        clearField();
+        clearsignupField();
         if (signUpUsernameTextField.getText().isBlank() || signUpEmailTextField.getText().isBlank() || signUpUsernameTextField.getText().equals("admin") ||
                 signUpPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().isBlank() || signUpUsernameTextField.getText().length() > 16 ||
-
+                signUpCountryTextField.getValue() == null || signUpCountryTextField.getValue().toString().equals("") ||
                 signUpPasswordField.getText().length() > 16 || signUpRepeatPasswordField.getText().length() > 16 || signUpNameTextField.getText().isBlank() ||
-                signUpSurnameTextField.getText().isBlank() || signUpCountryTextField.getText().isBlank()) {
+                signUpSurnameTextField.getText().isBlank() || signUpCountryTextField.getSelectionModel().isEmpty() ||
+                signUpPasswordField.getText().equals(signUpUsernameTextField.getText())) {
             invalidSignupCredentials.setText("Please fill in all fields! Max length is 16.");
             invalidSignupCredentials.setStyle(errorMessage);
             invalidLoginCredentials.setText("");
 
             if (signUpUsernameTextField.getText().isBlank() || signUpUsernameTextField.getText().length() > 16) {
                 signUpUsernameTextField.setStyle(errorStyle);
+                signUpUsernameTextField.requestFocus();
             } else if (signUpNameTextField.getText().isBlank() || signUpNameTextField.getText().length() > 16) {
                 signUpNameTextField.setStyle(errorStyle);
+                signUpNameTextField.requestFocus();
             } else if (signUpSurnameTextField.getText().isBlank() || signUpSurnameTextField.getText().length() > 16) {
                 signUpSurnameTextField.setStyle(errorStyle);
+                signUpSurnameTextField.requestFocus();
             } else if (signUpEmailTextField.getText().isBlank()) {
                 signUpEmailTextField.setStyle(errorStyle);
+                signUpEmailTextField.requestFocus();
             } else if (signUpPasswordField.getText().isBlank() || signUpPasswordField.getText().length() > 16) {
                 signUpPasswordField.setStyle(errorStyle);
+                signUpPasswordField.requestFocus();
             } else if (signUpRepeatPasswordField.getText().isBlank() || signUpRepeatPasswordField.getText().length() > 16) {
                 signUpRepeatPasswordField.setStyle(errorStyle);
-            } else if (signUpCountryTextField.getText().isBlank() || signUpCountryTextField.getText().length() > 16) {
+                signUpRepeatPasswordField.requestFocus();
+            } else if (signUpCountryTextField.getValue() == null || signUpCountryTextField.getValue().toString().equals("") ) {
                 signUpCountryTextField.setStyle(errorStyle);
+                invalidSignupCredentials.setText("Please, select a country from the list.");
+                signUpCountryTextField.requestFocus();
             } else if (signUpPasswordField.getText().equals(signUpUsernameTextField.getText())) {
-                signUpCountryTextField.setStyle(errorStyle);
+                signUpPasswordField.setStyle(errorStyle);
+                signUpPasswordField.requestFocus();
+                signUpRepeatPasswordField.setStyle(errorStyle);
                 invalidSignupCredentials.setText("Password and Username should not match!");
             }
 
@@ -219,7 +246,7 @@ public class LoginController {
                     signUpEmailTextField.getText(),
                     signUpNameTextField.getText(),
                     signUpSurnameTextField.getText(),
-                    signUpCountryTextField.getText(),
+                    signUpCountryTextField.getValue().toString(),
                     LocalDate.now()
             );
             //registriamo lo user e otteniamo il suo id;
@@ -248,7 +275,7 @@ public class LoginController {
         }
     }
 
-    private void clearField() {
+    private void clearsignupField() {
         signUpUsernameTextField.setStyle(successStyle);
         signUpSurnameTextField.setStyle(successStyle);
         signUpPasswordField.setStyle(successStyle);
@@ -258,6 +285,10 @@ public class LoginController {
         signUpCountryTextField.setStyle(successStyle);
     }
 
+    private void clearloginField(){
+        loginPasswordField.setStyle(successStyle);
+        loginUsernameTextField.setStyle(successStyle);
+    }
 
     public void setOver(MouseEvent mouseEvent) {
         ((Button) mouseEvent.getTarget()).setStyle(onOver);
