@@ -35,4 +35,7 @@ public class Neo4jDriver {
     public static Driver  getDriver(){
         return driver;
     }
+
+    //DA IMPLEMENTARE
+    public static void close(){}
 }
