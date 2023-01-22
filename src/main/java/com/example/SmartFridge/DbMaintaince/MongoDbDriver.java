@@ -2,7 +2,11 @@ package com.example.SmartFridge.DbMaintaince;
 
 
 import com.mongodb.ConnectionString;
+import com.mongodb.MongoException;
 import com.mongodb.client.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableArray;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -16,6 +20,8 @@ import org.bson.BsonInt64;
 import org.bson.Document;
 
 import org.bson.conversions.Bson;
+
+import java.util.Collection;
 
 public class MongoDbDriver {
 
@@ -47,8 +53,11 @@ public class MongoDbDriver {
             Bson command = new BsonDocument("ping", new BsonInt64(1));
             Document commandResult = database.runCommand(command);
             System.out.println("Connected successfully to server.");
+            getCountry();
         } catch (Exception me) {
             System.err.println("An error occurred while attempting to run a command: " + me);
+            Error panic = new Error(me);
+            /*
             Stage dialogStage = new Stage();
             dialogStage.initModality(Modality.WINDOW_MODAL);
             Button e = new Button("EXIT");
@@ -67,6 +76,7 @@ public class MongoDbDriver {
             dialogStage.setOnCloseRequest(w->{
                         System.exit(1);
                     });
+        */
         }
     }
 
@@ -80,14 +90,29 @@ public class MongoDbDriver {
         return driver;
     }
 
-    public void close() {
+    public static void close() {
         if(mongoclient!= null){
             mongoclient.close();
         }
 
         System.out.println("Mongo Connection closed");
     }
+    public static ObservableList<String> getCountry(){
 
+        MongoCollection<Document> collection = database.getCollection("User");
+        try {
+            ObservableList<String> countries = FXCollections.observableArrayList();
+            DistinctIterable<String> docs = collection.distinct("country",String.class);
+            MongoCursor<String> results = docs.iterator();
+            while(results.hasNext()) {
+                countries.add(results.next());
+            }
+            return countries;
+        } catch (MongoException me) {
+            System.err.println("An error occurred: " + me);
+        }
+        return null;
+    }
     public static MongoCollection<Document> getUserCollection()
     {
            return database.getCollection("User");

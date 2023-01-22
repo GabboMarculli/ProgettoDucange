@@ -4,6 +4,7 @@ import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
 import com.example.SmartFridge.model.RegisteredUser;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
@@ -19,17 +20,21 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("HomePageAdmin.fxml"));
+        
+        mongodb = MongoDbDriver.getInstance();
+        neo4j = Neo4jDriver.getInstance();
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("LoginPage.fxml"));
+
         Scene scene = new Scene(fxmlLoader.load(), 1000 , 700);
         stage.setTitle("Login or Sign up");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
 
         setPrimaryStage(stage);
         setPrimaryScene(scene);
 
-        mongodb = MongoDbDriver.getInstance();
-        neo4j = Neo4jDriver.getInstance();
+
     }
 
     public static void main(String[] args) {
@@ -55,5 +60,11 @@ public class Application extends javafx.application.Application {
 
     public static void setPrimaryScene(Scene primaryScene) {
         Application.primaryScene = primaryScene;
+    }
+    public static void setMousePointer(){
+        Application.primaryScene.setCursor(Cursor.HAND);
+    }
+    public static void unSetMousePointer(){
+        Application.primaryScene.setCursor(Cursor.DEFAULT);
     }
 }

@@ -226,6 +226,9 @@ public class AllRecipesController {
         ArrayList<IngredientInTheFridgeDTO> list_of_product = IngredientInTheFridgeDAO.getProduct(Application.authenticatedUser);
         //retrive the suggested recipe
         System.out.println(list_of_product);
+        if(list_of_product == null || list_of_product.isEmpty()) {
+            dropTable();
+        }
         String[] searched_ingredients = new String[list_of_product.size()];
         for(int i=0; i<list_of_product.size();i++){
             searched_ingredients[i] = list_of_product.get(i).getName();
@@ -237,6 +240,10 @@ public class AllRecipesController {
             data.addAll(list_of_recipe);
             AllRecipesTable.setItems(data);
         }
+    }
+
+    private void dropTable() {
+        data.clear();
     }
 
     public void showMyRecipe(ActionEvent actionEvent) {

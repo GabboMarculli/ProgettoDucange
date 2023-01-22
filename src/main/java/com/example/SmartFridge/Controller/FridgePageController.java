@@ -98,12 +98,19 @@ public class FridgePageController {
         //retrive ingredient from fridge
         ArrayList<IngredientInTheFridgeDTO> ingredientList = new ArrayList<>();
         ingredientList = IngredientInTheFridgeDAO.getProduct(Application.authenticatedUser);
+        if(ingredientList == null || ingredientList.isEmpty()) {
+            dropTable();
+        } else
+            for (IngredientInTheFridgeDTO us : ingredientList) {
+                IngredientInFridge newrow = new IngredientInFridge(us.getName(), us.getQuantity(), us.getDate());
+                data.add(newrow);
+            }
 
-        for (IngredientInTheFridgeDTO us : ingredientList) {
-            IngredientInFridge newrow = new IngredientInFridge(us.getName(), us.getQuantity(), us.getDate());
-            data.add(newrow);
-        }
+    }
 
+    //if fridge is empty, table must be dropped
+    private void dropTable() {
+        data.clear();
     }
 
     public void remove_product(ActionEvent actionEvent) {
