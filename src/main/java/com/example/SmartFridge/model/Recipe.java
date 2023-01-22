@@ -3,7 +3,7 @@ package com.example.SmartFridge.model;
 import java.util.List;
 
 public class Recipe {
-    private Integer id;
+    private String id;
     private User author;
     private Integer like;
     private List<Ingredient> ingredients;
@@ -11,7 +11,7 @@ public class Recipe {
     private List<Review> reviews;
     private String directions;
 
-    public Recipe(User author, List<Ingredient> ingredients, String title, String directions, Integer id)
+    public Recipe(User author, List<Ingredient> ingredients, String title, String directions, String id)
     {
         this.id = id;
         this.author= author;
@@ -28,7 +28,7 @@ public class Recipe {
         this.reviews = reviews;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -56,7 +56,7 @@ public class Recipe {
         this.author = author;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

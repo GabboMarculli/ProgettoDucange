@@ -3,7 +3,7 @@ package com.example.SmartFridge.model;
 import java.time.LocalDate;
 
 public abstract class User {
-    public int id;
+    public String id;
     private String firstName;
     private String lastName;
     private String username;
@@ -13,7 +13,7 @@ public abstract class User {
     private LocalDate registrationDate;
     private String email;
 
-    public void User(int id, String username, String password,LocalDate registrationDate )
+    public void User(String id, String username, String password,LocalDate registrationDate )
     {
         this.id = id;
         this.username = username;
@@ -21,10 +21,10 @@ public abstract class User {
         this.registrationDate=registrationDate;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

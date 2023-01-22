@@ -43,13 +43,13 @@
 
                 <Label text="First name" GridPane.rowIndex="1">
                 </Label>
-                <Label fx:id="FirstName" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                </Label>
+
+                <TextField fx:id="FirstName" GridPane.columnIndex="2" GridPane.rowIndex="1" />
 
                 <Label text="Last name" GridPane.rowIndex="2">
                 </Label>
-                <Label fx:id="LastName" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                </Label>
+
+                <TextField fx:id="LastName" GridPane.columnIndex="2" GridPane.rowIndex="2" />
 
                 <Label text="Email" GridPane.rowIndex="3">
                 </Label>
@@ -58,8 +58,8 @@
 
                 <Label text="Country" GridPane.rowIndex="4">
                 </Label>
-                <Label fx:id="Country" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                </Label>
+
+                <TextField fx:id="Country" GridPane.columnIndex="2" GridPane.rowIndex="4" />
 
                 <Label text="New Password" GridPane.rowIndex="5">
                 </Label>
@@ -69,12 +69,15 @@
                 <Label fx:id="invalidChangePassword" prefHeight="16.0" GridPane.rowIndex="6">
                 </Label>
 
-                <Button mnemonicParsing="false" onAction="#onChangePasswordButtonClick" prefHeight="20.0" prefWidth="180.0" text="Change password" GridPane.rowIndex="8">
+                <Button fx:id = "changeFieldButton" mnemonicParsing="false" onAction="#onChangePasswordButtonClick" prefHeight="20.0" prefWidth="180.0" text="Change fields" GridPane.rowIndex="8">
                 </Button>
                 <Button mnemonicParsing="false" onAction="#onDeleteUserClick" prefHeight="20.0" prefWidth="180.0" text="DeleteUser" GridPane.rowIndex="9">
                 </Button>
                 <Button mnemonicParsing="false" onAction="#onGoToHomeClick" prefHeight="20.0" prefWidth="180.0" text="Go to home" GridPane.rowIndex="10">
                 </Button>
+
+
+
 
             </children>
         </GridPane>

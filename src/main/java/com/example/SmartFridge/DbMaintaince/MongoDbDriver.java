@@ -20,6 +20,8 @@ import org.bson.Document;
 
 import org.bson.conversions.Bson;
 
+import java.util.Collection;
+
 public class MongoDbDriver {
 
 
@@ -50,26 +52,10 @@ public class MongoDbDriver {
             Bson command = new BsonDocument("ping", new BsonInt64(1));
             Document commandResult = database.runCommand(command);
             System.out.println("Connected successfully to server.");
+            getCountry();
         } catch (Exception me) {
             System.err.println("An error occurred while attempting to run a command: " + me);
-            Stage dialogStage = new Stage();
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            Button e = new Button("EXIT");
-            Text t = new Text(("CRITICAL ERROR: " + me.getMessage()));
-            t.setWrappingWidth(200);
-            VBox vbox = new VBox(t,e);
-            vbox.setAlignment(Pos.CENTER);
-            vbox.setPadding(new Insets(15));
-            dialogStage.setWidth(300);
-            dialogStage.setAlwaysOnTop(true);
-            dialogStage.setScene(new Scene(vbox));
-            dialogStage.show();
-            e.setOnAction(w->{
-                        System.exit(1);
-                    });
-            dialogStage.setOnCloseRequest(w->{
-                        System.exit(1);
-                    });
+            Error panic = new Error(me);
         }
     }
 

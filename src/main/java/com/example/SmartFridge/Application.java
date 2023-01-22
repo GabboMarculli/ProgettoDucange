@@ -27,11 +27,14 @@ public class Application extends javafx.application.Application {
         Scene scene = new Scene(fxmlLoader.load(), 1000 , 700);
         stage.setTitle("Login or Sign up");
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
 
         setPrimaryStage(stage);
         setPrimaryScene(scene);
 
+        mongodb = MongoDbDriver.getInstance();
+        neo4j = Neo4jDriver.getInstance();
     }
 
     public static void main(String[] args) {

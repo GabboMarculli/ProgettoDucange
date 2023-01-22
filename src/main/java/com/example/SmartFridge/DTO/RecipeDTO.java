@@ -2,7 +2,7 @@ package com.example.SmartFridge.DTO;
 
 public class RecipeDTO {
     private String Name;
-    private int Id ;
+    private String Id ;
     private int ReviewCount;
 
     private String Author;
@@ -14,14 +14,14 @@ public class RecipeDTO {
     private String[] IngredientsList;
     private ReviewDTO[] reviews;
 
-    public RecipeDTO(String name, int id, int reviewCount, String totalTime) {
+    public RecipeDTO(String name, String id, int reviewCount, String totalTime) {
         Name = name;
         Id = id;
         ReviewCount = reviewCount;
         TotalTime = totalTime;
     }
 
-    public RecipeDTO(String name, int id, int reviewCount, String author, String preparationTime, String cooktime, String totalTime, String ingrients, String direction, String[] ingredientsList, ReviewDTO[] reviews) {
+    public RecipeDTO(String name, String id, int reviewCount, String author, String preparationTime, String cooktime, String totalTime, String ingrients, String direction, String[] ingredientsList, ReviewDTO[] reviews) {
         Name = name;
         Id = id;
         Direction = direction;
@@ -43,11 +43,11 @@ public class RecipeDTO {
         Name = name;
     }
 
-    public int getId() {
+    public String getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         Id = id;
     }
 
