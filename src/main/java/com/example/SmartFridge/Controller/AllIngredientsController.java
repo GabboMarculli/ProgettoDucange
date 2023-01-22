@@ -33,7 +33,7 @@ public class AllIngredientsController {
     @FXML
     public TextField Quantity;
     @FXML
-    public TextField Expire_date;
+    public DatePicker Expire_date;
     @FXML
     public AnchorPane my_anchor_pane;
 
@@ -135,7 +135,8 @@ public void printAddToFridge(String label, String _id, Integer row_index)
         }
         if (_id.equals("Expire_date")) {
             final Label lab = new Label(label);
-            Expire_date = new TextField();
+            Expire_date = new DatePicker();
+            Expire_date.setEditable(false);
             Expire_date.setId(_id);
             Expire_date.setPromptText("02-12-2024");
 
@@ -218,6 +219,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
             Submit_in_fridge.setOnAction(event -> {
                 if (checkAddToFridge()) {
 
+                    /*
                     String date = Expire_date.getText();
                     DateTimeFormatter pattern =
                             DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -230,7 +232,8 @@ public void printAddToFridge(String label, String _id, Integer row_index)
                         Expire_date.setStyle("-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;");
                         return;
                     }
-
+                    */
+                    LocalDate formattedDate = Expire_date.getValue();
 
                     IngredientInTheFridgeDTO p = new IngredientInTheFridgeDTO(rowData.getFood(), Integer.parseInt(Quantity.getText()), formattedDate);
                     if(IngredientInTheFridgeDAO.add_product(p)){
@@ -249,7 +252,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
 
     public boolean checkAddToFridge()
     {
-        return (!Quantity.getText().isBlank() && Utils.isNumeric(Quantity.getText()) && !Expire_date.getText().isBlank());
+        return (!Quantity.getText().isBlank() && Utils.isNumeric(Quantity.getText()) && !(Expire_date.getValue() == null));
     }
 
     public void Search_for_ingredient()

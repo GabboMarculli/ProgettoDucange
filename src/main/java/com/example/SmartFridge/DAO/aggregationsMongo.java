@@ -27,7 +27,8 @@ public class aggregationsMongo {
         query.add(unwind("$reviews"));
         query.add(group("$RecipeName", avg("reviews.Rate", "$avg")));
         query.add(Sorts.descending("count"));
-        query.add(project(fields(excludeId(), include("RecipeID"), include("avg"), include("$id.RecipeName"))));
+        query.add(project(fields(excludeId(), include("RecipeID"), include("avg"),
+                include("$id.RecipeName"))));
         query.add(limit(10));
 
         List<Document> results = null;
@@ -46,7 +47,8 @@ public class aggregationsMongo {
         query.add(unwind("$reviews"));
         query.add(group("Reviews.profileID", sum("count",1)));
         query.add(Sorts.descending("count"));
-        query.add(project(fields(excludeId(), include("id"), include("count"), include("$id.profile"))));
+        query.add(project(fields(excludeId(), include("id"), include("count"),
+                include("$id.profile"))));
         query.add(limit(10));
 
         List<Document> results = null;
@@ -66,7 +68,8 @@ public class aggregationsMongo {
         query.add(unwind("$IngredientList"));
         query.add(group("$IngredientList", sum("count",1)));
         query.add(Sorts.descending("count"));
-        query.add(project(fields(excludeId(), include("RecipeID"), include("count"), include("$id.ingredient"))));
+        query.add(project(fields(excludeId(), include("RecipeID"),
+                include("count"), include("$id.ingredient"))));
         query.add(limit(10));
 
         List<Document> results = null;
@@ -88,7 +91,9 @@ public class aggregationsMongo {
         query.add(group("$fridge.name"  , sum("$fridge.quantity",1)));
         query.add(group("$id.country"));
         query.add(Sorts.descending("sum"));
-        query.add(project(fields(excludeId(), include("RecipeID"), include("ingredient"), include("$id.country"), include("sum"))));
+        query.add(project(fields(excludeId(), include("RecipeID"),
+                include("ingredient"), include("$id.country"),
+                include("sum"))));
 
         List<Document> results = null;
         try{

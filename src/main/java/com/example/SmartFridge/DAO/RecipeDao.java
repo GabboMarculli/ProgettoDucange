@@ -27,6 +27,7 @@ import static com.mongodb.client.model.Projections.excludeId;
 import static com.mongodb.client.model.Sorts.descending;
 import static org.neo4j.driver.Values.parameters;
 
+import org.bson.types.ObjectId;
 import org.json.*;
 import org.neo4j.driver.Record;
 import org.neo4j.driver.Result;
@@ -35,25 +36,25 @@ import org.neo4j.driver.TransactionWork;
 
 public class RecipeDao {
 
-    public static boolean addRecipe(RecipeDTO recipe) {
+    public static String addRecipe(RecipeDTO recipe) {
         //save recipe into mongoDB
 
         if(!add_recipe_MongoDB(recipe)){
-            return false;
+            return "error";
         }
 
         if(!add_recipe_Neo4J(recipe)){
-            return false;
+            return "error";
         }
 
-        return true;
+        return "ok";
     }
 
     private static boolean add_recipe_Neo4J(RecipeDTO recipe) {
         try (Session session = Neo4jDriver.getDriver().session()) {
             String name = recipe.getName();
-            int id_receipe = recipe.getId();
-            int id_user = Application.authenticatedUser.getId();
+            String id_receipe = recipe.getId();
+            String id_user = Application.authenticatedUser.getId();
 
             session.writeTransaction(tx -> {
                     tx.run("MERGE (b:Recipe {name: $name, id: $id, review_count : $review_count, totalTime : $totalTime}) " +
@@ -126,7 +127,7 @@ public class RecipeDao {
                     Record r = result.next();
                     Recipe_to_send.add(new RecipeDTO(
                             r.get("name").asString(),
-                            r.get("id").asInt(),
+                            r.get("id").asString(),
                             r.get("ReviewCount").asInt(),
                             r.get("totalTime").asString()
                     ));
@@ -148,10 +149,9 @@ public class RecipeDao {
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
         Bson projectionFields = Projections.fields(
                 Projections.include("RecipeName"),
-                Projections.include("RecipeID"),
+                Projections.include("_id"),
                 Projections.include("ReviewCount"),
-                Projections.include("TotalTime"),
-                Projections.excludeId());
+                Projections.include("TotalTime"));
 
         ArrayList<RecipeDTO> recipes_to_return = new ArrayList<>();
 
@@ -160,25 +160,39 @@ public class RecipeDao {
         MongoCursor<Document> cursor = collection.find(query).projection(projectionFields).limit(20).iterator();
 
         try {
-            if(!cursor.hasNext()){
-                query = new BasicDBObject("IngredientsList", new BasicDBObject("$in", list_of_product));
-                cursor = collection.find(query).projection(projectionFields).limit(20).iterator();
-            }
+
             while (cursor.hasNext()) {
-                String text = cursor.next().toJson(); //i get a json
-                JSONObject obj = new JSONObject(text);
+                Document obj = cursor.next();
                 recipes_to_return.add(
                         new RecipeDTO(
                                 obj.getString("RecipeName"),
-                                Integer.parseInt(obj.getString("RecipeID")),
-                                Integer.parseInt(obj.getString("ReviewCount")),
+                                obj.get("_id").toString(),
+                                obj.getInteger("ReviewCount"),
+                                obj.getString("TotalTime")
+                        )
+                );
+            }
+
+            cursor.close();
+
+            query = new BasicDBObject("IngredientsList", new BasicDBObject("$in", list_of_product));
+            cursor = collection.find(query).projection(projectionFields).limit(20).iterator();
+
+            while (cursor.hasNext()) {
+                Document obj = cursor.next();
+                recipes_to_return.add(
+                        new RecipeDTO(
+                                obj.getString("RecipeName"),
+                                obj.get("_id").toString(),
+                                obj.getInteger("ReviewCount"),
                                 obj.getString("TotalTime")
                         )
                 );
             }
             cursor.close();
+
             return recipes_to_return;
-        } catch (JSONException e) {
+        } catch (Exception e) {
             cursor.close();
             throw new RuntimeException(e);
         }
@@ -203,7 +217,7 @@ public class RecipeDao {
                     Record r = result.next();
                     Recipe_to_send.add(new RecipeDTO(
                             r.get("name").asString(),
-                            r.get("id").asInt(),
+                            r.get("id").asString(),
                             r.get("ReviewCount").asInt(),
                             r.get("totalTime").asString()
                     ));
@@ -222,28 +236,9 @@ public class RecipeDao {
     {
         try {
             MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
-            collection.deleteOne(eq("RecipeID", recipe.getId()));
+            collection.deleteOne(eq("_id", new ObjectId(recipe.getId())));
+
             System.out.println("Recipe deleted from mongodb");
-            return true;
-        } catch (Exception error) {
-            System.out.println( error );
-            return false;
-        }
-    }
-
-    // ################################################################################
-    // non sono sicuro funzioni, è per aumentare di uno i like.
-    // Devo fare anche la "removeLike"  ...? -> no
-    // ################################################################################
-    public boolean addLike(Recipe recipe)
-    {
-        try {
-            MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
-            Document doc = new Document().append("like", recipe.getLike());
-
-            Bson query = new Document("$inc", doc);
-            collection.updateOne(new Document("id", recipe.getId()), query);
-
             return true;
         } catch (Exception error) {
             System.out.println( error );
@@ -261,26 +256,28 @@ public class RecipeDao {
         ArrayList<RecipeDTO> recipes_to_return = new ArrayList<>();
         Bson projectionFields = Projections.fields(
                 Projections.include("RecipeName"),
-                Projections.include("RecipeID"),
+                Projections.include("_id"),
                 Projections.include("ReviewCount"),
-                Projections.include("TotalTime"),
-                Projections.excludeId());
+                Projections.include("TotalTime"));
 
         try (MongoCursor<Document> cursor = collection.find().skip(skipped_times*limit).limit(limit).projection(projectionFields).iterator()) {
             while (cursor.hasNext()) {
+                Document f = cursor.next();
+                /*
                 String text = cursor.next().toJson(); //i get a json
                 JSONObject obj = new JSONObject(text);
+                */
                 recipes_to_return.add(
                         new RecipeDTO(
-                                obj.getString("RecipeName"),
-                                Integer.parseInt(obj.getString("RecipeID")),
-                                Integer.parseInt(obj.getString("ReviewCount")),
-                                obj.getString("TotalTime")
+                                f.getString("RecipeName"),
+                                f.get("_id").toString(),
+                                f.getInteger("ReviewCount"),
+                                f.getString("TotalTime")
                         )
                 );
             }
             return recipes_to_return;
-        } catch (JSONException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
@@ -324,16 +321,14 @@ public class RecipeDao {
         // retrieve information
         Bson projectionFields = Projections.fields(
                 Projections.exclude("RecipeName"),
-                Projections.exclude("RecipeID"),
                 Projections.exclude("ReviewCount"),
-                Projections.exclude("TotalTime"),
-                excludeId());
+                Projections.exclude("TotalTime"));
 
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
         // we search for username
-        Document obj = collection.find(eq("RecipeID", recipe.getId())).projection(projectionFields).first();
+        Document obj = collection.find(eq("_id", new ObjectId(recipe.getId()))).projection(projectionFields).first();
 
         try{
             recipe.setAuthor(obj.getString("Author"));
@@ -373,7 +368,7 @@ public class RecipeDao {
                     recipes_to_return.add(
                             new RecipeDTO(
                                     obj.getString("RecipeName"),
-                                    Integer.parseInt(obj.getString("RecipeID")),
+                                    obj.get("_id").toString(),
                                     Integer.parseInt(obj.getString("ReviewCount")),
                                     obj.getString("Author"),
                                     obj.getString("PrepareTime"),
@@ -401,7 +396,7 @@ public class RecipeDao {
 
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
-        Bson query = eq("RecipeID", Recipe.getId());
+        Bson query = eq("_id", new ObjectId(Recipe.getId()));
 
         BasicDBObject delete =
                 new BasicDBObject("reviews",
@@ -486,7 +481,7 @@ public class RecipeDao {
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
         Document query = new Document();
-        query.append("RecipeID",  Recipe.getId());
+        query.append("_id",  new ObjectId(Recipe.getId()));
         Document setData = new Document();
         setData.append("RecipeName", Recipe.getName())
                 .append("Author", Recipe.getAuthor())
@@ -504,11 +499,12 @@ public class RecipeDao {
         }
     }
 
-    public static void addReview(ReviewDTO review, int id_recipe){
+    public static void addReview(ReviewDTO review, String id_recipe){
         try {
             MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
             BasicDBObject query = new BasicDBObject();
-            query.put( "RecipeID", id_recipe);
+            query.put( "_id", new ObjectId(id_recipe));
+
 
             BasicDBObject review_mongo = new BasicDBObject();
             review_mongo.put("profileID", Application.authenticatedUser.getUsername());
@@ -530,7 +526,7 @@ public class RecipeDao {
         }
     }
 
-    private static void incremente_review_count_on_the_graph(int id_recipe) {
+    private static void incremente_review_count_on_the_graph(String id_recipe) {
         try (Session session = Neo4jDriver.getDriver().session()) {
             session.writeTransaction(tx -> {
                 tx.run("MATCH (a:Recipe { id: $id}) " +

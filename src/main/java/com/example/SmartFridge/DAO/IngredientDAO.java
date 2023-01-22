@@ -9,6 +9,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -110,8 +111,7 @@ public class IngredientDAO {
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
         BasicDBObject query = new BasicDBObject();
-        query.put( "id", Application.authenticatedUser.getId());
-
+        query.put("_id", new ObjectId(Application.authenticatedUser.getId()));
         BasicDBObject ingredient = new BasicDBObject();
         ingredient.put("name", ingredientDTO.getFood());
         ingredient.put("quantity", 2);

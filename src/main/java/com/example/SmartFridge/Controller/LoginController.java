@@ -124,6 +124,7 @@ public class LoginController {
                 loginPasswordField.requestFocus();
             }
         } else {
+
             if (UserDAO.checkPassword(loginUsernameTextField.getText(), loginPasswordField.getText())) {
                 invalidLoginCredentials.setText("Login Successful!");
                 invalidLoginCredentials.setStyle(successMessage);
@@ -149,6 +150,7 @@ public class LoginController {
 
                         Application.authenticatedUser = new RegisteredUser(id, username, firstName, lastName, country, email);
                         goToHomePage();
+
                     }
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -240,7 +242,7 @@ public class LoginController {
             /////// MIRKO MODIFICARE QUI
             ///////
             RegisteredUser user = new RegisteredUser(
-                    0,
+                    "",
                     signUpUsernameTextField.getText(),
                     signUpPasswordField.getText(),
                     signUpEmailTextField.getText(),
@@ -250,9 +252,11 @@ public class LoginController {
                     LocalDate.now()
             );
             //registriamo lo user e otteniamo il suo id;
-            int user_index = UserDAO.signup(user);
+            String user_index = UserDAO.signup(user);
 
-            if (user_index == 0) {
+
+            if(user_index.equals("error")){
+
                 System.out.println();
                 invalidSignupCredentials.setText("Something went wrong! Retry");
                 invalidSignupCredentials.setStyle(errorMessage);

@@ -9,6 +9,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -78,19 +79,18 @@ public class IngredientInTheFridgeDAO {
         return datetime;
     }
 
-
     //function to remore an element
-    public static void remove_product_mongo(IngredientInTheFridgeDTO product_to_delete, int id) {
+    public static void remove_product_mongo(IngredientInTheFridgeDTO product_to_delete, String id) {
 
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-            Document doc = collection.find(eq("id", id)).first();
+            Document doc = collection.find(eq("_id", new ObjectId(Application.authenticatedUser.getId()))).first();
 
             String date = product_to_delete.getDate().getDayOfMonth() + "/" +
                     product_to_delete.getDate().getMonthValue() + "/" +
                     product_to_delete.getDate().getYear();
 
-            Bson query = eq("id", Application.authenticatedUser.getId());
+            Bson query = eq("_id", new ObjectId(Application.authenticatedUser.getId()));
 
             BasicDBObject update =
                     new BasicDBObject("fridge",
@@ -108,15 +108,15 @@ public class IngredientInTheFridgeDAO {
         try {
             MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
             BasicDBObject query = new BasicDBObject();
-            query.put( "id", Application.authenticatedUser.getId());
+            query.put("_id", new ObjectId(Application.authenticatedUser.getId()));
 
             BasicDBObject product_mongo = new BasicDBObject();
             product_mongo.put("name", p.getName());
             product_mongo.put("quantity", p.getQuantity());
-                LocalDate date = p.getDate();
-                DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d/MM/uuuu");
-                String text = date.format(formatters);
-            product_mongo.put("expiringDate", text);
+                String date = p.getDate().getDayOfMonth() + "/" +
+                    p.getDate().getMonthValue() + "/" +
+                    p.getDate().getYear();
+            product_mongo.put("expiringDate", date);
 
             BasicDBObject update = new BasicDBObject();
             update.put("$push", new BasicDBObject("fridge",product_mongo));

@@ -20,9 +20,11 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        
         mongodb = MongoDbDriver.getInstance();
         neo4j = Neo4jDriver.getInstance();
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("LoginPage.fxml"));
+
         Scene scene = new Scene(fxmlLoader.load(), 1000 , 700);
         stage.setTitle("Login or Sign up");
         stage.setScene(scene);
