@@ -9,10 +9,7 @@ import com.example.SmartFridge.DAO.UserDAO;
 import com.example.SmartFridge.model.RegisteredUser;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -67,6 +64,8 @@ public class LoginController {
     private TextField signUpSurnameTextField;
     @FXML
     private ComboBox signUpCountryTextField;
+    @FXML
+    private ListView listview;
 
     // Creation of methods which are activated on events in the forms
     @FXML
@@ -181,6 +180,7 @@ public class LoginController {
         ObservableList<String> countries = MongoDbDriver.getCountry();
         countries.add("");
         signUpCountryTextField.setItems(countries);
+        ObservableList<>
     }
 
     @FXML

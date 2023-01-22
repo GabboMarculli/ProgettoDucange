@@ -22,6 +22,17 @@
                     <cursor>
                         <Cursor fx:constant="DEFAULT" />
                     </cursor>
+               <children>
+                  <Pane layoutY="-2.0" prefHeight="125.0" prefWidth="640.0" style="-fx-background-color: #00bfff;" AnchorPane.bottomAnchor="575.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Text fill="WHITE" fontSmoothingType="LCD" layoutX="123.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SMARTFRIDGE">
+                           <font>
+                              <Font name="SansSerif Regular" size="54.0" />
+                           </font>
+                        </Text>
+                     </children></Pane>
+                  <ListView layoutX="36.0" layoutY="168.0" prefHeight="465.0" prefWidth="250.0" />
+               </children>
                 </AnchorPane>
             </children>
         </Group>
