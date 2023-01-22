@@ -41,6 +41,4 @@ public class Neo4jDriver {
         return driver;
     }
 
-    //DA IMPLEMENTARE
-    public static void close(){}
 }
