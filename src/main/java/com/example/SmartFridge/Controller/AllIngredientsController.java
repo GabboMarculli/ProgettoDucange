@@ -50,9 +50,6 @@ public class AllIngredientsController {
                 new PropertyValueFactory<IngredientDTO,String>("calories")
         );
         AllProductsTable.setItems(data);
-
-        AllProductsTable.setItems(data);
-
         AllProductsTable.setRowFactory( tv -> {
             TableRow<IngredientDTO> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
