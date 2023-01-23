@@ -31,7 +31,7 @@
                            </font>
                         </Text>
                      </children></Pane>
-                  <ListView fx:id="listview" layoutX="23.0" layoutY="176.0" onMouseClicked="#showRecipe" prefHeight="440.0" prefWidth="277.0" />
+                  <ListView fx:id="listview" layoutX="23.0" layoutY="176.0" onMouseClicked="#showRecipe" prefHeight="440.0" prefWidth="277.0" style="-fx-cursor: HAND;" />
                   <Pane layoutX="321.0" layoutY="158.0" prefHeight="525.0" prefWidth="283.0" style="-fx-background-color: #abdbe3;">
                      <children>
                         <Text layoutX="24.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recipe Name:" wrappingWidth="159.01806640625">

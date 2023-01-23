@@ -258,6 +258,7 @@ public class RecipeDao {
                 Projections.include("RecipeName"),
                 Projections.include("_id"),
                 Projections.include("Author"),
+                Projections.include("CookTime"),
                 Projections.include("Ingredients"),
                 Projections.include("Directions"),
                 Projections.include("TotalTime"));

@@ -259,12 +259,14 @@ public class LoginController {
             @Override
             public ListCell call(ListView<RecipeDTO> listView) {
                 final ListCell<RecipeDTO> cell = new ListCell<RecipeDTO>(){
-
+                    final Tooltip tp = new Tooltip();
                     @Override
                     public void updateItem(RecipeDTO item, boolean empty){
                         super.updateItem(item,empty);
                         if(item != null) {
                             setText(item.getName());
+                            tp.setText("Author:"+item.getAuthor()+"\n"+"Cooking time:"+item.getCooktime()+"\n"+"Total Cooking time:"+item.getTotalTime());
+                            setTooltip(tp);
                             }
                     }
                 };
