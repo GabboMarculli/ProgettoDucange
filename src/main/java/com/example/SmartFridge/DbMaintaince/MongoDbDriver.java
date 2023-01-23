@@ -3,6 +3,8 @@ package com.example.SmartFridge.DbMaintaince;
 
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoException;
+import com.mongodb.ReadPreference;
+import com.mongodb.WriteConcern;
 import com.mongodb.client.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,10 +55,30 @@ public class MongoDbDriver {
             Document commandResult = database.runCommand(command);
             System.out.println("Connected successfully to server.");
             getCountry();
+            setForClustering();
         } catch (Exception me) {
             System.err.println("An error occurred while attempting to run a command: " + me);
             Error panic = new Error(me);
         }
+    }
+
+    private void setForClustering() {
+
+        //for the writes
+        MongoClient mongoClient = MongoClients.create(
+                "mongodb://localhost:27017,localhost:27017,localhost:27017/"+
+                        "?w=2&wtimeout = 5000"
+        );
+        MongoDatabase db = mongoClient.getDatabase("Progetto").
+                withWriteConcern(WriteConcern.W1);
+
+        //for the reads
+        mongoClient = MongoClients.create(
+                "mongodb://localhost:27017,localhost:27017,localhost:27017/"+
+                        "?readPreference = secondary"
+        );
+        db = mongoClient.getDatabase("Progetto").
+                withReadPreference(ReadPreference.nearest());
     }
 
     public static ObservableList<String> getCountry(){
