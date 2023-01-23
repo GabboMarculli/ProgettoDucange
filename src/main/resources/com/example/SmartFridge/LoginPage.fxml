@@ -93,13 +93,19 @@
                      </font>
                   </Button>
                   <Button fx:id="previousButton" layoutX="60.0" layoutY="634.0" mnemonicParsing="false" onAction="#onPreviousClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Previous" />
+                  <Text fx:id="pagenumber" layoutX="150.0" layoutY="656.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Pane layoutX="138.0" layoutY="636.0" opacity="0.53" prefHeight="31.0" prefWidth="32.0" style="-fx-background-color: #24a0ed; -fx-background-radius: 10;" />
                </children>
                 </AnchorPane>
             </children>
         </Group>
     </left>
     <center>
-        <AnchorPane fx:id="signUpCountry" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+        <AnchorPane fx:id="signUpCountry" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="350.0" style="--fx-cursor: DEFAULT;" BorderPane.alignment="CENTER">
             <children>
                 <Label layoutX="47.0" layoutY="1.0" prefHeight="57.0" prefWidth="263.0" style="-fx-background-color: transparent; -fx-text-fill: #24a0ed;" text="ENJOY THE FOOD">
                     <font>

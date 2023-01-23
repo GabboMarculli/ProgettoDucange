@@ -14,7 +14,7 @@
 .tab-pane .tab
 {
     -fx-background-color: #e6e6e6;
-    -fx--cursor: HAND;
+
 }
 
 .tab-pane .tab:selected
@@ -46,6 +46,10 @@
     -fx-text-fill: WHITE;
 }
 
-.tab :hover{
-    -fx-text-fill: BLUE;
+.tab{
+    -fx-cursor: HAND ;
+}
+
+.tab-pane{
+    -fx-cursor: DEFAULT ;
 }

@@ -91,6 +91,8 @@ public class LoginController {
     private Button previousButton;
     @FXML
     private Button nextButton;
+    @FXML
+    private Text pagenumber;
     ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
     private int page = 0;
 
@@ -103,6 +105,7 @@ public class LoginController {
         for(RecipeDTO r : recipes)
             data.add(r);
         listview.getSelectionModel().select(0);
+        pagenumber.setText(Integer.toString(page));
         showRecipe();
     }
 
@@ -112,6 +115,7 @@ public class LoginController {
             return;
         }
         page--;
+        pagenumber.setText(Integer.toString(page));
         if(page == 0){
             previousButton.setDisable(true);
         }
@@ -167,8 +171,8 @@ public class LoginController {
     public void unsetOver(MouseEvent mouseEvent) {
         Button b = ((Button) mouseEvent.getTarget());
         b.setStyle(exitOver);
-        b.setCursor(Cursor.HAND);
-
+        b.setCursor(Cursor.DEFAULT);
+        //Application.unSetMousePointer();
     }
 
     @FXML
@@ -411,13 +415,20 @@ public class LoginController {
         loginUsernameTextField.setStyle(successStyle);
     }
     public void setClick(MouseEvent mouseEvent) {
-        ((Button) mouseEvent.getSource()).setStyle(onClick);
-        Application.setMousePointer();
+        //((Button) mouseEvent.getSource()).setStyle(onClick);
+        //Application.setMousePointer();
+
+        Button b = ((Button) mouseEvent.getSource());
+        b.setStyle(onClick);
+        b.setCursor(Cursor.HAND);
     }
 
     public void unsetClick(MouseEvent mouseEvent) {
-        ((Button) mouseEvent.getSource()).setStyle(onReleased);
-        Application.setMousePointer();
+        //((Button) mouseEvent.getSource()).setStyle(onReleased);
+        //Application.setMousePointer();
+
+        Button b = ((Button) mouseEvent.getSource());
+        b.setStyle(onReleased);
     }
     private ObservableList getCountryData(){
         ObservableList<String> countries = FXCollections.observableArrayList();
