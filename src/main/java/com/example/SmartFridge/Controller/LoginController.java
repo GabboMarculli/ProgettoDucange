@@ -91,16 +91,38 @@ public class LoginController {
     private Button previousButton;
     @FXML
     private Button nextButton;
-
-    private int called = 0;
+    ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
+    private int page = 0;
 
     @FXML
     protected void onNextClick(){
-
+        page++;
+        previousButton.setDisable(false);
+        List<RecipeDTO> recipes = RecipeDao.getRecipeLoginpage(20,page);
+        data.clear();
+        for(RecipeDTO r : recipes)
+            data.add(r);
+        listview.getSelectionModel().select(0);
+        showRecipe();
     }
 
     @FXML
-    protected void onPreviousClick(){}
+    protected void onPreviousClick(){
+        if(page <= 0){
+            return;
+        }
+        page--;
+        if(page == 0){
+            previousButton.setDisable(true);
+        }
+        List<RecipeDTO> recipes = RecipeDao.getRecipeLoginpage(20,page);
+        data.clear();
+        for(RecipeDTO r : recipes)
+            data.add(r);
+        listview.getSelectionModel().select(0);
+        showRecipe();
+    }
+
 
     // Creation of methods which are activated on events in the forms
     @FXML
@@ -137,13 +159,16 @@ public class LoginController {
         invalidSignupCredentials.setText("");
     }
     public void setOver(MouseEvent mouseEvent) {
-        ((Button) mouseEvent.getTarget()).setStyle(onOver);
-        Application.setMousePointer();
+        Button b = ((Button) mouseEvent.getTarget());
+        b.setStyle(onOver);
+        b.setCursor(Cursor.HAND);
     }
 
     public void unsetOver(MouseEvent mouseEvent) {
-        ((Button) mouseEvent.getTarget()).setStyle(exitOver);
-        Application.unSetMousePointer();
+        Button b = ((Button) mouseEvent.getTarget());
+        b.setStyle(exitOver);
+        b.setCursor(Cursor.HAND);
+
     }
 
     @FXML
@@ -214,10 +239,8 @@ public class LoginController {
     public void initialize() throws IOException {
         ingredienttext.setWrapText(true);
         preparationtext.setWrapText(true);
-
-
         signUpCountryTextField.setItems(getCountryData());
-
+        previousButton.setDisable(true);
 /*
         FileWriter f = new FileWriter("country.txt");
         PrintWriter pw = new PrintWriter(f);
@@ -244,7 +267,7 @@ public class LoginController {
                 return cell;
             }
         });
-        ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
+
         for(RecipeDTO us : recipes) {
             System.out.println(us.getPreparationTime());
             data.add(us);
@@ -252,7 +275,6 @@ public class LoginController {
         listview.setItems(data);
         listview.getSelectionModel().select(0);
         showRecipe();
-
     }
 
     @FXML

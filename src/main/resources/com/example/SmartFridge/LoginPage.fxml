@@ -34,12 +34,12 @@
                   <ListView fx:id="listview" layoutX="23.0" layoutY="176.0" onMouseClicked="#showRecipe" prefHeight="440.0" prefWidth="277.0" />
                   <Pane layoutX="321.0" layoutY="158.0" prefHeight="525.0" prefWidth="283.0" style="-fx-background-color: #abdbe3;">
                      <children>
-                        <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recipe Name:" wrappingWidth="159.01806640625">
+                        <Text layoutX="24.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recipe Name:" wrappingWidth="159.01806640625">
                            <font>
                               <Font name="System Bold Italic" size="19.0" />
                            </font>
                         </Text>
-                        <Text fx:id="recipetext" layoutX="29.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="215.13671875">
+                        <Text fx:id="recipetext" layoutX="27.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="215.13671875">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -87,7 +87,7 @@
                         <Font size="19.0" />
                      </font>
                   </Label>
-                  <Button fx:id="LoginButton1" layoutX="182.0" layoutY="634.0" mnemonicParsing="false" onAction="#onNextClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Next">
+                  <Button fx:id="nextButton" defaultButton="true" layoutX="182.0" layoutY="634.0" mnemonicParsing="false" onAction="#onNextClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Next">
                      <font>
                         <Font size="15.0" />
                      </font>
