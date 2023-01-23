@@ -2,19 +2,27 @@ package com.example.SmartFridge.Controller;
 
 
 import com.example.SmartFridge.Application;
+import com.example.SmartFridge.DAO.RecipeDao;
+import com.example.SmartFridge.DTO.RecipeDTO;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
 import com.example.SmartFridge.Utils.Utils;
 import com.example.SmartFridge.DAO.UserDAO;
+import com.example.SmartFridge.model.Recipe;
 import com.example.SmartFridge.model.RegisteredUser;
+import com.mongodb.client.MongoCollection;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 // ######################################################################################################################
@@ -66,6 +74,16 @@ public class LoginController {
     private ComboBox signUpCountryTextField;
     @FXML
     private ListView listview;
+    @FXML
+    private Text recipetext;
+    @FXML
+    private Text authortext;
+    @FXML
+    private TextArea ingredienttext;
+    @FXML
+    private TextArea preparationtext;
+
+    private int called = 0;
 
     // Creation of methods which are activated on events in the forms
     @FXML
@@ -177,10 +195,51 @@ public class LoginController {
     }
 
     public void initialize(){
+        ingredienttext.setWrapText(true);
+        preparationtext.setWrapText(true);
         ObservableList<String> countries = MongoDbDriver.getCountry();
         countries.add("");
         signUpCountryTextField.setItems(countries);
-        ObservableList<>
+        int limit_views_recipe = 20;
+        List<RecipeDTO> recipes = RecipeDao.getRecipeLoginpage(limit_views_recipe,0);
+        listview.setCellFactory(new Callback<ListView<RecipeDTO>, ListCell<RecipeDTO>>() {
+            @Override
+            public ListCell call(ListView<RecipeDTO> listView) {
+                final ListCell<RecipeDTO> cell = new ListCell<RecipeDTO>(){
+
+                    @Override
+                    public void updateItem(RecipeDTO item, boolean empty){
+                        super.updateItem(item,empty);
+                        if(item != null) {
+                            setText(item.getName());
+                            }
+                    }
+                };
+                return cell;
+            }
+        });
+        ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
+        for(RecipeDTO us : recipes) {
+            System.out.println(us.getPreparationTime());
+            data.add(us);
+        }
+        listview.setItems(data);
+        listview.getSelectionModel().select(0);
+        showRecipe();
+
+    }
+
+    @FXML
+    protected void showRecipe(){
+        int index = listview.getSelectionModel().getSelectedIndex();
+        RecipeDTO recipe = (RecipeDTO) listview.getItems().get(index);
+
+        authortext.setText(recipe.getAuthor());
+        ingredienttext.setText(recipe.getIngrients());
+        preparationtext.setText(recipe.getDirection());
+
+        recipetext.setText(recipe.getName());
+        System.out.println(recipe.getName()+" "+recipe.getTotalTime()+" time:"+recipe.getAuthor());
     }
 
     @FXML

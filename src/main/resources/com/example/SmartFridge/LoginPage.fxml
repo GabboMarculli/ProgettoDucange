@@ -31,7 +31,62 @@
                            </font>
                         </Text>
                      </children></Pane>
-                  <ListView layoutX="36.0" layoutY="168.0" prefHeight="465.0" prefWidth="250.0" />
+                  <ListView fx:id="listview" layoutX="23.0" layoutY="176.0" onMouseClicked="#showRecipe" prefHeight="440.0" prefWidth="277.0" />
+                  <Pane layoutX="321.0" layoutY="158.0" prefHeight="525.0" prefWidth="283.0" style="-fx-background-color: #abdbe3;">
+                     <children>
+                        <Text layoutX="24.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Recipe Name:" wrappingWidth="159.01806640625">
+                           <font>
+                              <Font name="System Bold Italic" size="19.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="recipetext" layoutX="29.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="215.13671875">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="24.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author:" wrappingWidth="159.01806640625">
+                           <font>
+                              <Font name="System Bold Italic" size="19.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="24.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ingredients:" wrappingWidth="159.01806640625">
+                           <font>
+                              <Font name="System Bold Italic" size="19.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="authortext" layoutX="27.0" layoutY="114.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" textOrigin="CENTER" wrappingWidth="228.7392578125">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                        </Text>
+                        <Text layoutX="24.0" layoutY="311.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Preparation:" wrappingWidth="159.01806640625">
+                           <font>
+                              <Font name="System Bold Italic" size="19.0" />
+                           </font>
+                        </Text>
+                        <TextArea fx:id="ingredienttext" accessibleRole="TEXT" editable="false" layoutX="29.0" layoutY="149.0" prefHeight="136.0" prefWidth="236.0" style="-fx-control-inner-background: #abdbe3;">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextArea>
+                        <TextArea fx:id="preparationtext" accessibleRole="TEXT" editable="false" layoutX="29.0" layoutY="325.0" prefHeight="182.0" prefWidth="236.0" style="-fx-control-inner-background: #abdbe3;">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="DEFAULT" />
+                           </cursor>
+                        </TextArea>
+                     </children>
+                  </Pane>
+                  <Label layoutX="29.0" layoutY="140.0" prefHeight="36.0" prefWidth="265.0" text="Select a Recipe from the table:">
+                     <font>
+                        <Font size="19.0" />
+                     </font>
+                  </Label>
                </children>
                 </AnchorPane>
             </children>

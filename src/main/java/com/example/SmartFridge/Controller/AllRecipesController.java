@@ -44,10 +44,6 @@ public class AllRecipesController {
     @FXML
     private Button showMyRecipe;
 
-
-
-
-
     private ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
 
     public AllRecipesController(){

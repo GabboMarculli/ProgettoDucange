@@ -1,5 +1,7 @@
 package com.example.SmartFridge.DTO;
 
+import org.neo4j.driver.internal.cluster.MultiDatabasesRoutingProcedureRunner;
+
 public class RecipeDTO {
     private String Name;
     private String Id ;
@@ -19,6 +21,17 @@ public class RecipeDTO {
         Id = id;
         ReviewCount = reviewCount;
         TotalTime = totalTime;
+    }
+
+    public RecipeDTO(String name, String id, String author,String preptime, String cktime, String tttime,String ingre, String dire){
+        Name = name;
+        Id = id;
+        Direction = dire;
+        Author = author;
+        Cooktime = cktime;
+        TotalTime = tttime;
+        PreparationTime = preptime;
+        Ingredients = ingre;
     }
 
     public RecipeDTO(String name, String id, int reviewCount, String author, String preparationTime, String cooktime, String totalTime, String ingrients, String direction, String[] ingredientsList, ReviewDTO[] reviews) {

@@ -248,7 +248,7 @@ public class RecipeDao {
 
     //skipped_time is used for retriving limit recipe at a time belonging to interval [skipped_times*limit, (skipped_times+1)*limit]
     //THIS WAS FOR RETRIVING RECIPE FROM MONGODB
-    public static ArrayList<RecipeDTO> getRecipe(int limit, int skipped_times) {
+    public static ArrayList<RecipeDTO> getRecipeLoginpage(int limit, int skipped_times) {
 
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
@@ -257,7 +257,9 @@ public class RecipeDao {
         Bson projectionFields = Projections.fields(
                 Projections.include("RecipeName"),
                 Projections.include("_id"),
-                Projections.include("ReviewCount"),
+                Projections.include("Author"),
+                Projections.include("Ingredients"),
+                Projections.include("Directions"),
                 Projections.include("TotalTime"));
 
         try (MongoCursor<Document> cursor = collection.find().skip(skipped_times*limit).limit(limit).projection(projectionFields).iterator()) {
@@ -271,8 +273,12 @@ public class RecipeDao {
                         new RecipeDTO(
                                 f.getString("RecipeName"),
                                 f.get("_id").toString(),
-                                f.getInteger("ReviewCount"),
-                                f.getString("TotalTime")
+                                f.getString("Author"),
+                                f.getString("PreparationTime"),
+                                f.getString("CookTime"),
+                                f.getString("TotalTime"),
+                                f.getString("Ingredients"),
+                                f.getString("Directions")
                         )
                 );
             }
@@ -316,6 +322,40 @@ public class RecipeDao {
         return null;
     }
 */
+    public static ArrayList<RecipeDTO> getRecipe(int limit, int skipped_times) {
+
+        // retrieve user collection
+        MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
+
+        ArrayList<RecipeDTO> recipes_to_return = new ArrayList<>();
+        Bson projectionFields = Projections.fields(
+                Projections.include("RecipeName"),
+                Projections.include("_id"),
+                Projections.include("ReviewCount"),
+                Projections.include("TotalTime"));
+
+        try (MongoCursor<Document> cursor = collection.find().skip(skipped_times*limit).limit(limit).projection(projectionFields).iterator()) {
+            while (cursor.hasNext()) {
+                Document f = cursor.next();
+                /*
+                String text = cursor.next().toJson(); //i get a json
+                JSONObject obj = new JSONObject(text);
+                */
+                recipes_to_return.add(
+                        new RecipeDTO(
+                                f.getString("RecipeName"),
+                                f.get("_id").toString(),
+                                f.getInteger("ReviewCount"),
+                                f.getString("TotalTime")
+                        )
+                );
+            }
+            return recipes_to_return;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static RecipeDTO getSingleRecipe(RecipeDTO recipe) {
 
         // retrieve information
