@@ -8,41 +8,47 @@
    <children>
       <TabPane fx:id="tabPane" layoutX="247.0" layoutY="106.0" prefHeight="594.0" prefWidth="1000.0" stylesheets="@css/tab.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="106.0">
         <tabs>
-          <Tab closable="false" text="Untitled Tab 1">
+          <Tab text="Products" closable="false">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="586.0" prefWidth="1000.0" />
+                <fx:include fx:id="ProductTab" source="AllIngredient.fxml"/>
             </content>
           </Tab>
-          <Tab text="Untitled Tab 2">
+          <Tab text="Recipes">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <fx:include fx:id="RecipeTab" source="AllRecipes.fxml"/>
             </content>
           </Tab>
-            <Tab text="Untitled Tab 3">
+            <Tab text="Users">
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <fx:include fx:id="UserTab" source="AllUsers.fxml"/>
                 </content>
             </Tab>
-            <Tab text="Untitled Tab 4">
+            <Tab text="Following">
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <fx:include fx:id="FollowTab" source="FollowedUser.fxml"/>
                 </content>
             </Tab>
-            <Tab text="Untitled Tab 5">
+            <Tab text="Fridge">
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <fx:include fx:id="FridgeTab" source="FridgePage.fxml"/>
                 </content>
             </Tab>
-            <Tab text="Untitled Tab 6">
+            <Tab text="Profile">
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <fx:include fx:id="ProfileTab" source="ProfilePage.fxml"/>
                 </content>
             </Tab>
         </tabs>
       </TabPane>
-      <Pane layoutY="-1.0" prefHeight="112.0" prefWidth="1000.0">
+      <Pane layoutY="-1.0" prefHeight="112.0" prefWidth="1000.0" style="-fx-background-color: #24a0ed;">
          <children>
-            <Label layoutX="308.0" layoutY="16.0" prefHeight="80.0" prefWidth="441.0" text="SMARTFRIDGE">
+            <Label layoutX="308.0" layoutY="16.0" prefHeight="80.0" prefWidth="441.0" text="SMARTFRIDGE" textFill="#fcf8f8">
                <font>
                   <Font size="54.0" />
                </font>

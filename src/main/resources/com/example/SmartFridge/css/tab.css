@@ -7,18 +7,21 @@
     -fx-tab-min-width:150px;
 }
 
+
 .tab{
     -fx-background-insets: 0 1 0 1,0,0;
 }
 .tab-pane .tab
 {
     -fx-background-color: #e6e6e6;
-
+    -fx--cursor: HAND;
 }
 
 .tab-pane .tab:selected
 {
     -fx-background-color: #24a0ed;
+    -fx-text-fill: WHITE;
+
 }
 
 .tab .tab-label { 
@@ -26,11 +29,12 @@
     -fx-text-fill: #828282;
     -fx-font-size: 12px;
     -fx-font-weight: bold;
+
 }
 
 .tab {
     -fx-pref-height: 50px;
-    cursor:pointer;
+
 }
 .tab : hover{
     -fx-background-color: #24a0ed;
@@ -40,4 +44,8 @@
 .tab:selected .tab-label { 
     -fx-alignment: CENTER;
     -fx-text-fill: WHITE;
+}
+
+.tab :hover{
+    -fx-text-fill: BLUE;
 }

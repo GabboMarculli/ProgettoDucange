@@ -229,7 +229,7 @@ public class LoginController {
     }
 
     protected void goToHomePage() throws IOException {
-        Application.changeScene("HomePage");
+        Application.changeScene("MainTable");
     }
 
     protected void goToAdminPage() throws IOException {
@@ -617,7 +617,6 @@ public class LoginController {
         countries.add("Yemen");
         countries.add("Zambia");
         countries.add("Zimbabwe");
-        countries.add("italy");
         countries.add("");
         return countries;
     }
