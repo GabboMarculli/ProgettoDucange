@@ -252,6 +252,11 @@
                     </font>
                 </Button>
                 <ComboBox fx:id="signUpCountryTextField" layoutX="74.0" layoutY="576.0" prefHeight="30.0" prefWidth="240.0" promptText="Select..." style="-fx-border-width: 2; -fx-border-color: #A9A9A9; -fx-border-radius: 5;" />
+            <ImageView fitHeight="40.0" fitWidth="35.0" layoutX="31.0" layoutY="571.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@img/flag.png" />
+               </image>
+            </ImageView>
 
 
             </children>
