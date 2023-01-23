@@ -87,6 +87,12 @@
                         <Font size="19.0" />
                      </font>
                   </Label>
+                  <Button fx:id="LoginButton1" layoutX="182.0" layoutY="634.0" mnemonicParsing="false" onAction="#onNextClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Next">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="previousButton" layoutX="60.0" layoutY="634.0" mnemonicParsing="false" onAction="#onPreviousClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Previous" />
                </children>
                 </AnchorPane>
             </children>
