@@ -13,7 +13,9 @@ import com.example.SmartFridge.model.RegisteredUser;
 import com.mongodb.client.MongoCollection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -197,6 +199,7 @@ public class LoginController {
     public void initialize(){
         ingredienttext.setWrapText(true);
         preparationtext.setWrapText(true);
+
         ObservableList<String> countries = MongoDbDriver.getCountry();
         countries.add("");
         signUpCountryTextField.setItems(countries);

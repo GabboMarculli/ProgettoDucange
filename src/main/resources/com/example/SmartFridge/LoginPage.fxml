@@ -64,7 +64,7 @@
                               <Font name="System Bold Italic" size="19.0" />
                            </font>
                         </Text>
-                        <TextArea fx:id="ingredienttext" accessibleRole="TEXT" editable="false" layoutX="29.0" layoutY="149.0" prefHeight="136.0" prefWidth="236.0" style="-fx-control-inner-background: #abdbe3;">
+                        <TextArea fx:id="ingredienttext" accessibleRole="TEXT" editable="false" layoutX="29.0" layoutY="149.0" prefHeight="136.0" prefWidth="236.0" style="-fx-control-inner-background: #abdbe3; -fx-cursor: hand;">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -72,7 +72,7 @@
                               <Cursor fx:constant="DEFAULT" />
                            </cursor>
                         </TextArea>
-                        <TextArea fx:id="preparationtext" accessibleRole="TEXT" editable="false" layoutX="29.0" layoutY="325.0" prefHeight="182.0" prefWidth="236.0" style="-fx-control-inner-background: #abdbe3;">
+                        <TextArea fx:id="preparationtext" accessibleRole="TEXT" editable="false" layoutX="29.0" layoutY="325.0" prefHeight="182.0" prefWidth="236.0" style="-fx-control-inner-background: #abdbe3; -fx-cursor: hand;" stylesheets="@css/style.css">
                            <font>
                               <Font size="15.0" />
                            </font>

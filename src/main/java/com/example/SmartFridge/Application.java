@@ -33,8 +33,6 @@ public class Application extends javafx.application.Application {
         setPrimaryStage(stage);
         setPrimaryScene(scene);
 
-        mongodb = MongoDbDriver.getInstance();
-        neo4j = Neo4jDriver.getInstance();
     }
 
     public static void main(String[] args) {
