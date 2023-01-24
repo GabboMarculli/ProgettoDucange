@@ -45,4 +45,9 @@ public class HomePageAdminController {
     protected void goToUsers() throws IOException {
         Application.changeScene("AllUsers");
     }
+
+    @FXML
+    protected void goToAnalytics() throws IOException {
+        Application.changeScene("Analytics");
+    }
 }
