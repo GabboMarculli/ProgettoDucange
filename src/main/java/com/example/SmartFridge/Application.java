@@ -34,10 +34,14 @@ public class Application extends javafx.application.Application {
 
         setPrimaryStage(stage);
         setPrimaryScene(scene);
-
+        stage.setOnCloseRequest(windowEvent -> {closing();});
     }
 
-
+    private void closing(){
+        System.out.println("Closing");
+        mongodb.close();
+        neo4j.close();
+    }
     public static void main(String[] args) {
         launch();
     }

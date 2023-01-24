@@ -4,6 +4,7 @@ import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
 import com.example.SmartFridge.Utils.Utils;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -41,8 +42,7 @@ public class HomePageController {
     protected void leave() throws  IOException{
             MongoDbDriver.close();
             Neo4jDriver.close();
-            Stage stage = (Stage) Application.getPrimaryScene().getWindow();
-            stage.close();
+            Platform.exit();
     }
     @FXML
     protected void goToLogin() throws IOException {
