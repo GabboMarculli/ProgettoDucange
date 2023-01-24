@@ -3,10 +3,12 @@ package com.example.SmartFridge;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
 import com.example.SmartFridge.model.RegisteredUser;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.io.IOException;
 
@@ -34,6 +36,7 @@ public class Application extends javafx.application.Application {
         setPrimaryScene(scene);
 
     }
+
 
     public static void main(String[] args) {
         launch();

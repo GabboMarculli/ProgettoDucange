@@ -26,7 +26,9 @@ public class Neo4jDriver {
     }
 
     //DA IMPLEMENTARE
-    public static void close(){}
+    public static void close(){
+        driver.close();
+    }
 
 
     // singleton pattern

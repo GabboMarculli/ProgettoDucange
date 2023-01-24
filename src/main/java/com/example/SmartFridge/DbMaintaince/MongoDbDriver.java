@@ -54,7 +54,7 @@ public class MongoDbDriver {
             Bson command = new BsonDocument("ping", new BsonInt64(1));
             Document commandResult = database.runCommand(command);
             System.out.println("Connected successfully to server.");
-            getCountry();
+            //getCountry();
             setForClustering();
         } catch (Exception me) {
             System.err.println("An error occurred while attempting to run a command: " + me);
@@ -80,7 +80,7 @@ public class MongoDbDriver {
         db = mongoClient.getDatabase("Progetto").
                 withReadPreference(ReadPreference.nearest());
     }
-
+/*
     public static ObservableList<String> getCountry(){
 
         MongoCollection<Document> collection = database.getCollection("User");
@@ -97,6 +97,8 @@ public class MongoDbDriver {
         }
         return null;
     }
+    */
+
 
     // singleton pattern
     public static MongoDbDriver getInstance() {
