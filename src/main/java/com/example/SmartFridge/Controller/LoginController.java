@@ -27,6 +27,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -47,8 +48,6 @@ public class LoginController {
     String errorMessage = "-fx-text-fill: RED;";
     String errorStyle = "-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;";
     String successStyle = "-fx-border-color: #A9A9A9; -fx-border-width: 2; -fx-border-radius: 5;";
-    String onOver = "-fx-background-color: #34cfeb;";
-    String exitOver = "-fx-background-color: #24a0ed; -fx-text-fill: WHITE;";
     String onClick = "-fx-background-color: WHITE; -fx-text-fill: BLACK; -fx-border-color: #A9A9A9; -fx-border-width: 2; -fx-border-radius: 5";
     String onReleased = "-fx-background-color: #24a0ed; -fx-text-fill: WHITE;";
 
@@ -96,6 +95,19 @@ public class LoginController {
     ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
     private int page = 0;
 
+    public void setClick(MouseEvent mouseEvent) {
+        Utils.setClick(mouseEvent);
+    }
+
+    public void unsetClick(MouseEvent mouseEvent) {
+        Utils.unsetClick(mouseEvent);
+    }
+    public void setOver(MouseEvent mouseEvent) {
+        Utils.setOver(mouseEvent);
+    }
+    public void unsetOver(MouseEvent mouseEvent) {
+       Utils.unsetOver(mouseEvent);
+    }
     @FXML
     protected void onNextClick(){
         page++;
@@ -162,6 +174,7 @@ public class LoginController {
         signUpSurnameTextField.clear();
         invalidSignupCredentials.setText("");
     }
+    /*
     public void setOver(MouseEvent mouseEvent) {
         Button b = ((Button) mouseEvent.getTarget());
         b.setStyle(onOver);
@@ -174,7 +187,7 @@ public class LoginController {
         b.setCursor(Cursor.DEFAULT);
         //Application.unSetMousePointer();
     }
-
+    */
     @FXML
     protected void onLoginButtonClick() {
         clearloginField();
@@ -214,8 +227,13 @@ public class LoginController {
                         String firstName = credentials[3];
                         String lastName = credentials[4];
                         String email = credentials[5];
-
-                        Application.authenticatedUser = new RegisteredUser(id, username, firstName, lastName, country, email);
+                        String password = credentials[6];
+                        LocalDate regdate;
+                        if(credentials[7].length() > 9)
+                            regdate = Utils.LOCAL_DATE(credentials[7]);
+                        else
+                            regdate = Utils.LOCAL_DATE_OLD(credentials[7]);
+                        Application.authenticatedUser = new RegisteredUser(id, username,password, firstName, lastName, country, email,regdate);
                         goToHomePage();
 
                     }
@@ -243,7 +261,7 @@ public class LoginController {
     public void initialize() throws IOException {
         ingredienttext.setWrapText(true);
         preparationtext.setWrapText(true);
-        signUpCountryTextField.setItems(getCountryData());
+        signUpCountryTextField.setItems(Utils.getCountryData());
         previousButton.setDisable(true);
 /*
         FileWriter f = new FileWriter("country.txt");
@@ -364,23 +382,26 @@ public class LoginController {
             ///////
             /////// MIRKO MODIFICARE QUI
             ///////
+            LocalDate nowdate = LocalDate.now();
+            nowdate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+            System.out.println(nowdate);
             RegisteredUser user = new RegisteredUser(
                     "",
                     signUpUsernameTextField.getText(),
                     signUpPasswordField.getText(),
-                    signUpEmailTextField.getText(),
                     signUpNameTextField.getText(),
                     signUpSurnameTextField.getText(),
                     signUpCountryTextField.getValue().toString(),
-                    LocalDate.now()
+                    signUpEmailTextField.getText(),
+                    nowdate
             );
+
+            System.out.println(LocalDate.now());
             //registriamo lo user e otteniamo il suo id;
             String user_index = UserDAO.signup(user);
 
 
             if(user_index.equals("error")){
-
-                System.out.println();
                 invalidSignupCredentials.setText("Something went wrong! Retry");
                 invalidSignupCredentials.setStyle(errorMessage);
                 invalidLoginCredentials.setText("");
@@ -416,6 +437,7 @@ public class LoginController {
         loginPasswordField.setStyle(successStyle);
         loginUsernameTextField.setStyle(successStyle);
     }
+    /*
     public void setClick(MouseEvent mouseEvent) {
         //((Button) mouseEvent.getSource()).setStyle(onClick);
         //Application.setMousePointer();
@@ -432,205 +454,7 @@ public class LoginController {
         Button b = ((Button) mouseEvent.getSource());
         b.setStyle(onReleased);
     }
-    private ObservableList getCountryData(){
-        ObservableList<String> countries = FXCollections.observableArrayList();
-        countries.add("Afghanistan");
-        countries.add("Albania");
-        countries.add("Algeria");
-        countries.add("Andorra");
-        countries.add("Angola");
-        countries.add("Antigua & Deps");
-        countries.add("Argentina");
-        countries.add("Armenia");
-        countries.add("Australia");
-        countries.add("Austria");
-        countries.add("Azerbaijan");
-        countries.add("Bahamas");
-        countries.add("Bahrain");
-        countries.add("Bangladesh");
-        countries.add("Barbados");
-        countries.add("Belarus");
-        countries.add("Belgium");
-        countries.add("Belize");
-        countries.add("Benin");
-        countries.add("Bhutan");
-        countries.add("Bolivia");
-        countries.add("Bosnia Herzegovina");
-        countries.add("Botswana");
-        countries.add("Brazil");
-        countries.add("Brunei");
-        countries.add("Bulgaria");
-        countries.add("Burkina");
-        countries.add("Burundi");
-        countries.add("Cambodia");
-        countries.add("Cameroon");
-        countries.add("Canada");
-        countries.add("Cape Verde");
-        countries.add("Central African Rep");
-        countries.add("Chad");
-        countries.add("Chile");
-        countries.add("China");
-        countries.add("Colombia");
-        countries.add("Comoros");
-        countries.add("Congo");
-        countries.add("Congo {Democratic Rep}");
-        countries.add("Costa Rica");
-        countries.add("Croatia");
-        countries.add("Cuba");
-        countries.add("Cyprus");
-        countries.add("Czech Republic");
-        countries.add("Denmark");
-        countries.add("Djibouti");
-        countries.add("Dominica");
-        countries.add("Dominican Republic");
-        countries.add("East Timor");
-        countries.add("Ecuador");
-        countries.add("Egypt");
-        countries.add("El Salvador");
-        countries.add("Equatorial Guinea");
-        countries.add("Eritrea");
-        countries.add("Estonia");
-        countries.add("Ethiopia");
-        countries.add("Fiji");
-        countries.add("Finland");
-        countries.add("France");
-        countries.add("Gabon");
-        countries.add("Gambia");
-        countries.add("Georgia");
-        countries.add("Germany");
-        countries.add("Ghana");
-        countries.add("Greece");
-        countries.add("Grenada");
-        countries.add("Guatemala");
-        countries.add("Guinea");
-        countries.add("Guinea-Bissau");
-        countries.add("Guyana");
-        countries.add("Haiti");
-        countries.add("Honduras");
-        countries.add("Hungary");
-        countries.add("Iceland");
-        countries.add("India");
-        countries.add("Indonesia");
-        countries.add("Iran");
-        countries.add("Iraq");
-        countries.add("Ireland {Republic}");
-        countries.add("Israel");
-        countries.add("Italy");
-        countries.add("Ivory Coast");
-        countries.add("Jamaica");
-        countries.add("Japan");
-        countries.add("Jordan");
-        countries.add("Kazakhstan");
-        countries.add("Kenya");
-        countries.add("Kiribati");
-        countries.add("Korea North");
-        countries.add("Korea South");
-        countries.add("Kosovo");
-        countries.add("Kuwait");
-        countries.add("Kyrgyzstan");
-        countries.add("Laos");
-        countries.add("Latvia");
-        countries.add("Lebanon");
-        countries.add("Lesotho");
-        countries.add("Liberia");
-        countries.add("Libya");
-        countries.add("Liechtenstein");
-        countries.add("Lithuania");
-        countries.add("Luxembourg");
-        countries.add("Macedonia");
-        countries.add("Madagascar");
-        countries.add("Malawi");
-        countries.add("Malaysia");
-        countries.add("Maldives");
-        countries.add("Mali");
-        countries.add("Malta");
-        countries.add("Marshall Islands");
-        countries.add("Mauritania");
-        countries.add("Mauritius");
-        countries.add("Mexico");
-        countries.add("Micronesia");
-        countries.add("Moldova");
-        countries.add("Monaco");
-        countries.add("Mongolia");
-        countries.add("Montenegro");
-        countries.add("Morocco");
-        countries.add("Mozambique");
-        countries.add("Myanmar, {Burma}");
-        countries.add("Namibia");
-        countries.add("Nauru");
-        countries.add("Nepal");
-        countries.add("Netherlands");
-        countries.add("New Zealand");
-        countries.add("Nicaragua");
-        countries.add("Niger");
-        countries.add("Nigeria");
-        countries.add("Norway");
-        countries.add("Oman");
-        countries.add("Pakistan");
-        countries.add("Palau");
-        countries.add("Panama");
-        countries.add("Papua New Guinea");
-        countries.add("Paraguay");
-        countries.add("Peru");
-        countries.add("Philippines");
-        countries.add("Poland");
-        countries.add("Portugal");
-        countries.add("Qatar");
-        countries.add("Romania");
-        countries.add("Russian Federation");
-        countries.add("Rwanda");
-        countries.add("Saint Vincent & the Grenadines");
-        countries.add("Samoa");
-        countries.add("San Marino");
-        countries.add("Sao Tome & Principe");
-        countries.add("Saudi Arabia");
-        countries.add("Senegal");
-        countries.add("Serbia");
-        countries.add("Seychelles");
-        countries.add("Sierra Leone");
-        countries.add("Singapore");
-        countries.add("Slovakia");
-        countries.add("Slovenia");
-        countries.add("Solomon Islands");
-        countries.add("Somalia");
-        countries.add("South Africa");
-        countries.add("South Sudan");
-        countries.add("Spain");
-        countries.add("Sri Lanka");
-        countries.add("St Kitts & Nevis");
-        countries.add("St Lucia");
-        countries.add("Sudan");
-        countries.add("Suriname");
-        countries.add("Swaziland");
-        countries.add("Sweden");
-        countries.add("Switzerland");
-        countries.add("Syria");
-        countries.add("Taiwan");
-        countries.add("Tajikistan");
-        countries.add("Tanzania");
-        countries.add("Thailand");
-        countries.add("Togo");
-        countries.add("Tonga");
-        countries.add("Trinidad & Tobago");
-        countries.add("Tunisia");
-        countries.add("Turkey");
-        countries.add("Turkmenistan");
-        countries.add("Tuvalu");
-        countries.add("Uganda");
-        countries.add("Ukraine");
-        countries.add("United Arab Emirates");
-        countries.add("United Kingdom");
-        countries.add("United States");
-        countries.add("Uruguay");
-        countries.add("Uzbekistan");
-        countries.add("Vanuatu");
-        countries.add("Vatican City");
-        countries.add("Venezuela");
-        countries.add("Vietnam");
-        countries.add("Yemen");
-        countries.add("Zambia");
-        countries.add("Zimbabwe");
-        countries.add("");
-        return countries;
-    }
+
+     */
+
 }

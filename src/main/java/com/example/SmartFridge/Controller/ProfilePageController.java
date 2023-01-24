@@ -3,10 +3,15 @@ package com.example.SmartFridge.Controller;
 import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DAO.UserDAO;
 import com.example.SmartFridge.DTO.userDTO;
+import com.example.SmartFridge.Utils.Utils;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
@@ -26,9 +31,7 @@ public class ProfilePageController {
     @FXML
     private Label Email;
     @FXML
-    private TextField Country;
-    @FXML
-    private Label Password;
+    private ComboBox Country;
     @FXML
     private TextField NewPassword;
     @FXML
@@ -36,7 +39,13 @@ public class ProfilePageController {
     @FXML
     private Button changeFieldButton;
     @FXML
-    private Label invalidChangePassword;
+    private Label labeltext;
+    @FXML
+    private Button gohomebutton;
+    @FXML
+    private Button deleteuserbutton;
+    @FXML
+    private Label registrationdate;
 
     public void initialize()
     {
@@ -44,33 +53,61 @@ public class ProfilePageController {
         FirstName.setText(Application.authenticatedUser.getFirstName());
         LastName.setText(Application.authenticatedUser.getLastName());
         Email.setText(Application.authenticatedUser.getEmail());
-        Country.setText(Application.authenticatedUser.getCountry());
+        registrationdate.setText(Application.authenticatedUser.getRegistrationDate().format(Utils.dateFormatter));
+        int index = Utils.getCountryData().indexOf(Application.authenticatedUser.getCountry());
+        Country.setItems(Utils.getCountryData());
+        Country.getSelectionModel().select(index);
+
+
+    }
+    public static void setClick(MouseEvent mouseEvent) {
+        Utils.setClick(mouseEvent);
     }
 
+    public void unsetClick(MouseEvent mouseEvent) {
+        Utils.unsetClick(mouseEvent);
+    }
+    public static void setOver(MouseEvent mouseEvent) {
+        Utils.setOver(mouseEvent);
+    }
+
+    public static void unsetOver(MouseEvent mouseEvent) {
+        Utils.unsetOver(mouseEvent);
+    }
     @FXML
     protected void onChangePasswordButtonClick()
     {
 
         String password;
-        if(NewPassword.getText().isBlank()) password = Application.authenticatedUser.getPassword();
-        else password =  NewPassword.getText();
+        if(NewPassword.getText().isBlank()) {
+            password = Application.authenticatedUser.getPassword();
+        }
+        else {
+            password = NewPassword.getText();
+        }
+        if(FirstName.getText().isBlank()) {
+            FirstName.setText(Application.authenticatedUser.getFirstName());
+        }
+        if(LastName.getText().isBlank()) {
+            LastName.setText(Application.authenticatedUser.getLastName());
+        }
 
             userDTO user_to_modify = new userDTO();
             user_to_modify.setPassword(password);
             user_to_modify.setName(FirstName.getText());
-            user_to_modify.setCountry(Country.getText());
+            user_to_modify.setCountry(Country.getSelectionModel().getSelectedItem().toString());
             user_to_modify.setSurname(LastName.getText());
 
             Application.authenticatedUser.setPassword(password);
             Application.authenticatedUser.setFirstName(FirstName.getText());
-            Application.authenticatedUser.setLastName(Country.getText());
-            Application.authenticatedUser.setCountry(LastName.getText());
+            Application.authenticatedUser.setLastName(LastName.getText());
+            Application.authenticatedUser.setCountry(Country.getSelectionModel().getSelectedItem().toString());
 
             //UserDAO.changePassword(Application.authenticatedUser, NewPassword.getText());
             UserDAO.changeField(Application.authenticatedUser, user_to_modify);
 
-            invalidChangePassword.setText("Fields changed");
-            invalidChangePassword.setStyle(successMessage);
+            labeltext.setText("Fields changed");
+            labeltext.setStyle(successMessage);
     }
 
     @FXML

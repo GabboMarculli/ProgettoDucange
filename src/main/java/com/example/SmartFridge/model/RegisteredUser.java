@@ -10,6 +10,7 @@ public class RegisteredUser extends User{
         List<Review> reviews;
 
         // constructor
+    /*
         public RegisteredUser(String id)
         {
             super.setId(id);
@@ -23,21 +24,8 @@ public class RegisteredUser extends User{
             super.setRegistrationDate(registrationDate);
 
         }
-
-    public RegisteredUser(String id, String username, String password,String email, String name, String surname, String country, LocalDate registrationDate)
-    {
-        super.setId(id);
-        super.setUsername(username);
-        super.setPassword(password);
-        super.setEmail(email);
-        super.setFirstName(name);
-        super.setLastName(surname);
-        super.setCountry(country);
-        super.setRegistrationDate(registrationDate);
-
-    }
-
-        public RegisteredUser(String id, String username,String firstName, String lastName, String country, String email)
+*/
+    public RegisteredUser(String id, String username,String password, String firstName, String lastName, String country, String email,LocalDate regdate)
         {
             super.setId(id);
             super.setUsername(username);
@@ -45,6 +33,8 @@ public class RegisteredUser extends User{
             super.setFirstName(firstName);
             super.setCountry(country);
             super.setEmail(email);
+            super.setPassword(password);
+            super.setRegistrationDate(regdate);
         }
 
     public RegisteredUser(String id, String username) {

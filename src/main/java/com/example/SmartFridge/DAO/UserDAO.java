@@ -19,6 +19,7 @@ import org.bson.types.ObjectId;
 import org.neo4j.driver.*;
 import org.neo4j.driver.Record;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -272,7 +273,8 @@ LIMIT 4
                 resultDoc.getString("name"),
                 resultDoc.getString("surname"),
                 resultDoc.getString("email"),
-                resultDoc.getString("password")
+                resultDoc.getString("password"),
+                resultDoc.getString("registrationdate"),
         };
         return return_fields;
     }
@@ -317,18 +319,16 @@ LIMIT 4
     private static String add_user_to_mongoDB(User user) throws MongoException{
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
 
-        String text = user.getRegistrationDate().getDayOfMonth() + "/" +
-                user.getRegistrationDate().getMonthValue() + "/" +
-                user.getRegistrationDate().getYear();
+        LocalDate date = LocalDate.now();
 
         //insert the user in the collection
         Document doc = new Document("username",user.getUsername())
                 .append("password", user.getPassword())
-                .append("firstName", user.getFirstName())
-                .append("lastName", user.getLastName())
+                .append("name", user.getFirstName())
+                .append("surname", user.getLastName())
                 .append("email", user.getEmail())
                 .append("country",user.getCountry())
-                .append("registrationdate", text);
+                .append("registrationdate",date.format(Utils.dateFormatter));
         collection.insertOne(doc);
         System.out.println("User correctly added in Mongodb");
         return doc.get("_id").toString();

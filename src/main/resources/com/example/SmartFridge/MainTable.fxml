@@ -8,7 +8,7 @@
    <children>
       <TabPane fx:id="tabPane" layoutX="247.0" layoutY="65.0" prefHeight="635.0" prefWidth="1000.0" stylesheets="@css/tab.css" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="65.0">
         <tabs>
-          <Tab closable="false" style="-fx--cursor:HAND" text="Ingredients">
+          <Tab closable="false" style="-fx--cursor: HAND;" text="Ingredients">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="586.0" prefWidth="1000.0" />
                 <fx:include fx:id="ProductTab" source="AllIngredient.fxml" />
