@@ -38,11 +38,13 @@ public class AllRecipesController {
     @FXML
     private Button ShowMoreRecipe;
     @FXML
-    private Button show_recipe_of_followed_user;
+    private  Button show_recipe_of_followed_user;
     @FXML
-    private Button show_suggested_recipe;
+    private  Button show_suggested_recipe;
     @FXML
-    private Button showMyRecipe;
+    private  Button showMyRecipe;
+
+    public static String utente = null;
 
     private ObservableList<RecipeDTO> data = FXCollections.observableArrayList();
 
@@ -52,6 +54,7 @@ public class AllRecipesController {
     @FXML
     private void goToHome()
     {
+        utente = null;
         try {
             if(Application.authenticatedUser.getUsername().equals("admin"))
                 Application.changeScene("HomePageAdmin");
@@ -74,6 +77,8 @@ public class AllRecipesController {
         );
 
         AllRecipesTable.setItems(data);
+
+
 
         AllRecipesTable.setRowFactory( tv -> {
             TableRow<RecipeDTO> row = new TableRow<>();
@@ -133,10 +138,12 @@ public class AllRecipesController {
     int called_times = 0;
     public void FillTable()
     {
+
         ShowMoreRecipe.setDisable(false);
         int limit_views_recipe = 20;
-        List<RecipeDTO> recipes = RecipeDao.getRecipe(limit_views_recipe,called_times);
-        System.out.println(recipes.toString());
+        List<RecipeDTO> recipes = RecipeDao.getRecipe(limit_views_recipe,called_times,utente);
+
+
         for(RecipeDTO us : recipes) {
             data.add(us);
         }
@@ -156,6 +163,7 @@ public class AllRecipesController {
     @FXML
     private void modifyRecipe(RecipeDTO rowData)
     {
+        utente = null;
         try {
             rowData = RecipeDao.getSingleRecipe(rowData);
             ModifyRecipeController.Recipe = rowData;
@@ -169,6 +177,7 @@ public class AllRecipesController {
     @FXML
     private void viewRecipe(RecipeDTO rowData)
     {
+
         try {
             rowData = RecipeDao.getSingleRecipe(rowData);
             ViewRecipeController.Recipe = rowData;
@@ -198,6 +207,7 @@ public class AllRecipesController {
     }
 
     public void show_recipe_of_followed_user(ActionEvent actionEvent) {
+        utente = null;
         ShowMoreRecipe.setDisable(true);
         List<RecipeDTO> searched_recipe = RecipeDao.recipe_of_followed_user();
         if(searched_recipe != null)
@@ -213,6 +223,7 @@ public class AllRecipesController {
     //will retrive the product that she has in their fridge and the system will
     // suggest the recipe that has the same ingredient
     public void show_suggested_recipe(ActionEvent actionEvent) {
+        utente = null;
         if(Application.authenticatedUser.getUsername().equals("admin"))
 
             return;
@@ -243,6 +254,7 @@ public class AllRecipesController {
     }
 
     public void showMyRecipe(ActionEvent actionEvent) {
+        utente = null;
         ShowMoreRecipe.setDisable(true);
         data.clear();
         int limit_views_recipe = 20;
@@ -253,4 +265,6 @@ public class AllRecipesController {
         AllRecipesTable.setItems(data);
         called_times++;
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.example.SmartFridge.Controller;
 
 import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DAO.UserDAO;
+import com.example.SmartFridge.DTO.RecipeDTO;
 import com.example.SmartFridge.DTO.userDTO;
 import com.example.SmartFridge.model.RegisteredUser;
 import javafx.collections.FXCollections;
@@ -112,7 +113,28 @@ public class AllUsersController {
 
         FollowButtonColumn.setCellFactory(cellFactory);
         UserTable.setItems(data);
+
+
+        UserTable.setRowFactory( tv -> {
+            TableRow<userDTO> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    userDTO userDTO = row.getItem();
+                    viewRecipesOfTheUser(userDTO);
+                }
+            });
+            return row ;
+        });
         fillTable();
+    }
+
+    private void viewRecipesOfTheUser(userDTO userDTO) {
+        try {
+            AllRecipesController.utente = userDTO.getUsername();
+            Application.changeScene("AllRecipes");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void show_suggested_user(ActionEvent actionEvent) {
@@ -219,6 +241,7 @@ public class AllUsersController {
             throw new RuntimeException(e);
         }
     }
+
 }
 
 

@@ -323,7 +323,7 @@ public class RecipeDao {
         return null;
     }
 */
-    public static ArrayList<RecipeDTO> getRecipe(int limit, int skipped_times) {
+    public static ArrayList<RecipeDTO> getRecipe(int limit, int skipped_times,String utente_username) {
 
         // retrieve user collection
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
@@ -335,7 +335,14 @@ public class RecipeDao {
                 Projections.include("ReviewCount"),
                 Projections.include("TotalTime"));
 
-        try (MongoCursor<Document> cursor = collection.find().skip(skipped_times*limit).limit(limit).projection(projectionFields).iterator()) {
+        MongoCursor<Document> cursor = null;
+
+        if(utente_username != null)
+            cursor = collection.find(eq("Author", utente_username)).skip(skipped_times*limit).limit(limit).projection(projectionFields).iterator();
+        else
+            cursor = collection.find().skip(skipped_times*limit).limit(limit).projection(projectionFields).iterator();
+
+        try {
             while (cursor.hasNext()) {
                 Document f = cursor.next();
                 /*
@@ -351,8 +358,10 @@ public class RecipeDao {
                         )
                 );
             }
+            cursor.close();
             return recipes_to_return;
         } catch (Exception e) {
+            cursor.close();
             throw new RuntimeException(e);
         }
     }
