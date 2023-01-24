@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 
 import static com.mongodb.client.model.Filters.*;
+import static com.mongodb.client.model.Sorts.ascending;
+import static com.mongodb.client.model.Sorts.descending;
 
 public class IngredientInTheFridgeDAO {
 
@@ -48,6 +50,14 @@ public class IngredientInTheFridgeDAO {
             System.out.println( error );
             return null;
         }
+    }
+
+    public static Integer getMaxCalories(){
+        MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
+        ArrayList<Document> results = new ArrayList<>();
+        collection.find().sort(descending("calories")).into(results);
+        System.out.println(results.get(0));
+        return results.get(0).getInteger("calories");
     }
 
     //function to get a LocalDate type from a String. I'll do the cascade of try-catch cause the format of the date may vary

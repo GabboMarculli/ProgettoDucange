@@ -9,7 +9,7 @@
     <children>
         <Pane prefHeight="200.0" style="-fx-background-color: #00bfff;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label layoutX="350.0" layoutY="70.0" text="Handle ingredient" textFill="WHITE">
+                <Label layoutX="177.0" layoutY="64.0" text="Handle ingredient" textFill="WHITE">
                     <font>
                         <Font size="50.0" />
                     </font>

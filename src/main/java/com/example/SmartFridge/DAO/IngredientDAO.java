@@ -20,7 +20,7 @@ import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
 
 public class IngredientDAO {
-    public static ArrayList<IngredientDTO> search_ingredient(String food)
+    public static ArrayList<IngredientDTO> search_ingredient(String food,String calories)
     {
         MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
         ArrayList<IngredientDTO> ingredients_to_return = new ArrayList<>();
@@ -29,7 +29,8 @@ public class IngredientDAO {
             while (cursor.hasNext()) {
                 String text = cursor.next().toJson(); //i get a json
                 obj = new JSONObject(text);
-                ingredients_to_return.add(
+                if(Float.parseFloat(obj.getString("calories")) < Integer.parseInt(calories))
+                    ingredients_to_return.add(
                         new IngredientDTO(
                                 obj.getString("food"),
                                 obj.getString("measure"),
@@ -40,8 +41,7 @@ public class IngredientDAO {
                                 obj.getString("fiber"),
                                 obj.getString("carbs"),
                                 obj.getString("category")
-                        )
-                );
+                        ));
             }
             return ingredients_to_return;
         } catch (JSONException e) {
@@ -53,7 +53,7 @@ public class IngredientDAO {
     {
         MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
         try {
-            System.out.println(search_ingredient(food));
+            //System.out.println(search_ingredient(food),calories.get);
             Document obj = collection.find(eq("food", food)).first();
             IngredientDTO result = new IngredientDTO(obj.getString("food"),
                     obj.getString("measure"),

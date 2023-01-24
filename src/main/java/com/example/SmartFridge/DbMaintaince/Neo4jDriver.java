@@ -25,9 +25,9 @@ public class Neo4jDriver {
         }
     }
 
-    //DA IMPLEMENTARE
     public static void close(){
         driver.close();
+        System.out.println("Closing Neo4j");
     }
 
 
