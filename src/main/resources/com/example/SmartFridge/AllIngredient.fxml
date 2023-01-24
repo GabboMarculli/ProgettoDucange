@@ -19,6 +19,7 @@
                         <Font name="System Italic" size="16.0" />
                      </font>
                   </Text>
+                  <Button fx:id="Submit_in_fridge" layoutX="379.0" layoutY="449.0" mnemonicParsing="false" onAction="#onNextClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Add" />
                </children></Pane>
                 <GridPane fx:id="Right" alignment="CENTER" layoutX="53.0" layoutY="35.0" prefHeight="470.0" prefWidth="405.0" AnchorPane.leftAnchor="53.0" AnchorPane.rightAnchor="143.0">
                 <columnConstraints>
@@ -75,7 +76,6 @@
                         <Font size="14.0" />
                     </font>
                 </Text>
-            <Button fx:id="Submit_in_fridge" layoutX="337.0" layoutY="509.0" mnemonicParsing="false" onAction="#onNextClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Add" />
             <Slider fx:id="slider" layoutX="43.0" layoutY="20.0" max="1000.0" prefHeight="14.0" prefWidth="318.0" value="1000.0" />
             <Text layoutX="157.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Max Calories:" />
             <Text fx:id="calories" layoutX="240.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1000" />
