@@ -76,10 +76,12 @@ public class IngredientDAO {
         MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
 
         ArrayList<IngredientDTO> ingredients_to_return = new ArrayList<>();
+
         System.out.println("SKIPPED TIME VALORE:" + skipped_times);
         if(skipped_times == 6){
             System.out.println("analyze moment");
         }
+
         JSONObject obj;
         try (MongoCursor<Document> cursor = collection.find().skip(limit*skipped_times).limit(limit).projection(Projections.excludeId()).iterator()) {
             while (cursor.hasNext()) {
@@ -180,7 +182,6 @@ public class IngredientDAO {
             System.err.println("Ingredient: Unable to update due to an error: " + me);
             return false;
         }
-
     }
 }
 

@@ -1,16 +1,16 @@
 package com.example.SmartFridge.DAO;
+import com.example.SmartFridge.DTO.AggregationTransportDTO;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.mongodb.MongoException;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Aggregates;
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
-import java.security.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static com.mongodb.client.model.Accumulators.avg;
@@ -24,118 +24,139 @@ import static java.util.Collections.sort;
 
 
 public class aggregationsMongo {
-    public List<Document> top10votedrecipe(){
+    public static ArrayList<AggregationTransportDTO> top10votedrecipe(){
+
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
-        List<Bson> query = new ArrayList<>();
-
-        query.add(unwind("$reviews"));
-        query.add(group("$RecipeName", avg("reviews.Rate", "$avg")));
-        query.add(Sorts.descending("count"));
-        query.add(project(fields(excludeId(), include("RecipeID"), include("avg"), include("$id.RecipeName"))));
-        query.add(limit(10));
-
-        List<Document> results = null;
-        try{
-            results = collection.aggregate(query).into(new ArrayList<>());
-        } catch (MongoException ex){
-            System.out.println(ex);
+        ArrayList<Document> output = null;
+        try {
+             output = collection.aggregate(Arrays.asList(
+                    new Document("$unwind", "$reviews"),
+                    new Document("$group", new Document("_id", new Document("recipeName", "$RecipeName"))
+                            .append("avarageRate", new Document("$avg", "$reviews.Rate"))),
+                    new Document("$sort", new Document("avarageRate", -1)),
+                    new Document("$limit", 10),
+                    new Document("$project", new Document("_id", 0)
+                            .append("recipeName", "$_id.recipeName")
+                            .append("avarageRate", 1))
+            )).into(new ArrayList<>());
+             //.get(0).get("_id").getString("recipeName") -> usare questa per prendere le recipeName
         }
-        return results;
-    }
-
-    public List<Document> userMostCommented(){
-        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-        List<Bson> query = new ArrayList<>();
-
-        query.add(unwind("$reviews"));
-        query.add(group("Reviews.profileID", sum("count",1)));
-        query.add(Sorts.descending("count"));
-        query.add(project(fields(excludeId(), include("id"), include("count"), include("$id.profile"))));
-        query.add(limit(10));
-
-        List<Document> results = null;
-        try{
-            results = collection.aggregate(query).into(new ArrayList<>());
-        } catch (MongoException ex){
-            System.out.println(ex);
+        // avarageRate | recipeName
+        catch (Exception e){
+            System.out.println(e);
         }
 
-        return results;
+        ArrayList<AggregationTransportDTO> aggregation_array = new ArrayList<>();
+        for(Document d: output){
+            aggregation_array.add(new AggregationTransportDTO(
+                    d.getString("recipeName"),
+                    null,
+                    d.getDouble("avarageRate")
+            ));
+        }
+        return aggregation_array;
     }
 
-    public static List<Document> top10Ingredients(){
+    public static ArrayList<AggregationTransportDTO> userMostCommented(){
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
-        List<Bson> query = new ArrayList<>();
 
-        query.add(unwind("$IngredientList"));
-        query.add(group("$IngredientList", sum("count",1)));
-        query.add(Sorts.descending("count"));
-        query.add(project(fields(excludeId(), include("RecipeID"), include("count"), include("$id.ingredient"))));
-        query.add(limit(10));
-
-        List<Document> results = null;
-        try{
-            results = collection.aggregate(query).into(new ArrayList<>());
-        } catch (MongoException ex){
-            System.out.println(ex);
+        ArrayList<Document> output = null;
+        try {
+            output = collection.aggregate(Arrays.asList(
+                    new Document("$unwind", "$reviews"),
+                    new Document("$group", new Document("_id", new Document("Username", "$reviews.profileID"))
+                            .append("totalComments", new Document("$count", new Document()))),
+                    new Document("$sort", new Document("totalComments", -1)),
+                    new Document("$limit", 10),
+                    new Document("$project", new Document("_id", 0)
+                            .append("Username", "$_id.Username")
+                            .append("totalComments", 1))
+            )).into(new ArrayList<>());
+            //.get(0).get("_id").getString("Username") -> usare questa per prendere le recipeName
+        }
+        // totalComments | Username
+        catch (Exception e){
+            System.out.println(e);
         }
 
-        return results;
+        ArrayList<AggregationTransportDTO> aggregation_array = new ArrayList<>();
+        for(Document d: output){
+            aggregation_array.add(new AggregationTransportDTO(
+                    d.getString("Username"),
+                    null,
+                    Double.valueOf(d.getInteger("totalComments"))
+            ));
+        }
+        return aggregation_array;
+
     }
 
-    public List<Document> ingredientsByCountry()
+    public static ArrayList<AggregationTransportDTO> top10Ingredients() {
+
+        MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
+        ArrayList<Document> output = null;
+        try {
+            output = collection.aggregate(Arrays.asList(
+                    new Document("$unwind", "$IngredientsList"),
+                    new Document("$group", new Document("_id", new Document("ingredient", "$IngredientsList"))
+                            .append("timeUsed", new Document("$count", new Document()))),
+                    new Document("$sort", new Document("timeUsed", -1)),
+                    new Document("$limit", 10),
+                    new Document("$project", new Document("_id", 0)
+                            .append("timeUsed", 1)
+                            .append("Ingredient", "$_id.ingredient"))
+            )).into(new ArrayList<>());
+            //.get(0).get("_id").getString("Username") -> usare questa per prendere le recipeName
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        // timeUsed | Ingredient
+        ArrayList<AggregationTransportDTO> aggregation_array = new ArrayList<>();
+        for(Document d: output){
+            aggregation_array.add(new AggregationTransportDTO(
+                    d.getString("Ingredient"),
+                    null,
+                    Double.valueOf(d.getInteger("timeUsed"))
+            ));
+        }
+        return aggregation_array;
+    }
+
+    public static ArrayList<AggregationTransportDTO> ingredientsByCountry()
     {
+
         MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-        List<Bson> query = new ArrayList<>();
-
-        query.add(unwind("$fridge"));
-        query.add(group("$fridge.name"  , sum("$fridge.quantity",1)));
-        query.add(group("$id.country"));
-        query.add(Sorts.descending("sum"));
-        query.add(project(fields(excludeId(), include("RecipeID"), include("ingredient"), include("$id.country"), include("sum"))));
-
-        List<Document> results = null;
-        try{
-            results = collection.aggregate(query).into(new ArrayList<>());
-        } catch (MongoException ex){
-            System.out.println(ex);
+        ArrayList<Document> output=null;
+        try {
+            output = collection.aggregate(Arrays.asList(
+                    new Document("$unwind", "$fridge"),
+                    new Document("$group", new Document("_id", new Document("country", "$country").append("ingredient","$fridge.name"))
+                            .append("quantityInsertedInThefridge", new Document("$sum", "$fridge.quantity"))),
+                    new Document("$sort", new Document("quantityInsertedInThefridge", 1)),
+                    new Document("$group", new Document("_id", new Document("country", "$_id.country"))
+                            .append("ingredient", new Document("$last", "$_id.ingredient"))
+                            .append("quantityInsertedInThefridge", new Document("$last", "$quantityInsertedInThefridge"))),
+                    new Document("$project", new Document("_id", 0)
+                            .append("ingredient", 1)
+                            .append("country", "$_id.country")
+                            .append("quantityInsertedInThefridge", 1))
+            )).into(new ArrayList<>());
+            //.get(0).get("_id").getString("Username") -> usare questa per prendere le recipeName
         }
 
-        return results;
-    }
-
-    // ritorna username e numero di prodotti scaduti nel suo frigo
-    public List<Document> expireProductByUser()
-    {
-        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-        List<Bson> query = new ArrayList<>();
-
-        query.add(unwind("$fridge"));
-        query.add(group("$fridge.name"  , sum("$fridge.quantity",1)));
-
-        // date di scadenza <= timestamp corrente
-        query.add(Aggregates.match(and(Filters.lte("$fridge.expiringDate", System.currentTimeMillis()))));
-
-        /*
-        // se expiringDate = 20/1/2023, per esempio, controlla se 20/1/2023 >= oggi + 1 giorno
-        // quindi se 20/1/2023 >= 19/1/2023 + 1 cioè 20/1 >= 20/1. La risposta è si, quindi il prodotto sta per scadere
-        // e infatti se oggi è il 19 e scade il 20, significa che sta per scadere
-
-        query.add(Aggregates.match(and(Filters.gte("$fridge.expiringDate", System.currentTimeMillis() + 86400000))));
-         */
-        query.add(group("$id"));
-        query.add(Sorts.descending("sum"));
-        query.add(project(fields(excludeId(), include("$username"), include("sum"))));
-
-        List<Document> results = null;
-        try{
-            results = collection.aggregate(query).into(new ArrayList<>());
-        } catch (MongoException ex){
-            System.out.println(ex);
+        // ingredient | country | quantityInsertedInThefridge
+        catch (Exception e){
+            System.out.println(e);
         }
 
-        return results;
+        ArrayList<AggregationTransportDTO> aggregation_array = new ArrayList<>();
+        for(Document d: output){
+            aggregation_array.add(new AggregationTransportDTO(
+                    d.getString("ingredient"),
+                    d.getString("country"),
+                    Double.valueOf(d.getInteger("quantityInsertedInThefridge"))
+            ));
+        }
+        return aggregation_array;
     }
-
-
 }

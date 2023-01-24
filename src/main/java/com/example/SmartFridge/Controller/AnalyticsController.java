@@ -3,6 +3,7 @@ package com.example.SmartFridge.Controller;
 import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DAO.IngredientDAO;
 import com.example.SmartFridge.DAO.aggregationsMongo;
+import com.example.SmartFridge.DTO.AggregationTransportDTO;
 import com.example.SmartFridge.DTO.IngredientDTO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,27 +37,12 @@ public class AnalyticsController {
     }
 
     public void show_most_10_ingredients() throws JSONException {
-        List<Document> result = aggregationsMongo.top10Ingredients();
+        ArrayList<AggregationTransportDTO> result = aggregationsMongo.top10Ingredients();
         //System.out.println(result);
         ArrayList<IngredientDTO> ingredientList = new ArrayList<>();
 
-        JSONObject obj;
-        while(result.iterator().hasNext()){
-            String text = result.iterator().next().toJson(); //i get a json
-            obj = new JSONObject(text);
-            ingredientList.add(
-                    new IngredientDTO(
-                            obj.getString("food"),
-                            obj.getString("measure"),
-                            obj.getString("grams"),
-                            obj.getString("calories"),
-                            obj.getString("protein"),
-                            obj.getString("fat"),
-                            obj.getString("fiber"),
-                            obj.getString("carbs"),
-                            obj.getString("category")
-                    )
-            );
+        for(AggregationTransportDTO  r : result){
+           //completare
         }
 
         data.addAll(ingredientList);

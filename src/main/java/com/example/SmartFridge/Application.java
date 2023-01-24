@@ -1,5 +1,6 @@
 package com.example.SmartFridge;
 
+import com.example.SmartFridge.DAO.aggregationsMongo;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
 import com.example.SmartFridge.model.RegisteredUser;
@@ -25,7 +26,7 @@ public class Application extends javafx.application.Application {
 
         mongodb = MongoDbDriver.getInstance();
         neo4j = Neo4jDriver.getInstance();
-        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("HomePageAdmin.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("LoginPage.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000 , 700);
         stage.setTitle("Login or Sign up");
         stage.setScene(scene);
@@ -35,6 +36,11 @@ public class Application extends javafx.application.Application {
         setPrimaryStage(stage);
         setPrimaryScene(scene);
         stage.setOnCloseRequest(windowEvent -> {closing();});
+
+        aggregationsMongo.top10votedrecipe();
+        aggregationsMongo.userMostCommented();
+        aggregationsMongo.top10Ingredients();
+        aggregationsMongo.ingredientsByCountry();
     }
 
     private void closing(){
