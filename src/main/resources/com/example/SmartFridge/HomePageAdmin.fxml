@@ -51,12 +51,10 @@
                 <Button fx:id="Users" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToUsers"
                         prefHeight="100.0" prefWidth="170.0"  text="Delete users" GridPane.columnIndex="2">
                 </Button>
-                <!--
-                <Button fx:id="Analytics"  contentDisplay="TOP" mnemonicParsing="false"
+                <Button fx:id="Analytics"  contentDisplay="TOP" mnemonicParsing="false" onAction="#goToAnalytics"
                         prefHeight="100.0" prefWidth="170.0"  text="View analytics" GridPane.columnIndex="1"
                         GridPane.rowIndex="1">
                 </Button>
-                -->
             </children>
         </GridPane>
     </children>
