@@ -135,11 +135,11 @@ public class LoginController {
                 try {
                     String[] credentials = UserDAO.getUser(loginUsernameTextField.getText());
 
-                    int id = Integer.parseInt(credentials[0]);
+                    //int id = Integer.parseInt(credentials[0]);
                     String username = credentials[1];
 
                     if (username.equals("admin")) {
-                        Application.authenticatedUser = new RegisteredUser(id, username);
+                        Application.authenticatedUser = new RegisteredUser(credentials[0], username);
                         goToAdminPage();
 
                     } else {
@@ -148,7 +148,7 @@ public class LoginController {
                         String lastName = credentials[4];
                         String email = credentials[5];
 
-                        Application.authenticatedUser = new RegisteredUser(id, username, firstName, lastName, country, email);
+                        Application.authenticatedUser = new RegisteredUser(credentials[0], username, firstName, lastName, country, email);
                         goToHomePage();
 
                     }
