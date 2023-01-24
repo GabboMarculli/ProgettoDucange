@@ -9,13 +9,19 @@
     <children>
       <Pane layoutX="737.0" layoutY="93.0" prefHeight="364.0" prefWidth="200.0" style="-fx-background-color: #5fd6e8;">
          <children>
-                <Button fx:id="gohomebutton" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onGoToHomeClick" prefHeight="61.0" prefWidth="180.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 15; -fx-cursor: HAND; -fx-font-weight: bold;" text="Go to home">
-                </Button>
+                <Button fx:id="gohomebutton" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onGoToHomeClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="61.0" prefWidth="180.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: HAND;" text="Go to home">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
 
-                <Button fx:id="changeFieldButton" layoutX="10.0" layoutY="137.0" mnemonicParsing="false" onAction="#onChangePasswordButtonClick" prefHeight="61.0" prefWidth="180.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 15; -fx-cursor: HAND; -fx-font-weight: bold;" text="Change fields">
-                </Button>
-                <Button fx:id="deleteuserbutton" layoutX="10.0" layoutY="245.0" mnemonicParsing="false" onAction="#onDeleteUserClick" prefHeight="61.0" prefWidth="180.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-background-radius: 10; -fx-font-size: 15; -fx-cursor: HAND; -fx-font-weight: bold;" text="DeleteUser">
-                </Button>
+                <Button fx:id="changeFieldButton" layoutX="10.0" layoutY="137.0" mnemonicParsing="false" onAction="#onChangePasswordButtonClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="61.0" prefWidth="180.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: HAND;" text="Change fields">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
+                <Button fx:id="deleteuserbutton" layoutX="10.0" layoutY="245.0" mnemonicParsing="false" onAction="#onDeleteUserClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="61.0" prefWidth="180.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: HAND;" text="DeleteUser">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font></Button>
          </children>
       </Pane>
       <Pane layoutX="29.0" layoutY="68.0" opacity="0.85" prefHeight="489.0" prefWidth="644.0" style="-fx-background-color: #5fb4e8;">

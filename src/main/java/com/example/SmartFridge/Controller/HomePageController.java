@@ -3,8 +3,10 @@ package com.example.SmartFridge.Controller;
 import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
+import com.example.SmartFridge.Utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,6 +22,20 @@ public class HomePageController {
     protected void logout() throws IOException {
         Application.authenticatedUser = null;
         goToLogin();
+    }
+    public void setClick(MouseEvent mouseEvent) {
+        Utils.setClick(mouseEvent);
+    }
+
+    public void unsetClick(MouseEvent mouseEvent) {
+        Utils.unsetClick(mouseEvent);
+    }
+    public void setOver(MouseEvent mouseEvent) {
+        Utils.setOver(mouseEvent);
+    }
+
+    public void unsetOver(MouseEvent mouseEvent) {
+        Utils.unsetOver(mouseEvent);
     }
     @FXML
     protected void leave() throws  IOException{

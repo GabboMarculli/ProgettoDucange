@@ -60,18 +60,18 @@ public class ProfilePageController {
 
 
     }
-    public static void setClick(MouseEvent mouseEvent) {
+    public void setClick(MouseEvent mouseEvent) {
         Utils.setClick(mouseEvent);
     }
 
     public void unsetClick(MouseEvent mouseEvent) {
         Utils.unsetClick(mouseEvent);
     }
-    public static void setOver(MouseEvent mouseEvent) {
+    public void setOver(MouseEvent mouseEvent) {
         Utils.setOver(mouseEvent);
     }
 
-    public static void unsetOver(MouseEvent mouseEvent) {
+    public void unsetOver(MouseEvent mouseEvent) {
         Utils.unsetOver(mouseEvent);
     }
     @FXML

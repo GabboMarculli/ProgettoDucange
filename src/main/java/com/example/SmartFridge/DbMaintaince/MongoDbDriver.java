@@ -49,7 +49,7 @@ public class MongoDbDriver {
          */
 
         try{
-             mongoclient = MongoClients.create(uri);
+            mongoclient = MongoClients.create(uri);
             database = mongoclient.getDatabase("Progetto");
             Bson command = new BsonDocument("ping", new BsonInt64(1));
             Document commandResult = database.runCommand(command);
@@ -109,6 +109,7 @@ public class MongoDbDriver {
     public static void close() {
         if(mongoclient!= null){
             mongoclient.close();
+            mongoclient = null;
         }
 
         System.out.println("Mongo Connection closed");
