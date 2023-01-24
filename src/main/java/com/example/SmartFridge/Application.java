@@ -60,9 +60,6 @@ public class Application extends javafx.application.Application {
         Application.primaryScene = primaryScene;
     }
     public static void
-
-
-
     setMousePointer(){
         Application.primaryScene.setCursor(Cursor.HAND);
     }

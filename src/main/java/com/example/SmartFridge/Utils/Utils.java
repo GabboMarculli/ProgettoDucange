@@ -305,7 +305,6 @@ public class Utils {
         countries.add("Yemen");
         countries.add("Zambia");
         countries.add("Zimbabwe");
-        countries.add("");
         return countries;
     }
 
