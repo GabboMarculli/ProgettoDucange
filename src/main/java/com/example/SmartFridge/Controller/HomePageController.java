@@ -7,16 +7,23 @@ import com.example.SmartFridge.Utils.Utils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static java.lang.Thread.sleep;
+
 public class HomePageController {
     @FXML
     private Label Username;
-    public void initialize() {
-        //Username.setText(Application.authenticatedUser.getUsername());
+    @FXML
+    private static int tabnumber;
+    @FXML
+    private static TabPane tabPane;
+    public void initialize() throws InterruptedException {
+
     }
 
     @FXML
@@ -37,6 +44,9 @@ public class HomePageController {
 
     public void unsetOver(MouseEvent mouseEvent) {
         Utils.unsetOver(mouseEvent);
+    }
+    public static void changeTab(int i) throws InterruptedException {
+        tabnumber = i;
     }
     @FXML
     protected void leave() throws  IOException{

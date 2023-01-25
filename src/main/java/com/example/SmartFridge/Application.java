@@ -1,5 +1,6 @@
 package com.example.SmartFridge;
 
+import com.example.SmartFridge.Controller.HomePageController;
 import com.example.SmartFridge.DAO.aggregationsMongo;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
@@ -12,6 +13,9 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 import java.io.IOException;
+import java.time.Duration;
+
+import static java.lang.Thread.sleep;
 
 public class Application extends javafx.application.Application {
     MongoDbDriver mongodb;
@@ -55,6 +59,12 @@ public class Application extends javafx.application.Application {
     public static void changeScene(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource(fxml + ".fxml"));
         primaryScene.setRoot(fxmlLoader.load());
+    }
+
+    public static void changeTab(int i) throws IOException, InterruptedException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Application.class.getResource("MainTable.fxml"));
+        primaryScene.setRoot(fxmlLoader.load());
+
     }
 
     public Stage getPrimaryStage() {

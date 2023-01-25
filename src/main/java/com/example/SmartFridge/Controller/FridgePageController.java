@@ -36,6 +36,7 @@ public class FridgePageController {
     private ObservableList<IngredientInFridge> data = FXCollections.observableArrayList();
     private boolean prova = true;
 
+
     @FXML
     private void goToHome() {
         try {

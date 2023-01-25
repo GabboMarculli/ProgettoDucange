@@ -102,6 +102,7 @@ public class AllIngredientsController {
         ProductNameColumn.setCellValueFactory(
                 new PropertyValueFactory<IngredientDTO,String>("food")
         );
+        AllProductsTable.sort();
         QuantityInMyFridge.setCellValueFactory(
                 new PropertyValueFactory<IngredientDTO,String>("calories")
         );
