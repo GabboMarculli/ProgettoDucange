@@ -10,4 +10,16 @@ public class AggregationTransportDTO {
         this.field2 = field2;
         this.field3 = field3;
     }
+
+    public String getField1() {
+        return field1;
+    }
+
+    public String getField2() {
+        return field2;
+    }
+
+    public Double getField3() {
+        return field3;
+    }
 }

@@ -10,12 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
-
 import java.io.IOException;
-import java.time.Duration;
-
-import static java.lang.Thread.sleep;
 
 public class Application extends javafx.application.Application {
     MongoDbDriver mongodb;
@@ -41,10 +36,6 @@ public class Application extends javafx.application.Application {
         setPrimaryScene(scene);
         stage.setOnCloseRequest(windowEvent -> {closing();});
 
-        aggregationsMongo.top10votedrecipe();
-        aggregationsMongo.userMostCommented();
-        aggregationsMongo.top10Ingredients();
-        aggregationsMongo.ingredientsByCountry();
     }
 
     private void closing(){

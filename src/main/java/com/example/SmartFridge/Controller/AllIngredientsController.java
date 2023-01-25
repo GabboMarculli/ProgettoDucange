@@ -319,44 +319,6 @@ public void printAddToFridge(String label, String _id, Integer row_index)
             printAddToFridge("Insert quantity end expiring date below and press ADD:","instruction",9);
             printAddToFridge("Quantity: ", "Quantity", 10);
             printAddToFridge("Expire_date: ", "Expire_date", 11);
-
-            //final Button Submit_in_fridge = new Button("Add");
-
-            //GridPane.setRowIndex(Submit_in_fridge, 12);
-            //Right.getChildren().add(Submit_in_fridge);
-/*
-            Submit_in_fridge.setOnAction(event -> {
-                if (checkAddToFridge()) {
-
-                    /*
-                    String date = Expire_date.getText();
-                    DateTimeFormatter pattern =
-                            DateTimeFormatter.ofPattern("dd-MM-yyyy");
-                    LocalDate formattedDate;
-                    try{
-                        formattedDate = LocalDate.parse(date, pattern);
-                    }catch (Exception e){
-                        Submit_in_fridge.setText("Retry");
-                        Submit_in_fridge.setStyle("-fx-text-fill: RED;");
-                        Expire_date.setStyle("-fx-border-color: RED; -fx-border-width: 2; -fx-border-radius: 5;");
-                        return;
-                    }
-
-                    LocalDate formattedDate = Expire_date.getValue();
-
-                    IngredientInTheFridgeDTO p = new IngredientInTheFridgeDTO(rowData.getFood(), Integer.parseInt(Quantity.getText()), formattedDate);
-                    if(IngredientInTheFridgeDAO.add_product(p)){
-                        Submit_in_fridge.setText("Added");
-                        Submit_in_fridge.setStyle("-fx-text-fill: GREEN;");
-                        Expire_date.setStyle("-fx-border-color: GREEN; -fx-border-width: 2; -fx-border-radius: 5;");
-                        Quantity.setStyle("-fx-border-color: GREEN; -fx-border-width: 2; -fx-border-radius: 5;");
-                    } else {
-                        Submit_in_fridge.setText("Retry");
-                        Submit_in_fridge.setStyle("-fx-text-fill: RED;");
-                    }
-                }
-            });
-        */
         }
 
     }
