@@ -297,15 +297,15 @@ public class AllRecipesController {
         page = 0;
         pagenumber.setText(Integer.toString(page));
         previousButton.setDisable(true);
-        nextButton.setDisable(false);
+        nextButton.setDisable(true);
         data.clear();
         List<RecipeDTO> searched_recipe = RecipeDao.recipe_of_followed_user();
         if(searched_recipe != null)
         {
-
             data.clear();
             data.addAll(searched_recipe);
             AllRecipesTable.setItems(data);
+            AllRecipesTable.getSelectionModel().select(0);
         }
 
     }
@@ -331,11 +331,12 @@ public class AllRecipesController {
             searched_ingredients[i] = list_of_product.get(i).getName();
         }
         ArrayList<RecipeDTO> list_of_recipe = RecipeDao.get_suggested_recipe_by_ingredient(searched_ingredients);
-        if(list_of_recipe != null)
+        if(list_of_recipe!= null)
         {
             data.clear();
             data.addAll(list_of_recipe);
             AllRecipesTable.setItems(data);
+            AllRecipesTable.getSelectionModel().select(0);
         }
         nextButton.setDisable(true);
         previousButton.setDisable(true);

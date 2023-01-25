@@ -83,7 +83,6 @@ public class RecipeDao {
 
             Document doc =
                     new Document("RecipeName", recipe.getName())
-                            .append("RecipeID", recipe.getId())
                             .append("ReviewCount", 0)
                             .append("Author", recipe.getAuthor())
                             .append("PrepareTime", recipe.getPreparationTime())
