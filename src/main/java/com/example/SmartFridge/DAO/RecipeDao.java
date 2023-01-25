@@ -39,14 +39,14 @@ public class RecipeDao {
     public static String addRecipe(RecipeDTO recipe) {
         //save recipe into mongoDB
 
-        if(!add_recipe_MongoDB(recipe)){
+        String result = add_recipe_MongoDB(recipe);
+        if(result.equals("error")){
             return "error";
         }
-
+        recipe.setId((result));
         if(!add_recipe_Neo4J(recipe)){
             return "error";
         }
-
         return "ok";
     }
 
@@ -77,11 +77,12 @@ public class RecipeDao {
         return true;
     }
 
-    private static boolean add_recipe_MongoDB(RecipeDTO recipe){
+    private static String add_recipe_MongoDB(RecipeDTO recipe){
+        Document doc;
         try {
             MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
 
-            Document doc =
+            doc =
                     new Document("RecipeName", recipe.getName())
                             .append("RecipeID", recipe.getId())
                             .append("ReviewCount", 0)
@@ -93,12 +94,13 @@ public class RecipeDao {
                             .append("Directions", recipe.getDirection())
                             .append("IngredientsList", Arrays.asList(recipe.getIngredientsList()));
             collection.insertOne(doc);
+
         } catch (Exception e) {
             System.out.println("error during saving recipe in MongoDB");
-            return false;
+            return "error";
         }
         System.out.println("Recipe saved in MongoDB");
-        return true;
+        return doc.get("_id").toString();
     }
 
     //function to return the index used for creating a new recipe
@@ -347,10 +349,6 @@ public class RecipeDao {
         try {
             while (cursor.hasNext()) {
                 Document f = cursor.next();
-                /*
-                String text = cursor.next().toJson(); //i get a json
-                JSONObject obj = new JSONObject(text);
-                */
                 recipes_to_return.add(
                         new RecipeDTO(
                                 f.getString("RecipeName"),
@@ -411,8 +409,9 @@ public class RecipeDao {
 
         try (MongoCursor<Document> cursor = collection.find(regex("RecipeName", ".*" + Pattern.quote(recipeName) + ".*", "i")).skip(20*skip).limit(20).iterator()) {
             while (cursor.hasNext()) {
-                String id = cursor.next().get("_id").toString();
-                String text = cursor.next().toJson();
+                Document d = cursor.next();
+                String id = d.get("_id").toString();
+                String text = d.toJson();
                 obj = new JSONObject(text);
                 String review = null;
                 try{review = obj.getString("reviews");} //this because some document don't have reviews yet

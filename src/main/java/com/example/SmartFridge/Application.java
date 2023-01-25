@@ -1,11 +1,8 @@
 package com.example.SmartFridge;
 
-import com.example.SmartFridge.Controller.HomePageController;
-import com.example.SmartFridge.DAO.aggregationsMongo;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
 import com.example.SmartFridge.model.RegisteredUser;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
