@@ -86,6 +86,7 @@ public class AllIngredientsController {
     }
     public void initialize()
     {
+        AllProductsTable.setPlaceholder(new Label("No more data."));
         slider.setOnMouseDragged(mouseEvent -> {
             calories.setText(getCaloriesString(slider));
         });
@@ -368,7 +369,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
     {
         pagenumber.setText(Integer.toString(called_times_products));
         String ingredientName = SearchIngredient.getText();
-        if(!ingredientName.equals("")) {
+        //if(!ingredientName.equals("")) {
             try {
                 ArrayList<IngredientDTO> searched_ingredients = IngredientDAO.search_ingredient(ingredientName,calories.getText(),called_times_products);
                 if(searched_ingredients.size()==0)
@@ -386,8 +387,8 @@ public void printAddToFridge(String label, String _id, Integer row_index)
             } catch (Error e){
                 System.out.println(e);
             }
-        }else{
-
+        }//else{
+/*
             int limit_views_product = 20;
             ArrayList<IngredientDTO> ingredientList = IngredientDAO.getListOfIngredient(limit_views_product, called_times_products);
 
@@ -410,6 +411,9 @@ public void printAddToFridge(String label, String _id, Integer row_index)
             viewProductDetail(rowData);
         }
     }
+
+        */
+
 
     @FXML
     private void goToHome()
