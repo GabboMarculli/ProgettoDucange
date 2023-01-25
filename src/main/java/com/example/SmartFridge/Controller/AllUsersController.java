@@ -89,7 +89,7 @@ public class AllUsersController {
                                     userDTO selectedItem = getTableView().getItems().get(getIndex());
                                     UserTable.getItems().remove(selectedItem);
                                     UserDAO.deleteUser(new RegisteredUser(selectedItem));
-                                    btn.setText("Delet");
+                                    btn.setText("Delete");
                                 });
                             } else {
                                 btn = new Button("Follow");
