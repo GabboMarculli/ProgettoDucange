@@ -53,7 +53,7 @@ public class AddIngredientToFridgeController {
             Fat.setText(row.getFat());
             Fiber.setText(row.getFiber());
             Measure.setText(row.getMeasure());
-            Calories.setText(row.getCalories());
+            Calories.setText(Integer.toString(row.getCalories()));
             Category.setText(row.getCategory());
             Protein.setText(row.getCategory());
             Carbs.setText(row.getCarbs());
@@ -64,7 +64,7 @@ public class AddIngredientToFridgeController {
                 row.setFat(Fat.getText());
                 row.setFiber(Fiber.getText());
                 row.setMeasure(Measure.getText());
-                row.setCalories(Calories.getText());
+                row.setCalories(Integer.parseInt(Calories.getText()));
                 row.setCategory(Category.getText());
                 row.setProtein(Protein.getText());
                 row.setCarbs((Carbs.getText()));
@@ -103,7 +103,7 @@ public class AddIngredientToFridgeController {
     {
         if(checkInput())
         {
-            IngredientDTO ingredient = new IngredientDTO(Name.getText(), Measure.getText(), Grams.getText(), Calories.getText(),
+            IngredientDTO ingredient = new IngredientDTO(Name.getText(), Measure.getText(), Grams.getText(), Integer.parseInt(Calories.getText()),
                     Protein.getText(), Fat.getText(), Fiber.getText(), Carbs.getText(), Category.getText());
 
             IngredientDAO.addIngredient(ingredient);

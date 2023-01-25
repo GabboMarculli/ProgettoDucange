@@ -7,8 +7,10 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,28 +22,32 @@ import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
 
 public class IngredientDAO {
-    public static ArrayList<IngredientDTO> search_ingredient(String food,String calories)
+    public static ArrayList<IngredientDTO> search_ingredient(String food,String calories,int skip)
     {
         MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
         ArrayList<IngredientDTO> ingredients_to_return = new ArrayList<>();
         JSONObject obj;
-        try (MongoCursor<Document> cursor = collection.find(regex("food", ".*" + Pattern.quote(food) + ".*", "i")).iterator()) {
+        //try (MongoCursor<Document> cursor = collection.find(Filters.and(regex("food", ".*" + Pattern.quote(food) + ".*", "i"),Filters.lte("calories,",calories))).iterator()) {
+        Bson filter = Filters.and(regex("food", ".*" + Pattern.quote(food) + ".*", "i"), Filters.lte("calories",Integer.parseInt(calories)));
+        try (MongoCursor<Document> cursor = collection.find(filter).skip(20*skip).limit(20).iterator()) {
             while (cursor.hasNext()) {
                 String text = cursor.next().toJson(); //i get a json
                 obj = new JSONObject(text);
-                if(Float.parseFloat(obj.getString("calories")) < Integer.parseInt(calories))
+                //if(Float.parseFloat(obj.getString("calories")) < Integer.parseInt(calories)) {
+                    System.out.println(Float.parseFloat(obj.getString("calories")) + "," + Integer.parseInt(calories.replace(".","")));
                     ingredients_to_return.add(
-                        new IngredientDTO(
-                                obj.getString("food"),
-                                obj.getString("measure"),
-                                obj.getString("grams"),
-                                obj.getString("calories"),
-                                obj.getString("protein"),
-                                obj.getString("fat"),
-                                obj.getString("fiber"),
-                                obj.getString("carbs"),
-                                obj.getString("category")
-                        ));
+                            new IngredientDTO(
+                                    obj.getString("food"),
+                                    obj.getString("measure"),
+                                    obj.getString("grams"),
+                                    Integer.parseInt(obj.getString("calories").replace(".","")),
+                                    obj.getString("protein"),
+                                    obj.getString("fat"),
+                                    obj.getString("fiber"),
+                                    obj.getString("carbs"),
+                                    obj.getString("category")
+                            ));
+                //}
             }
             return ingredients_to_return;
         } catch (JSONException e) {
@@ -58,7 +64,7 @@ public class IngredientDAO {
             IngredientDTO result = new IngredientDTO(obj.getString("food"),
                     obj.getString("measure"),
                     obj.getString("grams"),
-                    obj.getString("calories"),
+                    Integer.parseInt(obj.getString("calories").replace(".","")),
                     obj.getString("protein"),
                     obj.getString("fat"),
                     obj.getString("fiber"),
@@ -71,16 +77,12 @@ public class IngredientDAO {
         }
     }
 
+
     public static ArrayList<IngredientDTO> getListOfIngredient(int limit, int skipped_times){
         // retrieve ingredient collection
         MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
 
         ArrayList<IngredientDTO> ingredients_to_return = new ArrayList<>();
-
-        System.out.println("SKIPPED TIME VALORE:" + skipped_times);
-        if(skipped_times == 6){
-            System.out.println("analyze moment");
-        }
 
         JSONObject obj;
         try (MongoCursor<Document> cursor = collection.find().skip(limit*skipped_times).limit(limit).projection(Projections.excludeId()).iterator()) {
@@ -92,7 +94,7 @@ public class IngredientDAO {
                                 obj.getString("food"),
                                 obj.getString("measure"),
                                 obj.getString("grams"),
-                                obj.getString("calories"),
+                                Integer.parseInt(obj.getString("calories").replace(".","")),
                                 obj.getString("protein"),
                                 obj.getString("fat"),
                                 obj.getString("fiber"),
@@ -183,5 +185,7 @@ public class IngredientDAO {
             return false;
         }
     }
+
+
 }
 

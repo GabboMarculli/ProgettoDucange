@@ -4,14 +4,14 @@ public class IngredientDTO {
     private String food;
     private String measure;
     String grams;
-    String calories;
+    Integer calories;
     String protein;
     String fat;
     String fiber;
     String carbs;
     String category;
 
-    public IngredientDTO(String food, String measure, String grams, String calories, String protein, String fat, String fiber, String carbs, String category) {
+    public IngredientDTO(String food, String measure, String grams, Integer calories, String protein, String fat, String fiber, String carbs, String category) {
         this.food = food;
         this.measure = measure;
         this.grams = grams;
@@ -47,11 +47,11 @@ public class IngredientDTO {
         this.grams = grams;
     }
 
-    public String getCalories() {
+    public Integer getCalories() {
         return calories;
     }
 
-    public void setCalories(String calories) {
+    public void setCalories(Integer calories) {
         this.calories = calories;
     }
 

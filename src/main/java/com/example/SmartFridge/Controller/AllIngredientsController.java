@@ -47,15 +47,32 @@ public class AllIngredientsController {
     public Slider slider;
     @FXML
     public Text calories;
-
+    @FXML
+    public Button previousButton;
+    @FXML
+    public Text pagenumber;
+    @FXML
+    public Button nextButton;
     @FXML
     private void onNextClick(){
-
+        called_times_products++;
+        previousButton.setDisable(false);
+        Search_for_ingredient();
+        pagenumber.setText(Integer.toString(called_times_products));
     }
     @FXML
     private void onPreviousClick(){
-
+        if(called_times_products != 0)
+        {
+            called_times_products--;
+            if(called_times_products == 0) {
+                previousButton.setDisable(true);
+            }
+            pagenumber.setText(Integer.toString(called_times_products));
+            Search_for_ingredient();
+        }
     }
+
     private ObservableList<IngredientDTO> data = FXCollections.observableArrayList();
     public static int getCaloriesInt(Slider slider){
         return (int)slider.getValue();
@@ -63,16 +80,21 @@ public class AllIngredientsController {
     public static String getCaloriesString(Slider slider){
         return Integer.toString((int)slider.getValue());
     }
+    public void startsearch(){
+        called_times_products = 0;
+        Search_for_ingredient();
+    }
     public void initialize()
     {
         slider.setOnMouseDragged(mouseEvent -> {
             calories.setText(getCaloriesString(slider));
-            Search_for_ingredient();
         });
         slider.setOnMouseReleased(mouseEvent -> {
+            called_times_products = 0;
             calories.setText(getCaloriesString(slider));
             Search_for_ingredient();
         });
+
         Integer cal = IngredientInTheFridgeDAO.getMaxCalories();
         slider.setMax(cal);
         calories.setText(cal.toString());
@@ -98,7 +120,7 @@ public class AllIngredientsController {
             return row ;
         });
         fillTable();
-
+        previousButton.setDisable(true);
         Submit_in_fridge.setOnAction(event -> {
             if (checkAddToFridge()) {
                     LocalDate fdate = Expire_date.getValue();
@@ -157,7 +179,7 @@ public class AllIngredientsController {
         if(ingredientList!= null)
         {
             data.addAll(ingredientList);
-            called_times_products++;
+            //called_times_products++;
         }
         AllProductsTable.getSelectionModel().select(0);
         IngredientDTO rowData = AllProductsTable.getSelectionModel().getSelectedItem();
@@ -247,10 +269,14 @@ public void printAddToFridge(String label, String _id, Integer row_index)
 
     public void call_print_product(IngredientDTO rowData,String use)
     {
+        if(rowData == null) {
+            called_times_products--;
+            return;
+        }
         printProduct("Name: ",rowData.getFood(),0);
         printProduct("Measure: ", rowData.getMeasure(), 1);
         printProduct("Grams: ", rowData.getGrams(), 2);
-        printProduct("Calories: ", rowData.getCalories(), 3);
+        printProduct("Calories: ", rowData.getCalories().toString(), 3);
         printProduct("Protein: ", rowData.getProtein(), 4);
         printProduct("Fat: ", rowData.getFat(), 5);
         printProduct("Fiber: ", rowData.getFiber(), 6);
@@ -340,21 +366,48 @@ public void printAddToFridge(String label, String _id, Integer row_index)
 
     public void Search_for_ingredient()
     {
+        pagenumber.setText(Integer.toString(called_times_products));
         String ingredientName = SearchIngredient.getText();
         if(!ingredientName.equals("")) {
             try {
-                ArrayList<IngredientDTO> searched_ingredients = IngredientDAO.search_ingredient(ingredientName,calories.getText());
+                ArrayList<IngredientDTO> searched_ingredients = IngredientDAO.search_ingredient(ingredientName,calories.getText(),called_times_products);
+                if(searched_ingredients.size()==0)
+                    nextButton.setDisable(true);
+                else
+                    nextButton.setDisable(false);
                 if(searched_ingredients != null)
                 {
+                    System.out.println("NON VUOTO!!!"+searched_ingredients.size());
                     data.clear();
                     data.addAll(searched_ingredients);
                     AllProductsTable.setItems(data);
-                }
+                }else
+                    System.out.println("VUOTO!!!");
             } catch (Error e){
                 System.out.println(e);
             }
         }else{
 
+            int limit_views_product = 20;
+            ArrayList<IngredientDTO> ingredientList = IngredientDAO.getListOfIngredient(limit_views_product, called_times_products);
+
+            if(ingredientList!= null)
+            {
+                data.clear();
+                data.addAll(ingredientList);
+                //for(IngredientDTO i : ingredientList) {
+                //    if(Float.parseFloat(i.getCalories()) <= getCaloriesInt(slider))
+                //    data.add(i);
+                    //called_times_products++;
+                //}
+            }
+            AllProductsTable.getSelectionModel().select(0);
+            IngredientDTO rowData = AllProductsTable.getSelectionModel().getSelectedItem();
+
+            if(Application.authenticatedUser.getUsername().equals("admin"))
+                AddIngredientToFridgeController.row = AllProductsTable.getSelectionModel().getSelectedItem();
+
+            viewProductDetail(rowData);
         }
     }
 
