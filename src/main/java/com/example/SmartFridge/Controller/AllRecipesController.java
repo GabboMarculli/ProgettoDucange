@@ -51,6 +51,8 @@ public class AllRecipesController {
     private Button previousButton;
     @FXML
     Button nextButton;
+    @FXML
+    Button commentbutton;
     private int page = 0;
     @FXML
     private Text pagenumber;
@@ -72,11 +74,14 @@ public class AllRecipesController {
     @FXML
     protected void onNextClick(){
         page++;
-        previousButton.setDisable(false);
+
         //List<RecipeDTO> recipes = RecipeDao.getRecipeLoginpage(20,page);
         //data.clear();
         //for(RecipeDTO r : recipes)
         //    data.add(r);
+        if(!Search_for_recipe(null))
+            nextButton.setDisable(true);
+        previousButton.setDisable(false);
         AllRecipesTable.getSelectionModel().select(0);
         pagenumber.setText(Integer.toString(page));
         //FillTable();
@@ -88,9 +93,12 @@ public class AllRecipesController {
         }
         page--;
         pagenumber.setText(Integer.toString(page));
-        if(page == 0){
-            previousButton.setDisable(true);
+
+        Search_for_recipe(null);
+        if(page > 0){
+            previousButton.setDisable(false);
         }
+        nextButton.setDisable(false);
         //List<RecipeDTO> recipes = RecipeDao.getRecipeLoginpage(20,page);
         //data.clear();
         //for(RecipeDTO r : recipes)
@@ -113,9 +121,21 @@ public class AllRecipesController {
          */
         Application.changeScene("MainTable");
     }
+    public void commentclick(ActionEvent actionEvent) {
 
+                RecipeDTO rowData = AllRecipesTable.getSelectionModel().getSelectedItem();
+                if(rowData == null)
+                    return;
+                if(Application.authenticatedUser.getUsername().equals("admin"))
+                {
+                    modifyRecipe(rowData);
+                } else {
+                    viewRecipe(rowData);
+                }
+
+    }
     public void initialize(){
-
+        previousButton.setDisable(true);
         RecipeNameColumn.setCellValueFactory(
                 new PropertyValueFactory<RecipeDTO,String>("Name")
         );
@@ -125,11 +145,13 @@ public class AllRecipesController {
         TotalTime.setCellValueFactory(
                 new PropertyValueFactory<RecipeDTO,String>("TotalTime")
         );
-
+        SearchRecipe.setOnKeyReleased(e -> {
+            page = 0;
+            previousButton.setDisable(true);
+            Search_for_recipe(null);
+        });
         AllRecipesTable.setItems(data);
-
-
-
+        AllRecipesTable.setPlaceholder(new Label("No data."));
         AllRecipesTable.setRowFactory( tv -> {
             TableRow<RecipeDTO> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
@@ -146,6 +168,7 @@ public class AllRecipesController {
             return row ;
         });
         FillTable();
+        AllRecipesTable.getSelectionModel().select(0);
         /*
         // se l'utente è l'admin, metto il pulsante "elimina ricetta", altrimenti se sei un utente normale vedi "aggiungi ricetta"
         Button button = new Button();
@@ -199,6 +222,7 @@ public class AllRecipesController {
             data.add(us);
         }
         called_times++;
+        AllRecipesTable.getSelectionModel().select(0);
     }
 
     @FXML
@@ -240,26 +264,41 @@ public class AllRecipesController {
 
     //function that will search for a user
 
-    public void Search_for_recipe(ActionEvent actionEvent) {
+    public boolean Search_for_recipe(ActionEvent a) {
+        //page = 0;
+        pagenumber.setText(Integer.toString(page));
+        previousButton.setDisable(true);
+        nextButton.setDisable(false);
         String recipeName = SearchRecipe.getText();
-        if(!recipeName.equals("")) {
-            try {
-                ArrayList<RecipeDTO> searched_recipe = RecipeDao.getSearchedRecipe(recipeName);
+        if(recipeName.equals("")) {
+            recipeName = "";
+        }
+            //try {
+                ArrayList<RecipeDTO> searched_recipe = RecipeDao.getSearchedRecipe(recipeName,page);
+
                 if(searched_recipe != null)
                 {
                     data.clear();
                     data.addAll(searched_recipe);
                     AllRecipesTable.setItems(data);
                 }
-            } catch (Error e){
-                System.out.println(e);
-            }
-        }
+                if(searched_recipe.isEmpty())
+                    return false;
+                return true;
+            //} catch (Error e){
+            //    System.out.println(e);
+            //}
+       // }
     }
 
     public void show_recipe_of_followed_user(ActionEvent actionEvent) {
         utente = null;
         //ShowMoreRecipe.setDisable(true);
+        page = 0;
+        pagenumber.setText(Integer.toString(page));
+        previousButton.setDisable(true);
+        nextButton.setDisable(false);
+        data.clear();
         List<RecipeDTO> searched_recipe = RecipeDao.recipe_of_followed_user();
         if(searched_recipe != null)
         {
@@ -298,6 +337,10 @@ public class AllRecipesController {
             data.addAll(list_of_recipe);
             AllRecipesTable.setItems(data);
         }
+        nextButton.setDisable(true);
+        previousButton.setDisable(true);
+        page = 0;
+        pagenumber.setText(Integer.toString(page));
     }
 
     private void dropTable() {
@@ -314,8 +357,9 @@ public class AllRecipesController {
             data.add(us);
         }
         AllRecipesTable.setItems(data);
-        called_times++;
+        //called_times++;
     }
+
 
 
 }

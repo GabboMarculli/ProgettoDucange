@@ -123,7 +123,8 @@ public class RecipeDao {
                         parameters("id", Application.authenticatedUser.getId()
                                 ));
                 List<RecipeDTO> Recipe_to_send = new ArrayList<>();
-                while (result.hasNext()) {
+                int i = 0;
+                while (result.hasNext() || i < 20) {
                     Record r = result.next();
                     Recipe_to_send.add(new RecipeDTO(
                             r.get("name").asString(),
@@ -131,6 +132,7 @@ public class RecipeDao {
                             r.get("ReviewCount").asInt(),
                             r.get("totalTime").asString()
                     ));
+                    i++;
                 }
                 return Recipe_to_send;
             });
@@ -402,14 +404,14 @@ public class RecipeDao {
         }
     }
 
-    public static ArrayList<RecipeDTO> getSearchedRecipe(String recipeName) {
+    public static ArrayList<RecipeDTO> getSearchedRecipe(String recipeName,int skip) {
         MongoCollection<Document> collection = MongoDbDriver.getRecipeCollection();
         ArrayList<RecipeDTO> recipes_to_return = new ArrayList<>();
         JSONObject obj;
 
-        try (MongoCursor<Document> cursor = collection.find(regex("RecipeName", ".*" + Pattern.quote(recipeName) + ".*", "i")).iterator()) {
+        try (MongoCursor<Document> cursor = collection.find(regex("RecipeName", ".*" + Pattern.quote(recipeName) + ".*", "i")).skip(20*skip).limit(20).iterator()) {
             while (cursor.hasNext()) {
-                String id = cursor.next().get("_id").toString();
+                //String id = cursor.next().get("_id").toString();
                 String text = cursor.next().toJson();
                 obj = new JSONObject(text);
                 String review = null;
@@ -419,7 +421,8 @@ public class RecipeDao {
                     recipes_to_return.add(
                             new RecipeDTO(
                                     obj.getString("RecipeName"),
-                                    id,
+                                    //id,
+                                    obj.getString("_id"),
                                     Integer.parseInt(obj.getString("ReviewCount")),
                                     obj.getString("Author"),
                                     obj.getString("PrepareTime"),

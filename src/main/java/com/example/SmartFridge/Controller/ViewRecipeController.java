@@ -4,8 +4,10 @@ import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DAO.RecipeDao;
 import com.example.SmartFridge.DTO.RecipeDTO;
 import com.example.SmartFridge.DTO.ReviewDTO;
+import com.example.SmartFridge.Utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
@@ -62,7 +64,7 @@ public class ViewRecipeController {
     {
         try {
             Recipe = null;
-            Application.changeScene("AllRecipes");
+            Application.changeScene("MainTable");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -76,6 +78,22 @@ public class ViewRecipeController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    @FXML
+    public void setClick(MouseEvent mouseEvent) {
+        Utils.setClick(mouseEvent);
+    }
+    @FXML
+    public void unsetClick(MouseEvent mouseEvent) {
+        Utils.unsetClick(mouseEvent);
+    }
+    @FXML
+    public void setOver(MouseEvent mouseEvent) {
+        Utils.setOver(mouseEvent);
+    }
+    @FXML
+    public void unsetOver(MouseEvent mouseEvent) {
+        Utils.unsetOver(mouseEvent);
     }
 
 }

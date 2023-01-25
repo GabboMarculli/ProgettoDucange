@@ -4,8 +4,13 @@ import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DAO.RecipeDao;
 import com.example.SmartFridge.DTO.RecipeDTO;
 import com.example.SmartFridge.DTO.ReviewDTO;
+import com.example.SmartFridge.Utils.Utils;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.scene.Cursor;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -21,11 +26,16 @@ public class AllCommentsController {
     private Integer called_times_reviews = 0;
     private final Integer how_much_comments = 20;
     public static RecipeDTO Recipe;
+    @FXML
+    private Button showmore;
+    private ReviewDTO[] review;
+    Integer page = 0;
 
     public void printSingleComment(VBox content, ReviewDTO[] r, Integer i)
     {
         String name = "Username: " + r[i].getProfile() + "\t \t \t" + "Rate: " + Integer.toString(r[i].getRate());
         Label profile = new Label(name);
+        profile.setStyle("-fx-font-size: 15;");
         content.setPrefHeight(content.getPrefHeight() + profile.getPrefHeight());
         content.getChildren().add(profile);
 
@@ -52,10 +62,7 @@ public class AllCommentsController {
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
 
-
-
-
-                List<ReviewDTO> reviews_list = Arrays.asList(Recipe.getReviews());
+                 List<ReviewDTO> reviews_list = Arrays.asList(Recipe.getReviews());
                 ArrayList<ReviewDTO> list = new ArrayList<>(reviews_list);
 
                 for(int j=0; j<list.size();j++) {
@@ -78,17 +85,37 @@ public class AllCommentsController {
         Integer division = (charachters > 500)? 5 : (charachters > 300)? 3 : (charachters < 70) ? 1 : 2;
         Float size = (float) (charachters / division);
         field.setMinHeight(size);
-        field.setMinWidth(Double.parseDouble("200"));
+        field.setMinWidth(Double.parseDouble("400"));
+        field.setStyle("-fx-font-size: 14;");
+        field.setCursor(Cursor.HAND);
+
 
         field.setWrapText(true);
         content.getChildren().add(field);
+        //content.getChildren().add(0,field);
+        content.setFillWidth(true);
+        content.setSpacing(10);
+        content.setPadding(new Insets(0,210,0,210));
     }
 
-    public void show_more(ReviewDTO[] r, Button button)
+    //public void show_more(ReviewDTO[] r, Button button)
+
+    public void show_more(ReviewDTO[] r)
     {
-        Integer i = 0;
+
+        /*
         while(called_times_reviews < r.length && i++ < how_much_comments){
             printSingleComment(content, r, called_times_reviews++);
+        }
+
+         */
+        Integer i = how_much_comments*page;
+        if(i>=r.length){
+            return;
+        }
+        while(i < r.length && (i-page*how_much_comments) < how_much_comments){
+            printSingleComment(content, r, i);
+            i++;
         }
 
         /* // si bugga, riporta sempre al primo commento con la visuale
@@ -108,25 +135,26 @@ public class AllCommentsController {
             if(name.equals("Back"))
                 goBack();
             else if(name.equals("Show more"))
-                show_more(r, button);
+                show_more(r);
         });
 
         content.getChildren().add(button);
     }
 
     public void printComments(ReviewDTO[] r) {
-        create_button("Back", "Back", r);
-        create_button("Show more", "Show_more",r );
-        show_more(r, null);
+        //create_button("Back", "Back", r);
+        //create_button("Show more", "Show_more",r );
+        show_more(r);
     }
 
     public void initialize(){
-        ReviewDTO[] review = Recipe.getReviews();
+        review = Recipe.getReviews();
 
         content = new VBox();
         Box.setContent(content);
 
-        printComments(review);
+        //printComments(review);
+        show_more(review);
     }
 
     public void goBack()
@@ -134,9 +162,26 @@ public class AllCommentsController {
         try {
             ViewRecipeController.Recipe = Recipe;
             Recipe = null;
-            Application.changeScene("ViewRecipe");
+            Application.changeScene("MainTable");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void showclick(ActionEvent actionEvent) {
+        show_more(review);
+    }
+
+    public void setClick(MouseEvent mouseEvent) {
+        Utils.setClick(mouseEvent);
+    }
+    public void unsetClick(MouseEvent mouseEvent) {
+        Utils.unsetClick(mouseEvent);
+    }
+    public void setOver(MouseEvent mouseEvent) {
+        Utils.setOver(mouseEvent);
+    }
+    public void unsetOver(MouseEvent mouseEvent) {
+        Utils.unsetOver(mouseEvent);
     }
 }
