@@ -70,61 +70,6 @@ public class UserDAO {
 
         return null;
     }
-/*
-
-    {
-        // retrieve user collection
-        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-
-        ArrayList<Document> results = collection.find().limit(limit).skip(called_times*20).into(new ArrayList<>());
-
-        //retrive list of unflowwed user from the graph db
-
-        return results;
-    }
-    */
-
-    /*
-    MATCH (u:User {id:2}), (p:User)
-WHERE NOT (u)-[:FOLLOW]->(p) AND p.id <> 2
-RETURN p
-SKIP 4
-LIMIT 4
-     */
-/*
-    public static List<userDTO> getListOfUser(Integer limit,Integer called_times) {
-        List<userDTO> UserList = null;
-        int skipped_calculated = limit*called_times;
-        try (Session session = Neo4jDriver.getDriver().session()) {
-            UserList = session.readTransaction((TransactionWork<List<userDTO>>) tx -> {
-                Result result = tx.run(
-                        "MATCH (u:User{id: $id}), (m:User) " +
-                                "WHERE NOT (u)-[:FOLLOW]->(m) AND m.id <> $id " +
-                                "RETURN m.id AS id, m.country AS country , m.name AS username" +
-                                " SKIP $skip LIMIT $limit ",
-                        parameters("id", Application.authenticatedUser.getId(),
-                                "limit", limit,
-                                "skip", skipped_calculated));
-                List<userDTO> User_to_send = new ArrayList<>();
-                while (result.hasNext()) {
-                    Record r = result.next();
-                    User_to_send.add(new userDTO(
-                            r.get("id").asInt(),
-                            r.get("country").asString(),
-                            r.get("username").asString()
-                    ));
-
-                }
-                return User_to_send;
-            });
-            return UserList;
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-        return null;
-    }
-*/
-
     public static List<userDTO> getListOfFollowedUser(Integer limit,Integer called_times) {
         List<userDTO> UserList = null;
         int skipped_calculated = limit*called_times;
@@ -210,7 +155,6 @@ LIMIT 4
                             r.get("country").asString(),
                             r.get("username").asString()
                     ));
-
                 }
                 return User_to_send;
             });
