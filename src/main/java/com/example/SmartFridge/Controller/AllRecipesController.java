@@ -350,6 +350,8 @@ public class AllRecipesController {
     public void showMyRecipe(ActionEvent actionEvent) {
         utente = null;
         //ShowMoreRecipe.setDisable(true);
+        nextButton.setDisable(true);
+        pagenumber.setText(Integer.toString(page));
         data.clear();
         int limit_views_recipe = 20;
         List<RecipeDTO> recipes = RecipeDao.getMyRecipe(limit_views_recipe,0);
