@@ -409,6 +409,7 @@ public class RecipeDao {
 
         try (MongoCursor<Document> cursor = collection.find(regex("RecipeName", ".*" + Pattern.quote(recipeName) + ".*", "i")).iterator()) {
             while (cursor.hasNext()) {
+                String id = cursor.next().get("_id").toString();
                 String text = cursor.next().toJson();
                 obj = new JSONObject(text);
                 String review = null;
@@ -418,7 +419,7 @@ public class RecipeDao {
                     recipes_to_return.add(
                             new RecipeDTO(
                                     obj.getString("RecipeName"),
-                                    obj.get("_id").toString(),
+                                    id,
                                     Integer.parseInt(obj.getString("ReviewCount")),
                                     obj.getString("Author"),
                                     obj.getString("PrepareTime"),
