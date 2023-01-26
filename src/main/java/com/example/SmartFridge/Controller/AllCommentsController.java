@@ -49,6 +49,7 @@ public class AllCommentsController {
                 String my_str = String.valueOf(content.getChildren().get(index-1)); //return 'Username: "some_user_name"\t\t\tRate:"some_number"'
                 my_str = my_str.replace("\t", ":").replace(": ", ":");
                 String username = my_str.split(":")[1];
+                int rate = Integer.parseInt(my_str.split(":")[5].replace("'", ""));
 
                 content.getChildren().remove(index-1);
                 content.getChildren().remove(index-1);
@@ -66,17 +67,19 @@ public class AllCommentsController {
 
                 Recipe.setReviews(list.toArray(new ReviewDTO[list.size()]));
 
-                RecipeDao.removeReviews(Recipe,username);
+                RecipeDao.removeReviews(Recipe,username,rate);
 
             });
             content.getChildren().add(button);
         }
 
         TextArea field = new TextArea(r[i].getComment());
+        field.setEditable(false);
+        field.setMinHeight(Double.parseDouble("100"));
+
         Integer charachters = r[i].getComment().length();
         Integer division = (charachters > 500)? 5 : (charachters > 300)? 3 : (charachters < 70) ? 1 : 2;
-        Float size = (float) (charachters / division);
-        field.setMinHeight(size);
+
         field.setMinWidth(Double.parseDouble("400"));
         field.setStyle("-fx-font-size: 14;");
         field.setCursor(Cursor.HAND);
@@ -91,16 +94,20 @@ public class AllCommentsController {
 
     public void show_more(ReviewDTO[] r)
     {
-
-        Integer i = how_much_comments*page;
-        if(i>=r.length){
-            return;
+        try {
+            Integer i = how_much_comments * page;
+            if (i >= r.length) {
+                return;
+            }
+            while (i < r.length && (i - page * how_much_comments) < how_much_comments) {
+                printSingleComment(content, r, i);
+                i++;
+            }
+            page++;
         }
-        while(i < r.length && (i-page*how_much_comments) < how_much_comments){
-            printSingleComment(content, r, i);
-            i++;
-        }
-
+         catch (Exception e){
+            System.out.println(e);
+         }
     }
 
     public void create_button(String name, String id, ReviewDTO[] r)
@@ -125,6 +132,7 @@ public class AllCommentsController {
     }
 
     public void initialize(){
+        page=0;
         review = Recipe.getReviews();
 
         content = new VBox();
@@ -137,6 +145,7 @@ public class AllCommentsController {
 
     public void goBack()
     {
+        page=0;
         try {
             ViewRecipeController.Recipe = Recipe;
             Recipe = null;
