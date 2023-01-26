@@ -39,7 +39,6 @@ public class aggregationsMongo {
                             .append("recipeName", "$_id.recipeName")
                             .append("avarageRate", 1))
             )).into(new ArrayList<>());
-             //.get(0).get("_id").getString("recipeName") -> usare questa per prendere le recipeName
         }
         // avarageRate | recipeName
         catch (Exception e){
@@ -72,7 +71,6 @@ public class aggregationsMongo {
                             .append("Username", "$_id.Username")
                             .append("totalComments", 1))
             )).into(new ArrayList<>());
-            //.get(0).get("_id").getString("Username") -> usare questa per prendere le recipeName
         }
         // totalComments | Username
         catch (Exception e){
@@ -106,7 +104,6 @@ public class aggregationsMongo {
                             .append("timeUsed", 1)
                             .append("Ingredient", "$_id.ingredient"))
             )).into(new ArrayList<>());
-            //.get(0).get("_id").getString("Username") -> usare questa per prendere le recipeName
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -142,7 +139,6 @@ public class aggregationsMongo {
                             .append("quantityInsertedInThefridge", 1)),
                     new Document("$limit", 20)
             )).into(new ArrayList<>());
-            //.get(0).get("_id").getString("Username") -> usare questa per prendere le recipeName
         }
 
         // ingredient | country | quantityInsertedInThefridge

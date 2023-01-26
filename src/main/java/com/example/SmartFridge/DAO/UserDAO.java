@@ -1,7 +1,6 @@
 package com.example.SmartFridge.DAO;
 
 import com.example.SmartFridge.Application;
-import com.example.SmartFridge.DTO.RecipeDTO;
 import com.example.SmartFridge.DTO.userDTO;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
@@ -12,7 +11,6 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -23,13 +21,9 @@ import org.neo4j.driver.Record;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import static com.mongodb.client.model.Filters.eq;
-import static com.mongodb.client.model.Filters.regex;
 import static com.mongodb.client.model.Projections.excludeId;
-import static com.mongodb.client.model.Sorts.ascending;
-import static com.mongodb.client.model.Sorts.descending;
 import static org.neo4j.driver.Values.parameters;
 
 public class UserDAO {
@@ -60,7 +54,6 @@ public class UserDAO {
 
         // we search for username
 
-        //Bson filter = Filters(regex("username", ".*" + Pattern.quote(text) + ".*", "i"));
 
         Document resultDoc = collection.find(eq("username",text)).first();
         if(resultDoc!= null) {

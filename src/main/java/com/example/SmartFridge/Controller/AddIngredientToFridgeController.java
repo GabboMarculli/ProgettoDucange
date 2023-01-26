@@ -2,7 +2,6 @@ package com.example.SmartFridge.Controller;
 
 import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DAO.IngredientDAO;
-import com.example.SmartFridge.DAO.IngredientInTheFridgeDAO;
 import com.example.SmartFridge.DTO.IngredientDTO;
 import com.example.SmartFridge.Utils.Utils;
 import javafx.fxml.FXML;

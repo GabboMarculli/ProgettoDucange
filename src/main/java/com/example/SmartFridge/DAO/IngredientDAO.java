@@ -27,7 +27,6 @@ public class IngredientDAO {
         MongoCollection<Document> collection = MongoDbDriver.getIngredientCollection();
         ArrayList<IngredientDTO> ingredients_to_return = new ArrayList<>();
         JSONObject obj;
-        //try (MongoCursor<Document> cursor = collection.find(Filters.and(regex("food", ".*" + Pattern.quote(food) + ".*", "i"),Filters.lte("calories,",calories))).iterator()) {
         Bson filter = Filters.and(regex("food", ".*" + Pattern.quote(food) + ".*", "i"), Filters.lte("calories",Integer.parseInt(calories)));
         try (MongoCursor<Document> cursor = collection.find(filter).skip(20*skip).limit(20).iterator()) {
             while (cursor.hasNext()) {

@@ -10,7 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 import static com.example.SmartFridge.DAO.RecipeDao.updateRecipe;
 

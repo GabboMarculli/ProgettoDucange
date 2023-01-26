@@ -155,37 +155,3 @@ public class IngredientInTheFridgeDAO {
 }
 
 
-
-/*
-    Bson query = and(
-            eq("_id", Application.authenticatedUser.getId()),
-            eq("fridge.name", p.getName()),
-            eq("fridge.expiringDate", date )
-    );
-
-    Document documentList = new Document();
-        documentList.append(String.format("%s.$.%s","fridge","quantity"), "quantity update 1");
-        Document document = new Document("$set",documentList));
-
-    Single.fromPublisher(
-            this.repository.getCollection(
-            ConstantValues.PRODUCT_CATEGORY_COLLECTION_NAME, Category.class)
-            .updateOne(query, document)).subscribe();
-
-
-Bson query = and(
-        eq("id", Application.authenticatedUser.getId()),
-        eq("fridge.name", p.getName()),
-        eq("fridge.expiringDate", date )
-);
-
-    BasicDBObject set = new BasicDBObject(
-            "$set",
-            new BasicDBObject("System.system_type.Tenant.$.Tenant_Info", p.getQuantity())
-    );
-collection.updateOne(query, set);
-
-
-
- */
-

@@ -9,14 +9,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,8 +39,6 @@ public class AllRecipesController {
     private AnchorPane bottom;
     @FXML
     private Button add_recipe;
-    //@FXML
-    //private Button ShowMoreRecipe;
     @FXML
     private  Button show_recipe_of_followed_user;
     @FXML
@@ -77,16 +73,11 @@ public class AllRecipesController {
     protected void onNextClick(){
         page++;
 
-        //List<RecipeDTO> recipes = RecipeDao.getRecipeLoginpage(20,page);
-        //data.clear();
-        //for(RecipeDTO r : recipes)
-        //    data.add(r);
         if(!Search_for_recipe(null))
             nextButton.setDisable(true);
         previousButton.setDisable(false);
         AllRecipesTable.getSelectionModel().select(0);
         pagenumber.setText(Integer.toString(page));
-        //FillTable();
     }
     @FXML
     protected  void onPreviousClick(){
@@ -101,11 +92,6 @@ public class AllRecipesController {
             previousButton.setDisable(false);
         }
         nextButton.setDisable(false);
-        //List<RecipeDTO> recipes = RecipeDao.getRecipeLoginpage(20,page);
-        //data.clear();
-        //for(RecipeDTO r : recipes)
-        //    data.add(r);
-        //listview.getSelectionModel().select(0);
     }
     @FXML
     private void goToHome() throws IOException {
@@ -169,15 +155,6 @@ public class AllRecipesController {
         });
         FillTable();
         AllRecipesTable.getSelectionModel().select(0);
-        /*
-        // se l'utente è l'admin, metto il pulsante "elimina ricetta", altrimenti se sei un utente normale vedi "aggiungi ricetta"
-        Button button = new Button();
-        button.setAlignment(Pos.valueOf("CENTER"));
-        button.setContentDisplay(ContentDisplay.valueOf("CENTER"));
-        button.setLayoutX(203);
-        button.setLayoutY(552);
-        button.setMnemonicParsing(false);
-        */
 
         if(Application.authenticatedUser.getUsername().equals("admin"))
             add_recipe.setText("Delete recipe");
@@ -196,8 +173,6 @@ public class AllRecipesController {
             }
         });
 
-        //bottom.getChildren().add(button);
-
         if(Application.authenticatedUser.getUsername().equals("admin")) {
             show_recipe_of_followed_user.setDisable(true);
             show_suggested_recipe.setDisable(true);
@@ -214,7 +189,6 @@ public class AllRecipesController {
     public void FillTable()
     {
 
-        //ShowMoreRecipe.setDisable(false);
         int limit_views_recipe = 20;
         List<RecipeDTO> recipes = RecipeDao.getRecipe(limit_views_recipe,called_times,utente);
 
@@ -274,7 +248,7 @@ public class AllRecipesController {
         if(recipeName.equals("")) {
             recipeName = "";
         }
-            //try {
+
                 ArrayList<RecipeDTO> searched_recipe = RecipeDao.getSearchedRecipe(recipeName,page);
 
                 if(searched_recipe != null)
@@ -286,15 +260,10 @@ public class AllRecipesController {
                 if(searched_recipe.isEmpty())
                     return false;
                 return true;
-            //} catch (Error e){
-            //    System.out.println(e);
-            //}
-       // }
     }
 
     public void show_recipe_of_followed_user(ActionEvent actionEvent) {
         utente = null;
-        //ShowMoreRecipe.setDisable(true);
         page = 0;
         pagenumber.setText(Integer.toString(page));
         previousButton.setDisable(true);
@@ -319,8 +288,6 @@ public class AllRecipesController {
 
             return;
 
-        //ShowMoreRecipe.setDisable(true);
-        //retrive fridge of the user
         ArrayList<IngredientInTheFridgeDTO> list_of_product = IngredientInTheFridgeDAO.getProduct(Application.authenticatedUser);
         //retrive the suggested recipe
         System.out.println(list_of_product);
@@ -351,7 +318,6 @@ public class AllRecipesController {
 
     public void showMyRecipe(ActionEvent actionEvent) {
         utente = null;
-        //ShowMoreRecipe.setDisable(true);
         nextButton.setDisable(true);
         pagenumber.setText(Integer.toString(page));
         data.clear();
@@ -361,7 +327,6 @@ public class AllRecipesController {
             data.add(us);
         }
         AllRecipesTable.setItems(data);
-        //called_times++;
     }
 
 

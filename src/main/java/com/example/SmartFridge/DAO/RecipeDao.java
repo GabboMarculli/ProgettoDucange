@@ -4,16 +4,12 @@ import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DTO.*;
 import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
-import com.example.SmartFridge.model.Recipe;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
 
 import com.mongodb.client.MongoCursor;
-import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
-import com.mongodb.client.model.Updates;
-import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import java.util.ArrayList;
@@ -23,7 +19,6 @@ import java.util.regex.Pattern;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.regex;
-import static com.mongodb.client.model.Projections.excludeId;
 import static com.mongodb.client.model.Sorts.descending;
 import static org.neo4j.driver.Values.parameters;
 
@@ -252,7 +247,6 @@ public class RecipeDao {
     }
 
     //skipped_time is used for retriving limit recipe at a time belonging to interval [skipped_times*limit, (skipped_times+1)*limit]
-    //THIS WAS FOR RETRIVING RECIPE FROM MONGODB
     public static ArrayList<RecipeDTO> getRecipeLoginpage(int limit, int skipped_times) {
 
         // retrieve user collection
@@ -293,41 +287,7 @@ public class RecipeDao {
             throw new RuntimeException(e);
         }
     }
-    /*GET RECIPE FROM NEO4j
-    public static List<RecipeDTO> getRecipe(int limit, int skipped_times) {
-        List<RecipeDTO> RecipeList = null;
-        int skipped_calculated = limit*skipped_times;
-        try (Session session = Neo4jDriver.getDriver().session()) {
-            RecipeList = session.readTransaction((TransactionWork<List<RecipeDTO>>) tx -> {
-                Result result = tx.run(
-                        "MATCH (u:User{id: $id}), (r:Recipe) " +
-                                "WHERE NOT (u)-[:SHARE]->(r) " +
-                                "RETURN r.id AS id, r.name AS name, " +
-                                "r.review_count as ReviewCount, r.totalTime as totalTime" +
-                                " SKIP $skip LIMIT $limit ",
 
-                        parameters("id", Application.authenticatedUser.getId(),
-                                "limit", limit,
-                                "skip", skipped_calculated));
-                List<RecipeDTO> Recipe_to_send = new ArrayList<>();
-                while (result.hasNext()) {
-                    Record r = result.next();
-                    Recipe_to_send.add(new RecipeDTO(
-                            r.get("name").asString(),
-                            r.get("id").asInt(),
-                            r.get("ReviewCount").asInt(),
-                            r.get("totalTime").asString()
-                    ));
-                }
-                return Recipe_to_send;
-            });
-            return RecipeList;
-        } catch (Exception e) {
-            System.err.println(e);
-        }
-        return null;
-    }
-*/
     public static ArrayList<RecipeDTO> getRecipe(int limit, int skipped_times,String utente_username) {
 
         // retrieve user collection

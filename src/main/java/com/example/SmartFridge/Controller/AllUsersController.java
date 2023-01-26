@@ -2,7 +2,6 @@ package com.example.SmartFridge.Controller;
 
 import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DAO.UserDAO;
-import com.example.SmartFridge.DTO.RecipeDTO;
 import com.example.SmartFridge.DTO.userDTO;
 import com.example.SmartFridge.Utils.Utils;
 import com.example.SmartFridge.model.RegisteredUser;
@@ -20,7 +19,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static com.example.SmartFridge.DAO.UserDAO.*;
-import static java.time.LocalDate.now;
 
 public class AllUsersController {
     @FXML
@@ -66,7 +64,6 @@ public class AllUsersController {
         for (userDTO us : users) {
             data.add(us);
         }
-        //called_times++;
     }
 
     public void initialize() {
@@ -199,29 +196,6 @@ public class AllUsersController {
         }
     }
 
-
-
-    /*
-    public void fillTable() {
-        int limit_views_user = 20;
-        ArrayList<Document> users = getListOfUser(limit_views_user, called_times);
-        for (Document us : users) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
-            userDTO newrow = new userDTO(Integer.parseInt(
-                    us.get("id").toString()),
-                    us.get("username").toString(),
-                    us.get("password").toString(),
-                    us.get("name").toString(),
-                    us.get("surname").toString(),
-                    LocalDate.parse(us.get("registrationdate").toString(), formatter),
-                    us.get("country").toString());
-            data.add(newrow);
-        }
-        called_times++;
-    }
-    */
-
-
     //fill the table with 20 user. By pressing the button the user will visualize
     // 20 user in plus appended at the end of the previous list of user
 
@@ -243,11 +217,7 @@ public class AllUsersController {
 
         data.clear();
         if (searched_user != null) {
-            /*
-            for (userDTO us : searched_user) {
-                data.add(us);
-            }
-            */
+
             data.add(searched_user);
             UserTable.setItems(data);
             return;

@@ -20,8 +20,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import static com.mongodb.client.model.Filters.and;
-import static com.mongodb.client.model.Filters.eq;
 
 public class FridgePageController {
     @FXML
@@ -112,14 +110,7 @@ public class FridgePageController {
 
     private void fillTable() {
 
-
-
          System.out.println("Inserimento dati in frigo");
-
-        // ########################################################################################################
-        // Per la quantità nel frigo, bisogna ogni volta scorrere il db per vedere, di ogni prodotto, quanti ne ho nel frigo?
-        // Oppure magari, quando un utente fa login, si salva in locale il frigo con le rispettive quantità? In questo secondo caso, è un KVDB?
-        // ########################################################################################################
 
         //retrive ingredient from fridge
         ArrayList<IngredientInTheFridgeDTO> ingredientList = new ArrayList<>();

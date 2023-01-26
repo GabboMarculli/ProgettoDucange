@@ -8,37 +8,20 @@ import com.example.SmartFridge.DbMaintaince.MongoDbDriver;
 import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
 import com.example.SmartFridge.Utils.Utils;
 import com.example.SmartFridge.DAO.UserDAO;
-import com.example.SmartFridge.model.Recipe;
 import com.example.SmartFridge.model.RegisteredUser;
-import com.mongodb.client.MongoCollection;
-import javafx.animation.FillTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
-
-// ######################################################################################################################
-// DA FARE:
-// - RISOLVERE BUG ESTETICI (SPESSO LE CASELLE DI INPUT SI COLORANO DI ROSSO A CAS0, E LA SCRITTA "LOGIN OK" OPPURE "LOGIN
-//   ERRATO" VIENE DOV'E' IL SIGNUP IN BASSO
-// - IMPEDIRE CHE UN UTENTE POSSA REGISTRARSI CON L'EMAIL DI UN UTENTE GIA' REGISTRATO
-// - METTERE IL CHECK PASSWORD (?) ADESSO E' COMMENTATO, METTERLO IMPLICA DOVER MODIFICARE TUTTE LE PASSWORD NEL DB RENDENDOLE SICURE
-// - METTERE UN LIMITE MINIMO E MASSIMO ALLA LUNGHEZZA DEI NOMI (DI NUOVO, FARLO IMPLICA DOVER MODIFICARE I NOMI ERRATI NEL DB)
-// #######################################################################################################################
 
 public class LoginController {
 
@@ -174,20 +157,7 @@ public class LoginController {
         signUpSurnameTextField.clear();
         invalidSignupCredentials.setText("");
     }
-    /*
-    public void setOver(MouseEvent mouseEvent) {
-        Button b = ((Button) mouseEvent.getTarget());
-        b.setStyle(onOver);
-        b.setCursor(Cursor.HAND);
-    }
 
-    public void unsetOver(MouseEvent mouseEvent) {
-        Button b = ((Button) mouseEvent.getTarget());
-        b.setStyle(exitOver);
-        b.setCursor(Cursor.DEFAULT);
-        //Application.unSetMousePointer();
-    }
-    */
     @FXML
     protected void onLoginButtonClick() {
         clearloginField();
@@ -263,14 +233,7 @@ public class LoginController {
         preparationtext.setWrapText(true);
         signUpCountryTextField.setItems(Utils.getCountryData());
         previousButton.setDisable(true);
-/*
-        FileWriter f = new FileWriter("country.txt");
-        PrintWriter pw = new PrintWriter(f);
-        pw.println("ObservableList<RecipeDTO> countries = FXCollections.observableArrayList();");
-        for(String s : countries)
-            pw.println("countries.add(\""+s+"\");");
-        pw.close();
-*/
+
         int limit_views_recipe = 20;
         List<RecipeDTO> recipes = RecipeDao.getRecipeLoginpage(limit_views_recipe,20);
         listview.setCellFactory(new Callback<ListView<RecipeDTO>, ListCell<RecipeDTO>>() {
@@ -361,13 +324,7 @@ public class LoginController {
             invalidSignupCredentials.setStyle(errorMessage);
             signUpEmailTextField.setStyle(errorStyle);
             invalidLoginCredentials.setText("");
-        }/* else if (!Utils.CheckEmail(signUpPasswordField.getText())) {
-            invalidSignupCredentials.setText("Password is too simple");
-            invalidSignupCredentials.setStyle(errorMessage);
-            signUpPasswordField.setStyle(errorStyle);
-            signUpRepeatPasswordField.setStyle(errorStyle);
-            invalidLoginCredentials.setText("");
-        }*/ else if (!signUpRepeatPasswordField.getText().equals(signUpPasswordField.getText())) {
+        }else if (!signUpRepeatPasswordField.getText().equals(signUpPasswordField.getText())) {
             invalidSignupCredentials.setText("The Passwords don't match!");
             invalidSignupCredentials.setStyle(errorMessage);
             signUpPasswordField.setStyle(errorStyle);
@@ -379,9 +336,6 @@ public class LoginController {
             signUpUsernameTextField.setStyle(errorStyle);
             invalidLoginCredentials.setText("");
         } else {
-            ///////
-            /////// MIRKO MODIFICARE QUI
-            ///////
             LocalDate nowdate = LocalDate.now();
             nowdate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             System.out.println(nowdate);
@@ -397,7 +351,7 @@ public class LoginController {
             );
 
             System.out.println(LocalDate.now());
-            //registriamo lo user e otteniamo il suo id;
+            //signup of the user
             String user_index = UserDAO.signup(user);
 
 
@@ -410,15 +364,7 @@ public class LoginController {
                 user.setId(user_index);
                 Application.authenticatedUser = user;
                 goToHomePage();
-                /*
-                invalidSignupCredentials.setText("You are set!");
-                invalidSignupCredentials.setStyle(successMessage);
-                signUpUsernameTextField.setStyle(successStyle);
-                signUpEmailTextField.setStyle(successStyle);
-                signUpPasswordField.setStyle(successStyle);
-                signUpRepeatPasswordField.setStyle(successStyle);
-                invalidLoginCredentials.setText("");
-                */
+
             }
         }
     }
@@ -437,24 +383,4 @@ public class LoginController {
         loginPasswordField.setStyle(successStyle);
         loginUsernameTextField.setStyle(successStyle);
     }
-    /*
-    public void setClick(MouseEvent mouseEvent) {
-        //((Button) mouseEvent.getSource()).setStyle(onClick);
-        //Application.setMousePointer();
-
-        Button b = ((Button) mouseEvent.getSource());
-        b.setStyle(onClick);
-        b.setCursor(Cursor.HAND);
-    }
-
-    public void unsetClick(MouseEvent mouseEvent) {
-        //((Button) mouseEvent.getSource()).setStyle(onReleased);
-        //Application.setMousePointer();
-
-        Button b = ((Button) mouseEvent.getSource());
-        b.setStyle(onReleased);
-    }
-
-     */
-
 }

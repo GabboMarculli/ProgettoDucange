@@ -1,27 +1,18 @@
 package com.example.SmartFridge.Controller;
 
 import com.example.SmartFridge.Application;
-import com.example.SmartFridge.DAO.IngredientDAO;
 import com.example.SmartFridge.DAO.aggregationsMongo;
 import com.example.SmartFridge.DTO.AggregationTransportDTO;
 import com.example.SmartFridge.DTO.IngredientDTO;
 import com.example.SmartFridge.Utils.Utils;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import org.bson.Document;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AnalyticsController {
     @FXML
@@ -46,7 +37,6 @@ public class AnalyticsController {
     public void show_most_10_ingredients() {
 
         ArrayList<AggregationTransportDTO> result = aggregationsMongo.top10Ingredients();
-        //System.out.println(result);
         ArrayList<IngredientDTO> ingredientList = new ArrayList<>();
 
         left.getChildren().clear();
@@ -59,7 +49,6 @@ public class AnalyticsController {
     }
     public void show_most_10_recipes() {
         ArrayList<AggregationTransportDTO> result = aggregationsMongo.top10votedrecipe();
-        //System.out.println(result);
         ArrayList<IngredientDTO> ingredientList = new ArrayList<>();
 
         left.getChildren().clear();
@@ -74,7 +63,6 @@ public class AnalyticsController {
     public void show_userMostCommented() {
 
         ArrayList<AggregationTransportDTO> result = aggregationsMongo.userMostCommented();
-        //System.out.println(result);
         ArrayList<IngredientDTO> ingredientList = new ArrayList<>();
 
         left.getChildren().clear();

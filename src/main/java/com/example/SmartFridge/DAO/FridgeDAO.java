@@ -15,63 +15,6 @@ import static com.mongodb.client.model.Filters.eq;
 
 public class FridgeDAO {
 
-    // ############################################################################
-    //  NON FUNZIONA
-    // ###########################################################################
-
-    public static boolean updateFridge2(ObservableList<IngredientInFridge> fridge)
-    {
-        try {
-            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-
-            Document doc = new Document();
-            for(IngredientInFridge p : fridge){
-                String date = p.getExpireDate().getDayOfMonth()+"/"+
-                        p.getExpireDate().getMonthValue()+"/"+
-                        p.getExpireDate().getYear();
-                doc.append("name", p.getName()).append("quantity", p.getQuantity()).append("expiringDate", date);
-            }
-
-            Bson query = new Document("$set", doc);
-            collection.updateOne(new Document("fridge", Application.authenticatedUser.getFridge()), query);
-
-            return true;
-        } catch (Exception error) {
-            System.out.println( error );
-            return false;
-        }
-    }
-
-    public static boolean updateFridge22(ObservableList<IngredientInFridge> fridge)
-    {
-        try {
-            MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
-
-
-            BasicDBObject query = new BasicDBObject();
-            query.put( "_id", new ObjectId(Application.authenticatedUser.getId()));
-
-
-            for(IngredientInFridge p : fridge) {
-
-                BasicDBObject product_mongo = new BasicDBObject();
-                product_mongo.put("name", p.getName());
-                product_mongo.put("quantity", p.getQuantity());
-                        String date = p.getExpireDate().getDayOfMonth() + "/" +
-                            p.getExpireDate().getMonthValue() + "/" +
-                            p.getExpireDate().getYear();
-                product_mongo.put("expiringDate", date);
-                BasicDBObject update = new BasicDBObject();
-                update.put("$", new BasicDBObject("fridge",product_mongo));
-                collection.updateOne(query, update);
-            }
-            return true;
-        } catch (Exception error) {
-            System.out.println( error );
-            return false;
-        }
-    }
-
     public static boolean updateFridge(ObservableList<IngredientInFridge> fridge)
     {
         try {

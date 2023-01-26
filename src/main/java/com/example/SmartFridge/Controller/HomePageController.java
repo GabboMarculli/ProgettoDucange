@@ -12,12 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
-
 import java.io.IOException;
-
-import static java.lang.Thread.sleep;
 
 public class HomePageController {
     @FXML

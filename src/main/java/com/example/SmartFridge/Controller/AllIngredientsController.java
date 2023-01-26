@@ -14,10 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AllIngredientsController {
@@ -154,11 +152,6 @@ public class AllIngredientsController {
             });
         //------------------------
         if(Application.authenticatedUser.getUsername().equals("admin")) {
-            /*final Button Add_product = new Button("Add product ");
-            Add_product.setLayoutX(Double.parseDouble("240"));
-            Add_product.setLayoutY(Double.parseDouble("560"));
-            my_anchor_pane.getChildren().add(Add_product);
-            */
             deletebutton.setVisible(true);
             deletebutton.setOnAction(event -> {
                 if (AllProductsTable.getSelectionModel().getSelectedIndex() >= 0) {
@@ -174,9 +167,6 @@ public class AllIngredientsController {
             });
             addrecipebutton.setVisible(true);
             addrecipebutton.setOnAction(event ->{goToAddProduct();});
-            //Add_product.setOnAction(event -> {
-            //    goToAddProduct();
-            //});
         }
     }
     @FXML
@@ -214,30 +204,6 @@ public class AllIngredientsController {
 
         viewProductDetail(rowData);
     }
-
-/*
-public void printAddToFridge(String label, String _id, Integer row_index)
-    {
-        final Label lab = new Label(label);
-        final TextField field = new TextField();
-        field.setId(_id);
-
-        GridPane.setRowIndex(lab, row_index);
-        GridPane.setRowIndex(field, row_index);
-        GridPane.setColumnIndex(field, 2);
-
-        Right.getChildren().add(lab);
-        Right.getChildren().add(field);
-
-        if(label.equals("quantity")){
-            Quantity = field;
-        }
-        if(label.equals("Expire_date")){
-            Expire_date = field;
-        }
-
-    }
- */
 
     public void printAddToFridge(String label, String _id, Integer row_index) {
 
@@ -315,36 +281,10 @@ public void printAddToFridge(String label, String _id, Integer row_index)
         Right.getChildren().clear();
         call_print_product(rowData, "view");
 
-        /*
-        if(Application.authenticatedUser.getUsername().equals("admin")){
-            final Button Delete_product = new Button("Delete ");
-            GridPane.setRowIndex(Delete_product, 10);
-            Right.getChildren().add(Delete_product);
-
-            Delete_product.setOnAction(event -> {
-                if (AllProductsTable.getSelectionModel().getSelectedIndex() >= 0) {
-                    IngredientDTO selectedItem = AllProductsTable.getSelectionModel().getSelectedItem();
-                    AllProductsTable.getItems().remove(selectedItem);
-                    IngredientInTheFridgeDAO.deleteIngredient(selectedItem);
-                }
-            });
-
-            final Button Modify_product = new Button("Modify ");
-            GridPane.setRowIndex(Modify_product, 10);
-            GridPane.setColumnIndex(Modify_product, 2);
-            Right.getChildren().add(Modify_product);
-
-            Modify_product.setOnAction(event -> {
-                AddIngredientToFridgeController.modify = true;
-                goToAddProduct();
-            });
-
-        } else {
-                 */
             printAddToFridge("Insert quantity end expiring date below and press ADD:","instruction",9);
             printAddToFridge("Quantity: ", "Quantity", 10);
             printAddToFridge("Expire_date: ", "Expire_date", 11);
-        //}
+
 
     }
 
@@ -375,34 +315,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
             } catch (Error e){
                 System.out.println(e);
             }
-        }//else{
-/*
-            int limit_views_product = 20;
-            ArrayList<IngredientDTO> ingredientList = IngredientDAO.getListOfIngredient(limit_views_product, called_times_products);
-
-            if(ingredientList!= null)
-            {
-                data.clear();
-                data.addAll(ingredientList);
-                //for(IngredientDTO i : ingredientList) {
-                //    if(Float.parseFloat(i.getCalories()) <= getCaloriesInt(slider))
-                //    data.add(i);
-                    //called_times_products++;
-                //}
-            }
-            AllProductsTable.getSelectionModel().select(0);
-            IngredientDTO rowData = AllProductsTable.getSelectionModel().getSelectedItem();
-
-            if(Application.authenticatedUser.getUsername().equals("admin"))
-                AddIngredientToFridgeController.row = AllProductsTable.getSelectionModel().getSelectedItem();
-
-            viewProductDetail(rowData);
         }
-    }
-
-        */
-
-
     @FXML
     private void goToHome()
     {

@@ -12,7 +12,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -92,23 +91,14 @@ public class AllCommentsController {
 
         field.setWrapText(true);
         content.getChildren().add(field);
-        //content.getChildren().add(0,field);
         content.setFillWidth(true);
         content.setSpacing(10);
         content.setPadding(new Insets(0,210,0,210));
     }
 
-    //public void show_more(ReviewDTO[] r, Button button)
-
     public void show_more(ReviewDTO[] r)
     {
 
-        /*
-        while(called_times_reviews < r.length && i++ < how_much_comments){
-            printSingleComment(content, r, called_times_reviews++);
-        }
-
-         */
         Integer i = how_much_comments*page;
         if(i>=r.length){
             return;
@@ -118,12 +108,6 @@ public class AllCommentsController {
             i++;
         }
 
-        /* // si bugga, riporta sempre al primo commento con la visuale
-        if(called_times_reviews != how_much_comments)
-            content.getChildren().remove(button);
-
-
-        create_button("Show more", "Show_more",r ); */
     }
 
     public void create_button(String name, String id, ReviewDTO[] r)
