@@ -108,11 +108,8 @@ public class AllUsersController {
                                 btn = new Button("Follow");
                                 btn.setOnAction(event -> {
                                     userDTO user = getTableView().getItems().get(getIndex());
-                                    //userDAO.follow_a_user(Integer.parseInt(Application.authenticatedUser.id),user.getId());
                                     UserDAO.follow_a_user(Application.authenticatedUser.id, user.getId());
-                                    //System.out.println(Application.authenticatedUser.getUsername()+ " FOLLOWS " + user.getUsername());
                                     btn.setDisable(true);
-                                    //btn.setText("Following");
                                     getTableView().getItems().remove(getIndex());
                                 });
                             }

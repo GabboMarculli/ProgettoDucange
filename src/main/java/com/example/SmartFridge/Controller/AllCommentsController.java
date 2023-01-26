@@ -42,13 +42,6 @@ public class AllCommentsController {
         {
             Button button = new Button("Delete");
             button.setOnAction(event->{
-                System.out.println(i);
-                System.out.println(content.getChildren().get(i));
-                System.out.println(content.getChildren().get(i+1));
-                System.out.println(content.getChildren().get(i+2));
-                System.out.println(content.getChildren().get(i+3));
-                System.out.println(content.getChildren().get(i+4));
-                System.out.println(content.getChildren().get(i+5));
 
                 int index = content.getChildren().indexOf(event.getSource());
 

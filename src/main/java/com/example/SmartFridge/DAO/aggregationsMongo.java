@@ -149,8 +149,8 @@ public class aggregationsMongo {
         ArrayList<AggregationTransportDTO> aggregation_array = new ArrayList<>();
         for(Document d: output){
             aggregation_array.add(new AggregationTransportDTO(
-                    d.getString("ingredient"),
                     d.getString("country"),
+                    d.getString("ingredient"),
                     Double.valueOf(d.getInteger("quantityInsertedInThefridge"))
             ));
 

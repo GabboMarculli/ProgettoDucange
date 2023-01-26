@@ -290,7 +290,6 @@ public class AllRecipesController {
 
         ArrayList<IngredientInTheFridgeDTO> list_of_product = IngredientInTheFridgeDAO.getProduct(Application.authenticatedUser);
         //retrive the suggested recipe
-        System.out.println(list_of_product);
         if(list_of_product == null || list_of_product.isEmpty()) {
             dropTable();
         }

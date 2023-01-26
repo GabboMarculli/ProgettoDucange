@@ -306,12 +306,10 @@ public class AllIngredientsController {
                     nextButton.setDisable(false);
                 if(searched_ingredients != null)
                 {
-                    System.out.println("NON VUOTO!!!"+searched_ingredients.size());
                     data.clear();
                     data.addAll(searched_ingredients);
                     AllProductsTable.setItems(data);
-                }else
-                    System.out.println("VUOTO!!!");
+                }
             } catch (Error e){
                 System.out.println(e);
             }

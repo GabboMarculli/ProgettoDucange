@@ -40,7 +40,7 @@ public class AnalyticsController {
         ArrayList<IngredientDTO> ingredientList = new ArrayList<>();
 
         left.getChildren().clear();
-        printAnalytics("Ingredient","Time Used",0);
+        printAnalytics("INGREDIENT","TOTAL USAGE",0);
         int i=1;
         for(AggregationTransportDTO  r : result){
             printAnalytics(r.getField1(),String.valueOf(r.getField3()),i);
@@ -52,7 +52,7 @@ public class AnalyticsController {
         ArrayList<IngredientDTO> ingredientList = new ArrayList<>();
 
         left.getChildren().clear();
-        printAnalytics("recipeName","avarageRate",0);
+        printAnalytics("RECIPE","AVERAGE RATE",0);
         int i=1;
         for(AggregationTransportDTO  r : result){
             printAnalytics(r.getField1(),String.valueOf(r.getField3()),i);
@@ -66,7 +66,7 @@ public class AnalyticsController {
         ArrayList<IngredientDTO> ingredientList = new ArrayList<>();
 
         left.getChildren().clear();
-        printAnalytics("Username","Total Comments",0);
+        printAnalytics("USERNAME","TOTAL COMMENTS",0);
         int i=1;
         for(AggregationTransportDTO  r : result){
             printAnalytics(r.getField1(),String.valueOf(r.getField3()),i);
@@ -76,11 +76,10 @@ public class AnalyticsController {
 
     public void ingredientsByCountry() {
         ArrayList<AggregationTransportDTO> result = aggregationsMongo.ingredientsByCountry();
-        //System.out.println(result);
         ArrayList<IngredientDTO> ingredientList = new ArrayList<>();
 
         left.getChildren().clear();
-        printAnalytics_2("ingredient","country","quantity",0);
+        printAnalytics_2("COUNTRY","INGREDIENT","QUANTITY",0);
         int i=1;
         for(AggregationTransportDTO  r : result){
             printAnalytics_2(r.getField1(),r.getField2(),String.valueOf(r.getField3()),i);

@@ -256,7 +256,6 @@ public class LoginController {
         });
 
         for(RecipeDTO us : recipes) {
-            System.out.println(us.getPreparationTime());
             data.add(us);
         }
         listview.setItems(data);
@@ -274,7 +273,6 @@ public class LoginController {
         preparationtext.setText(recipe.getDirection());
 
         recipetext.setText(recipe.getName());
-        System.out.println(recipe.getName()+" "+recipe.getTotalTime()+" time:"+recipe.getAuthor());
     }
 
     @FXML
@@ -338,7 +336,6 @@ public class LoginController {
         } else {
             LocalDate nowdate = LocalDate.now();
             nowdate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
-            System.out.println(nowdate);
             RegisteredUser user = new RegisteredUser(
                     "",
                     signUpUsernameTextField.getText(),
@@ -350,7 +347,6 @@ public class LoginController {
                     nowdate
             );
 
-            System.out.println(LocalDate.now());
             //signup of the user
             String user_index = UserDAO.signup(user);
 
