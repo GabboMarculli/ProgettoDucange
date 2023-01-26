@@ -51,7 +51,7 @@
                         <Insets left="20.0" />
                      </GridPane.margin>
                   </Label>
-                      <Label fx:id="Username" prefHeight="18.0" prefWidth="71.0" style="-fx-text-fill: WHITE;" text="text" GridPane.columnIndex="1">
+                      <Label fx:id="Username" prefHeight="28.0" prefWidth="301.0" style="-fx-text-fill: WHITE;" text="text" GridPane.columnIndex="1">
                      <font>
                         <Font size="22.0" />
                      </font>

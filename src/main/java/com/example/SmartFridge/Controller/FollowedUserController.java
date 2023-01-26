@@ -74,7 +74,7 @@ public class FollowedUserController {
                                 //userDAO.follow_a_user(Integer.parseInt(Application.authenticatedUser.id),user.getId());
                                 UserDAO.unfollowUser(Application.authenticatedUser.id, user.getId());
 
-                                btn.setText("Unfollowed");
+                                //btn.setText("Unfollowed");
                                 data.remove(getIndex());
                             });
                             setGraphic(btn);
