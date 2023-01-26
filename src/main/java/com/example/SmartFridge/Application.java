@@ -32,7 +32,6 @@ public class Application extends javafx.application.Application {
         setPrimaryStage(stage);
         setPrimaryScene(scene);
         stage.setOnCloseRequest(windowEvent -> {closing();});
-
     }
 
     private void closing(){

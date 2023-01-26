@@ -25,13 +25,6 @@ import java.util.List;
 
 public class AnalyticsController {
     @FXML
-    public TableView<IngredientDTO> Table;
-    @FXML
-    public TableColumn<IngredientDTO, String> Name;
-
-    private ObservableList<IngredientDTO> data = FXCollections.observableArrayList();
-
-    @FXML
     private GridPane left;
     public void setClick(MouseEvent mouseEvent) {
         Utils.setClick(mouseEvent);
@@ -47,18 +40,12 @@ public class AnalyticsController {
         Utils.unsetOver(mouseEvent);
     }
     public void initialize(){
-
-        for(int i =0 ; i<5;i++) {
-            printAnalytics("campo1", "campo2", i);
-        }
-        aggregationsMongo.top10votedrecipe();
-        aggregationsMongo.userMostCommented();
-        aggregationsMongo.ingredientsByCountry();
-
+        ingredientsByCountry();
     }
 
     public void show_most_10_ingredients() {
-        ArrayList<AggregationTransportDTO> result = aggregationsMongo.top10votedrecipe();
+
+        ArrayList<AggregationTransportDTO> result = aggregationsMongo.top10Ingredients();
         //System.out.println(result);
         ArrayList<IngredientDTO> ingredientList = new ArrayList<>();
 
@@ -70,8 +57,8 @@ public class AnalyticsController {
             i++;
         }
     }
-    public void show_most_10_recipes(ActionEvent actionEvent) {
-        ArrayList<AggregationTransportDTO> result = aggregationsMongo.top10Ingredients();
+    public void show_most_10_recipes() {
+        ArrayList<AggregationTransportDTO> result = aggregationsMongo.top10votedrecipe();
         //System.out.println(result);
         ArrayList<IngredientDTO> ingredientList = new ArrayList<>();
 
@@ -84,7 +71,7 @@ public class AnalyticsController {
         }
     }
 
-    public void show_userMostCommented(ActionEvent actionEvent) {
+    public void show_userMostCommented() {
 
         ArrayList<AggregationTransportDTO> result = aggregationsMongo.userMostCommented();
         //System.out.println(result);
@@ -99,8 +86,8 @@ public class AnalyticsController {
         }
     }
 
-    public void ingredientsByCountry(ActionEvent actionEvent) {
-        ArrayList<AggregationTransportDTO> result = aggregationsMongo.userMostCommented();
+    public void ingredientsByCountry() {
+        ArrayList<AggregationTransportDTO> result = aggregationsMongo.ingredientsByCountry();
         //System.out.println(result);
         ArrayList<IngredientDTO> ingredientList = new ArrayList<>();
 

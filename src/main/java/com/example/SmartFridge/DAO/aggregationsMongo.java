@@ -136,10 +136,11 @@ public class aggregationsMongo {
                     new Document("$group", new Document("_id", new Document("country", "$_id.country"))
                             .append("ingredient", new Document("$last", "$_id.ingredient"))
                             .append("quantityInsertedInThefridge", new Document("$last", "$quantityInsertedInThefridge"))),
-                    new Document("$project", new Document("_id", 0)
+                    new Document("$project", new Document("_id", 1)
                             .append("ingredient", 1)
                             .append("country", "$_id.country")
-                            .append("quantityInsertedInThefridge", 1))
+                            .append("quantityInsertedInThefridge", 1)),
+                    new Document("$limit", 20)
             )).into(new ArrayList<>());
             //.get(0).get("_id").getString("Username") -> usare questa per prendere le recipeName
         }
@@ -156,6 +157,7 @@ public class aggregationsMongo {
                     d.getString("country"),
                     Double.valueOf(d.getInteger("quantityInsertedInThefridge"))
             ));
+
         }
         return aggregation_array;
     }

@@ -125,7 +125,7 @@ public class RecipeDao {
                                 ));
                 List<RecipeDTO> Recipe_to_send = new ArrayList<>();
                 int i = 0;
-                while (result.hasNext() || i < 20) {
+                while (result.hasNext() && i < 20) {
                     Record r = result.next();
                     Recipe_to_send.add(new RecipeDTO(
                             r.get("name").asString(),
@@ -134,6 +134,8 @@ public class RecipeDao {
                             r.get("totalTime").asString()
                     ));
                     i++;
+                    if(i == 4)
+                        System.out.println("ciao");
                 }
                 return Recipe_to_send;
             });
