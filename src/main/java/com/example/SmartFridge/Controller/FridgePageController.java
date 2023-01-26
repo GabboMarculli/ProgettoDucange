@@ -55,7 +55,6 @@ public class FridgePageController {
     @FXML
     private void goToHome() {
         try {
-            FridgeDAO.updateFridge(data);
             Application.changeScene("HomePage");
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -103,14 +102,16 @@ public class FridgePageController {
         }
     }
     public void refresh() {
+
+        if(!data.isEmpty())
+            FridgeDAO.updateFridge(data);
         dropTable();
         fillTable();
     }
     @FXML
-
     private void fillTable() {
 
-         System.out.println("Inserimento dati in frigo");
+         System.out.println("Inserting data into fridge");
 
         //retrive ingredient from fridge
         ArrayList<IngredientInTheFridgeDTO> ingredientList = new ArrayList<>();
@@ -122,7 +123,6 @@ public class FridgePageController {
                 IngredientInFridge newrow = new IngredientInFridge(us.getName(), us.getQuantity(), us.getDate());
                 data.add(newrow);
             }
-
     }
 
     //if fridge is empty, table must be dropped
