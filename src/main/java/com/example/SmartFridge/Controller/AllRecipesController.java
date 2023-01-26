@@ -24,6 +24,8 @@ import java.util.List;
 
 public class AllRecipesController {
     @FXML
+    private Button backbutton;
+    @FXML
     private TableView<RecipeDTO> AllRecipesTable;
     @FXML
     public TableColumn<RecipeDTO, String> RecipeNameColumn;
@@ -108,18 +110,16 @@ public class AllRecipesController {
     @FXML
     private void goToHome() throws IOException {
         utente = null;
-        /*
+
         try {
             if(Application.authenticatedUser.getUsername().equals("admin"))
                 Application.changeScene("HomePageAdmin");
             else
-                Application.changeScene("HomePage");
+                Application.changeScene("MainTable");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-         */
-        Application.changeScene("MainTable");
     }
     public void commentclick(ActionEvent actionEvent) {
 
@@ -202,6 +202,7 @@ public class AllRecipesController {
             show_recipe_of_followed_user.setDisable(true);
             show_suggested_recipe.setDisable(true);
             showMyRecipe.setDisable(true);
+            backbutton.setVisible(true);
         }
     }
 

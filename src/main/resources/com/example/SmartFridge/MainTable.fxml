@@ -22,7 +22,7 @@
                 <fx:include fx:id="RecipeTab" source="AllRecipes.fxml" />
             </content>
           </Tab>
-            <Tab text="Users">
+            <Tab fx:id="tabuser" text="Users">
                 <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                         <fx:include fx:id="UserTab" source="AllUsers.fxml" />

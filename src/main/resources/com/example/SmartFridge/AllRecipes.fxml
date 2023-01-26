@@ -28,6 +28,7 @@
                         <Font size="14.0" />
                     </font>
                 </Text>
+            <Button fx:id="backbutton" layoutX="39.0" layoutY="501.0" mnemonicParsing="false" onAction="#goToHome" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="35.0" prefWidth="70.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="BACK" visible="false" />
             </children>
         </AnchorPane>
     </left>

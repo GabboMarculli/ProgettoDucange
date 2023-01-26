@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
@@ -85,6 +86,19 @@ public class AddIngredientToFridgeController {
             });
     }
 
+    public void setClick(MouseEvent mouseEvent) {
+        Utils.setClick(mouseEvent);
+    }
+
+    public void unsetClick(MouseEvent mouseEvent) {
+        Utils.unsetClick(mouseEvent);
+    }
+    public void setOver(MouseEvent mouseEvent) {
+        Utils.setOver(mouseEvent);
+    }
+    public void unsetOver(MouseEvent mouseEvent) {
+        Utils.unsetOver(mouseEvent);
+    }
     public boolean checkInput()
     {
         if(Name.getText().isBlank() || Grams.getText().isBlank() || Category.getText().isBlank() || Calories.getText().isBlank()

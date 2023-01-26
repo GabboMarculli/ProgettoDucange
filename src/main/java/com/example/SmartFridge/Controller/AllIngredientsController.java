@@ -22,6 +22,14 @@ import java.util.ArrayList;
 
 public class AllIngredientsController {
     @FXML
+    private Button modifybutton;
+    @FXML
+    private Button backbutton;
+    @FXML
+    private Button addrecipebutton;
+    @FXML
+    private Button deletebutton;
+    @FXML
     public TableView<IngredientDTO> AllProductsTable;
     @FXML
     public TableColumn<IngredientDTO, String> ProductNameColumn;
@@ -146,14 +154,29 @@ public class AllIngredientsController {
             });
         //------------------------
         if(Application.authenticatedUser.getUsername().equals("admin")) {
-            final Button Add_product = new Button("Add product ");
+            /*final Button Add_product = new Button("Add product ");
             Add_product.setLayoutX(Double.parseDouble("240"));
             Add_product.setLayoutY(Double.parseDouble("560"));
             my_anchor_pane.getChildren().add(Add_product);
-
-            Add_product.setOnAction(event -> {
+            */
+            deletebutton.setVisible(true);
+            deletebutton.setOnAction(event -> {
+                if (AllProductsTable.getSelectionModel().getSelectedIndex() >= 0) {
+                    IngredientDTO selectedItem = AllProductsTable.getSelectionModel().getSelectedItem();
+                    AllProductsTable.getItems().remove(selectedItem);
+                    IngredientInTheFridgeDAO.deleteIngredient(selectedItem);
+                }});
+            backbutton.setVisible(true);
+            modifybutton.setVisible(true);
+            modifybutton.setOnAction(event -> {
+                AddIngredientToFridgeController.modify = true;
                 goToAddProduct();
             });
+            addrecipebutton.setVisible(true);
+            addrecipebutton.setOnAction(event ->{goToAddProduct();});
+            //Add_product.setOnAction(event -> {
+            //    goToAddProduct();
+            //});
         }
     }
     @FXML
@@ -292,6 +315,7 @@ public void printAddToFridge(String label, String _id, Integer row_index)
         Right.getChildren().clear();
         call_print_product(rowData, "view");
 
+        /*
         if(Application.authenticatedUser.getUsername().equals("admin")){
             final Button Delete_product = new Button("Delete ");
             GridPane.setRowIndex(Delete_product, 10);
@@ -316,10 +340,11 @@ public void printAddToFridge(String label, String _id, Integer row_index)
             });
 
         } else {
+                 */
             printAddToFridge("Insert quantity end expiring date below and press ADD:","instruction",9);
             printAddToFridge("Quantity: ", "Quantity", 10);
             printAddToFridge("Expire_date: ", "Expire_date", 11);
-        }
+        //}
 
     }
 

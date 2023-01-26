@@ -5,6 +5,7 @@ import com.example.SmartFridge.DAO.IngredientDAO;
 import com.example.SmartFridge.DAO.aggregationsMongo;
 import com.example.SmartFridge.DTO.AggregationTransportDTO;
 import com.example.SmartFridge.DTO.IngredientDTO;
+import com.example.SmartFridge.Utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import org.bson.Document;
 import org.json.JSONException;
@@ -31,7 +33,19 @@ public class AnalyticsController {
 
     @FXML
     private GridPane left;
+    public void setClick(MouseEvent mouseEvent) {
+        Utils.setClick(mouseEvent);
+    }
 
+    public void unsetClick(MouseEvent mouseEvent) {
+        Utils.unsetClick(mouseEvent);
+    }
+    public void setOver(MouseEvent mouseEvent) {
+        Utils.setOver(mouseEvent);
+    }
+    public void unsetOver(MouseEvent mouseEvent) {
+        Utils.unsetOver(mouseEvent);
+    }
     public void initialize(){
 
         for(int i =0 ; i<5;i++) {

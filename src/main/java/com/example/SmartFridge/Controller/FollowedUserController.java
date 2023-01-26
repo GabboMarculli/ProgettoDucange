@@ -3,18 +3,19 @@ package com.example.SmartFridge.Controller;
 import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DAO.UserDAO;
 import com.example.SmartFridge.DTO.userDTO;
+import com.example.SmartFridge.Utils.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 import java.io.IOException;
 import java.util.List;
 
 import static com.example.SmartFridge.DAO.UserDAO.getListOfFollowedUser;
-
 public class FollowedUserController {
     @FXML
     private TableView<userDTO> UserTable;
@@ -30,7 +31,19 @@ public class FollowedUserController {
 
 
     private ObservableList<userDTO> data = FXCollections.observableArrayList();
+    public void setClick(MouseEvent mouseEvent) {
+        Utils.setClick(mouseEvent);
+    }
 
+    public void unsetClick(MouseEvent mouseEvent) {
+        Utils.unsetClick(mouseEvent);
+    }
+    public void setOver(MouseEvent mouseEvent) {
+        Utils.setOver(mouseEvent);
+    }
+    public void unsetOver(MouseEvent mouseEvent) {
+        Utils.unsetOver(mouseEvent);
+    }
     public void initialize() {
         UsernameColumn.setCellValueFactory(
                 new PropertyValueFactory<userDTO, String>("username")
@@ -60,8 +73,9 @@ public class FollowedUserController {
                                 userDTO user = getTableView().getItems().get(getIndex());
                                 //userDAO.follow_a_user(Integer.parseInt(Application.authenticatedUser.id),user.getId());
                                 UserDAO.unfollowUser(Application.authenticatedUser.id, user.getId());
-                                btn.setDisable(true);
+
                                 btn.setText("Unfollowed");
+                                data.remove(getIndex());
                             });
                             setGraphic(btn);
                             setText(null);
@@ -77,7 +91,7 @@ public class FollowedUserController {
         fillTable();
     }
 
-    int called_times = 0;
+    static int called_times = 0;
 
     //fill the table with 20 followed user. By pressing the button the user will visualize
     // 20 user in plus appended at the end of the previous list of user
@@ -91,7 +105,18 @@ public class FollowedUserController {
             called_times++;
         }
     }
-
+    public void refresh(){
+        called_times = 0;
+        data.clear();
+        int limit_views_user = 20;
+        List<userDTO> users = getListOfFollowedUser(limit_views_user, called_times);
+        if(users != null) {
+            for (userDTO us : users) {
+                data.add(us);
+            }
+            called_times++;
+        }
+    }
     /* carina la roba del formatter, cancellateliamola alla fine sennò è uno sbattimento costante con queste LocalDate
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yy");
             userDTO newrow = new userDTO(Integer.parseInt(

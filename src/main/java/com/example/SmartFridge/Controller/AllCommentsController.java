@@ -155,6 +155,7 @@ public class AllCommentsController {
 
         //printComments(review);
         show_more(review);
+
     }
 
     public void goBack()
@@ -162,7 +163,10 @@ public class AllCommentsController {
         try {
             ViewRecipeController.Recipe = Recipe;
             Recipe = null;
-            Application.changeScene("MainTable");
+            if(Application.authenticatedUser.getUsername().equals("admin"))
+                Application.changeScene("AllRecipes");
+            else
+                Application.changeScene("MainTable");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

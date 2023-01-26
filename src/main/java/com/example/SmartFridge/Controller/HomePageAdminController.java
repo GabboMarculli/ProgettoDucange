@@ -1,10 +1,12 @@
 package com.example.SmartFridge.Controller;
 
 import com.example.SmartFridge.Application;
+import com.example.SmartFridge.Utils.Utils;
 import com.example.SmartFridge.model.RegisteredUser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 
@@ -18,6 +20,18 @@ public class HomePageAdminController {
     @FXML
     private Button Users;
 
+    public void setClick(MouseEvent mouseEvent) {
+        Utils.setClick(mouseEvent);
+    }
+    public void unsetClick(MouseEvent mouseEvent) {
+        Utils.unsetClick(mouseEvent);
+    }
+    public void setOver(MouseEvent mouseEvent) {
+        Utils.setOver(mouseEvent);
+    }
+    public void unsetOver(MouseEvent mouseEvent) {
+        Utils.unsetOver(mouseEvent);
+    }
     public void initialize() {
         Username.setText("Admin");
 

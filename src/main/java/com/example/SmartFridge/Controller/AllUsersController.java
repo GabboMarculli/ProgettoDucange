@@ -4,6 +4,7 @@ import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DAO.UserDAO;
 import com.example.SmartFridge.DTO.RecipeDTO;
 import com.example.SmartFridge.DTO.userDTO;
+import com.example.SmartFridge.Utils.Utils;
 import com.example.SmartFridge.model.RegisteredUser;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 import java.io.IOException;
@@ -36,10 +38,11 @@ public class AllUsersController {
 
     @FXML
     private Button Show_Suggested_User;
-
+    @FXML
+    private Button backbutton;
     @FXML
     private Button show_more;
-    int called_times = 0;
+    static int called_times = 0;
     /*
     token used to the following feauture: when i want to see the suggested user, i click on it, then
     the "show more" button will be disable cause i will upload only max 40 suggested user,
@@ -51,7 +54,20 @@ public class AllUsersController {
     private boolean token_show_suggested_all = true;
 
 
-    private ObservableList<userDTO> data = FXCollections.observableArrayList();
+    private static ObservableList<userDTO> data = FXCollections.observableArrayList();
+
+    public void refresh() {
+        called_times = 0;
+        String username = SearchUser.getText();
+        int limit_views_user = 20;
+        List<userDTO> users = Search_for_Unfollowed_user(username,limit_views_user, called_times);
+        if(users == null || users.size() == 0) return;
+        data.clear();
+        for (userDTO us : users) {
+            data.add(us);
+        }
+        //called_times++;
+    }
 
     public void initialize() {
         UsernameColumn.setCellValueFactory(
@@ -99,7 +115,8 @@ public class AllUsersController {
                                     UserDAO.follow_a_user(Application.authenticatedUser.id, user.getId());
                                     //System.out.println(Application.authenticatedUser.getUsername()+ " FOLLOWS " + user.getUsername());
                                     btn.setDisable(true);
-                                    btn.setText("Following");
+                                    //btn.setText("Following");
+                                    getTableView().getItems().remove(getIndex());
                                 });
                             }
                             setGraphic(btn);
@@ -126,8 +143,25 @@ public class AllUsersController {
             return row ;
         });
         fillTable();
+        if(Application.authenticatedUser.getUsername().equals("admin")){
+            Show_Suggested_User.setDisable(true);
+            show_more.setDisable(true);
+            backbutton.setVisible(true);
+        }
+    }
+    public void setClick(MouseEvent mouseEvent) {
+        Utils.setClick(mouseEvent);
     }
 
+    public void unsetClick(MouseEvent mouseEvent) {
+        Utils.unsetClick(mouseEvent);
+    }
+    public void setOver(MouseEvent mouseEvent) {
+        Utils.setOver(mouseEvent);
+    }
+    public void unsetOver(MouseEvent mouseEvent) {
+        Utils.unsetOver(mouseEvent);
+    }
     private void viewRecipesOfTheUser(userDTO userDTO) {
         try {
             AllRecipesController.utente = userDTO.getUsername();
@@ -203,45 +237,58 @@ public class AllUsersController {
         called_times++;
     }
 
-    public void Search_for_user()
-    {
+    public void Search_for_user() {
+        if (Application.authenticatedUser.getUsername().equals("admin")) {
+            userDTO searched_user = UserDAO.searchforadmin(SearchUser.getText());
+
+        data.clear();
+        if (searched_user != null) {
+            /*
+            for (userDTO us : searched_user) {
+                data.add(us);
+            }
+            */
+            data.add(searched_user);
+            UserTable.setItems(data);
+            return;
+        }
+    }
             String username = SearchUser.getText();
-            if(!username.equals("")) {
+            if (!username.equals("")) {
                 try {
-                    List<userDTO> searched_user = UserDAO.Search_for_Unfollowed_user(username,20,0);
+                    List<userDTO> searched_user = UserDAO.Search_for_Unfollowed_user(username, 20, 0);
 
                     data.clear();
-                    if(searched_user != null)
-                    {
-                        for(userDTO us: searched_user) {
+                    if (searched_user != null) {
+                        for (userDTO us : searched_user) {
                             data.add(us);
                         }
                         UserTable.setItems(data);
                     }
-                } catch (Error e){
+                } catch (Error e) {
                     System.out.println(e);
                 }
-            }else{
+            } else {
                 data.clear();
                 UserTable.setItems(data);
                 //restore all the user
-                called_times=0;
+                called_times = 0;
                 fillTable();
             }
-    }
-
-    @FXML
-    protected void goToHome() throws IOException {
-        try {
-            if(Application.authenticatedUser.getUsername().equals("admin"))
-                Application.changeScene("HomePageAdmin");
-            else
-                Application.changeScene("HomePage");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
-    }
 
-}
+        @FXML
+        protected void goToHome () throws IOException {
+            try {
+                if (Application.authenticatedUser.getUsername().equals("admin"))
+                    Application.changeScene("HomePageAdmin");
+                else
+                    Application.changeScene("HomePage");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+    }
 
 

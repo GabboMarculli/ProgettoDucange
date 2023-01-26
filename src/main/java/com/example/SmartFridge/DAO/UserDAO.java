@@ -12,6 +12,7 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
 import com.mongodb.MongoException;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Projections;
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -22,8 +23,10 @@ import org.neo4j.driver.Record;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Filters.regex;
 import static com.mongodb.client.model.Projections.excludeId;
 import static com.mongodb.client.model.Sorts.ascending;
 import static com.mongodb.client.model.Sorts.descending;
@@ -46,6 +49,31 @@ public class UserDAO {
         if(resultDoc!= null) {
             String user = resultDoc.getString("username");
             return user;
+        }
+
+        return null;
+    }
+    public static userDTO searchforadmin(String text) {
+
+        // retrieve user collection
+        MongoCollection<Document> collection = MongoDbDriver.getUserCollection();
+
+        // we search for username
+
+        //Bson filter = Filters(regex("username", ".*" + Pattern.quote(text) + ".*", "i"));
+
+        Document resultDoc = collection.find(eq("username",text)).first();
+        if(resultDoc!= null) {
+            userDTO ret = new userDTO(
+                    resultDoc.get("_id").toString(),
+                    resultDoc.getString("username"),
+                    resultDoc.getString("password"),
+                    resultDoc.getString("name"),
+                    resultDoc.getString("surname"),
+                    resultDoc.getString("registrationdate").length()>9? Utils.LOCAL_DATE(resultDoc.getString("registrationdate")):Utils.LOCAL_DATE_OLD(resultDoc.getString("registrationdate")),
+                    resultDoc.getString("country")
+            );
+            return ret;
         }
 
         return null;
@@ -446,5 +474,7 @@ public class UserDAO {
             return false;
         }
     }
+
+
 }
 

@@ -1,21 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.control.Button?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0"
-            xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.SmartFridge.Controller.HomePageAdminController">
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.SmartFridge.Controller.HomePageAdminController">
     <children>
-        <Pane prefHeight="200.0" style="-fx-background-color: #00bfff;;"
-              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <Pane prefHeight="200.0" style="-fx-background-color: #00bfff;;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label layoutX="350.0" layoutY="70.0" text="SmartFridge" textFill="WHITE">
+                <Label layoutX="366.0" layoutY="70.0" text="SmartFridge" textFill="WHITE">
                     <font>
                         <Font size="50.0" />
                     </font>
@@ -25,37 +18,27 @@
                         <Font size="20.0" />
                     </font>
                 </Label>
-                <Button fx:id="Logout" layoutX="800" layoutY="80" contentDisplay="TOP" mnemonicParsing="false" onAction="#logout"
-                        prefHeight="50.0" prefWidth="80.0"  text="Logout" >
-                </Button>
             </children>
         </Pane>
-        <GridPane alignment="CENTER" layoutX="165.0" layoutY="228.0" prefHeight="320.0"
-                  prefWidth="650.0" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <Button fx:id="Products" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToProducts"
-                        prefHeight="100.0" prefWidth="170.0" text="Handle products">
-                </Button>
-                <Button fx:id="Recipes" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToRecipes"
-                        prefHeight="100.0" prefWidth="170.0"  text="Handle recipes" GridPane.columnIndex="1">
-                </Button>
-                <Button fx:id="Users" contentDisplay="TOP" mnemonicParsing="false" onAction="#goToUsers"
-                        prefHeight="100.0" prefWidth="170.0"  text="Delete users" GridPane.columnIndex="2">
-                </Button>
-                <Button fx:id="Analytics"  contentDisplay="TOP" mnemonicParsing="false" onAction="#goToAnalytics"
-                        prefHeight="100.0" prefWidth="170.0"  text="View analytics" GridPane.columnIndex="1"
-                        GridPane.rowIndex="1">
-                </Button>
-            </children>
-        </GridPane>
+          <Button fx:id="Products" contentDisplay="TOP" layoutX="188.0" layoutY="378.0" mnemonicParsing="false" onAction="#goToProducts" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="100.0" prefWidth="170.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Handle products">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+          <Button fx:id="Recipes" contentDisplay="TOP" layoutX="433.0" layoutY="244.0" mnemonicParsing="false" onAction="#goToRecipes" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="100.0" prefWidth="170.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Handle recipes">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+          <Button fx:id="Users" contentDisplay="TOP" layoutX="691.0" layoutY="365.0" mnemonicParsing="false" onAction="#goToUsers" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="100.0" prefWidth="170.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Delete users">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+          <Button fx:id="Analytics" contentDisplay="TOP" layoutX="433.0" layoutY="524.0" mnemonicParsing="false" onAction="#goToAnalytics" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="100.0" prefWidth="170.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="View analytics">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
+          <Button fx:id="Logout" contentDisplay="TOP" layoutX="467.0" layoutY="400.0" mnemonicParsing="false" onAction="#logout" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="65.0" prefWidth="102.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-border-radius: 5; -fx-border-width: 2; -fx-border-color: #24a0ed;" text="Logout">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font></Button>
     </children>
 </AnchorPane>

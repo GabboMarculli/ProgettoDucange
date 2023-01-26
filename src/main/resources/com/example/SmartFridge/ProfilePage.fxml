@@ -9,12 +9,12 @@
     <children>
       <Pane layoutX="737.0" layoutY="93.0" prefHeight="364.0" prefWidth="200.0" style="-fx-background-color: #5fd6e8;">
          <children>
-                <Button fx:id="gohomebutton" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onGoToHomeClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="61.0" prefWidth="180.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: HAND;" text="Go to home">
+                <Button fx:id="gohomebutton" layoutX="10.0" layoutY="33.0" mnemonicParsing="false" onAction="#onGoToHomeClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="61.0" prefWidth="180.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: HAND;" text="Go to home" visible="false">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>
 
-                <Button fx:id="changeFieldButton" layoutX="10.0" layoutY="137.0" mnemonicParsing="false" onAction="#onChangePasswordButtonClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="61.0" prefWidth="180.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: HAND;" text="Change fields">
+                <Button fx:id="changeFieldButton" layoutX="10.0" layoutY="77.0" mnemonicParsing="false" onAction="#onChangePasswordButtonClick" onMouseEntered="#setOver" onMouseExited="#unsetOver" onMousePressed="#setClick" onMouseReleased="#unsetClick" prefHeight="61.0" prefWidth="180.0" style="-fx-background-color: #24a0ed; -fx-text-fill: white; -fx-background-radius: 10; -fx-cursor: HAND;" text="Change fields">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font></Button>

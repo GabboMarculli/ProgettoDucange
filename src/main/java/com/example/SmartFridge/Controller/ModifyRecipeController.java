@@ -2,10 +2,12 @@ package com.example.SmartFridge.Controller;
 
 import com.example.SmartFridge.Application;
 import com.example.SmartFridge.DTO.RecipeDTO;
+import com.example.SmartFridge.Utils.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -25,7 +27,18 @@ public class ModifyRecipeController {
     public Button Modify;
 
     public static RecipeDTO Recipe;
-
+    public void setClick(MouseEvent mouseEvent) {
+        Utils.setClick(mouseEvent);
+    }
+    public void unsetClick(MouseEvent mouseEvent) {
+        Utils.unsetClick(mouseEvent);
+    }
+    public void setOver(MouseEvent mouseEvent) {
+        Utils.setOver(mouseEvent);
+    }
+    public void unsetOver(MouseEvent mouseEvent) {
+        Utils.unsetOver(mouseEvent);
+    }
     public void initialize()
     {
         RecipeTitle.setText(Recipe.getName());

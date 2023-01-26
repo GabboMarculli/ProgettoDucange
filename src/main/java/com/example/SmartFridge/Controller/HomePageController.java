@@ -6,10 +6,14 @@ import com.example.SmartFridge.DbMaintaince.Neo4jDriver;
 import com.example.SmartFridge.Utils.Utils;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
@@ -19,11 +23,34 @@ public class HomePageController {
     @FXML
     private Label Username;
     @FXML
-    private static int tabnumber;
+    private int tabnumber;
     @FXML
-    private static TabPane tabPane;
-    public void initialize() throws InterruptedException {
+    public TabPane tabPane;
+    @FXML
+    public Tab TabUser;
+    @FXML
+    private Parent UserTab;
+    @FXML
+    private AllUsersController UserTabController;
+    @FXML
+    private FollowedUserController FollowTabController;
+    @FXML
+    private FridgePageController FridgeTabController;
 
+
+    public void initialize() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("FollowedUser.fxml"));
+        FollowedUserController follow = loader.getController();
+        tabPane.getSelectionModel().selectedItemProperty().addListener((observableValue, tab, t1) -> {
+            
+            if(t1.getText().equals("Users")) {
+                UserTabController.refresh();
+            } else if (t1.getText().equals("Following")) {
+                FollowTabController.refresh();
+            } else if (t1.getText().equals("Fridge")) {
+                FridgeTabController.refresh();
+            }
+        });
     }
 
     @FXML
@@ -45,7 +72,7 @@ public class HomePageController {
     public void unsetOver(MouseEvent mouseEvent) {
         Utils.unsetOver(mouseEvent);
     }
-    public static void changeTab(int i) throws InterruptedException {
+    public void changeTab(int i) throws InterruptedException {
         tabnumber = i;
     }
     @FXML
