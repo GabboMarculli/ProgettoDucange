@@ -127,7 +127,8 @@ public class aggregationsMongo {
         try {
             output = collection.aggregate(Arrays.asList(
                     new Document("$unwind", "$fridge"),
-                    new Document("$group", new Document("_id", new Document("country", "$country").append("ingredient","$fridge.name"))
+                    new Document("$group", new Document("_id", new Document("country", "$country")
+                            .append("ingredient","$fridge.name"))
                             .append("quantityInsertedInThefridge", new Document("$sum", "$fridge.quantity"))),
                     new Document("$sort", new Document("quantityInsertedInThefridge", 1)),
                     new Document("$group", new Document("_id", new Document("country", "$_id.country"))

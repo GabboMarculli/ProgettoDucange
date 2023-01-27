@@ -88,6 +88,18 @@ public class FollowedUserController {
 
         UnFollowButtonColumn.setCellFactory(cellFactory);
         UserTable.setItems(data);
+
+        UserTable.setRowFactory( tv -> {
+            TableRow<userDTO> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    userDTO userDTO = row.getItem();
+                    AllUsersController.viewRecipesOfTheUser(userDTO);
+                }
+            });
+            return row ;
+        });
+
         fillTable();
     }
 
@@ -119,7 +131,7 @@ public class FollowedUserController {
     }
     public void Search_for_followed_user() {
         String username = SearchUser.getText();
-        if(!username.equals("")) {
+        if(true) {
             try {
                 List<userDTO> searched_user = UserDAO.Search_for_followed_user(username);
 

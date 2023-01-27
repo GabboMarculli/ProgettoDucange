@@ -177,8 +177,9 @@ public class AllRecipesController {
             show_recipe_of_followed_user.setDisable(true);
             show_suggested_recipe.setDisable(true);
             showMyRecipe.setDisable(true);
-            backbutton.setVisible(true);
+
         }
+        backbutton.setVisible(true);
     }
 
 

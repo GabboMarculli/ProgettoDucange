@@ -139,7 +139,7 @@ public class AllUsersController {
         fillTable();
         if(Application.authenticatedUser.getUsername().equals("admin")){
             Show_Suggested_User.setDisable(true);
-            show_more.setDisable(true);
+            //show_more.setDisable(true);
             backbutton.setVisible(true);
         }
     }
@@ -156,7 +156,7 @@ public class AllUsersController {
     public void unsetOver(MouseEvent mouseEvent) {
         Utils.unsetOver(mouseEvent);
     }
-    private void viewRecipesOfTheUser(userDTO userDTO) {
+    static void viewRecipesOfTheUser(userDTO userDTO) {
         try {
             AllRecipesController.utente = userDTO.getUsername();
             Application.changeScene("AllRecipes");
